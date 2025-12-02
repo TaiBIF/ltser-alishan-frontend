@@ -1,0 +1,252 @@
+@use "sass:map";
+$col-yel: #d5b943;
+$col-brown1: #654d26;
+$col-brown2: #464138;
+$category: #776549;
+$main: 1220px;
+$grid: 100%;
+$pc_m: "only screen and (max-width: 1599px)";
+$pc_s: "only screen and (max-width: 1279px)";
+$pc: "only screen and (min-width: 1000px)";
+$pad: "only screen and (max-width: 999px)";
+$mobile: "only screen and (max-width: 767px)";
+$breakpoints: (
+    mobile: 0,
+    tablet: 768px,
+    laptop: 1024px,
+    desktop: 1280px,
+    desktop-xl: 1600px,
+);
+$color: (
+    primary: #529a81,
+    light: #fff,
+    error: #cf0000,
+    hover: #256750,
+    bg: (
+        muted: #fafafa,
+    ),
+    border: (
+        muted: #e0e0e0,
+        table: #f2f2f2,
+    ),
+    font: (
+        muted: #828282,
+        text: #333333,
+        primary: #529a81,
+        light: #ffffff,
+    ),
+    opacity: (
+        primary: rgba(#529a81, 0.4),
+    ),
+    gray: (
+        1: #333333,
+        2: #505050,
+        3: #828282,
+        4: #bdbdbd,
+        5: #e0e0e0,
+        6: #f2f2f2,
+        7: #fafafa,
+    ),
+    shadow: rgba(0, 0, 0, 0.1),
+);
+$padding: (
+    action: 1rem 1.5rem,
+    input: 0.75rem,
+    main: 2rem,
+    section: 1rem,
+    thead: 1rem,
+    icon: 0.25rem,
+    btn: 1rem 1.5rem,
+);
+$margin: (
+    item: 1rem,
+    text: 0.25rem,
+    icon: 0.25rem,
+    block: 2rem,
+);
+$radius: (
+    action: 1rem,
+    block: 0.5rem,
+    main: 2rem,
+    section: 1rem,
+    input: 0.5rem,
+    btn: 100000rem,
+);
+$transition: (
+    default: 0.3s,
+);
+$border: (
+    input: 0.0625rem solid
+        map-get(
+            $map: map-get($color, border),
+            $key: muted,
+        ),
+);
+
+$shadow: (
+    block: 0 0 1rem 0
+        map-get(
+            $map: $color,
+            $key: shadow,
+        ),
+    table: 0 0 0 0.00625rem
+        map-get(
+            $map: map-get($color, border),
+            $key: table,
+        ),
+    focus: 0 0 0 0.3rem
+        map-get(
+            $map: map-get($color, opacity),
+            $key: primary,
+        ),
+);
+
+$weight: (
+    normal: 400,
+    bold: 500,
+);
+$height: (
+    line: 0.125rem,
+    action: 2.75rem,
+    icon: 1.25rem,
+);
+@mixin respond($device) {
+    $value: map.get($breakpoints, $device);
+
+    @if $value != null {
+        @media (min-width: $value) {
+            @content;
+        }
+    } @else {
+        @warn "⚠️ 沒有定義 '#{$device}' 的斷點。";
+    }
+}
+
+@mixin font($el) {
+    @if $el == text {
+        font-size: 1.125rem;
+        color: map-get($map: map-get($color, font), $key: text);
+    }
+    @if $el == title {
+        font-size: 1.125rem;
+        font-weight: map-get($map: $weight, $key: bold);
+    }
+    @if $el == subtext {
+        font-size: 1rem;
+        color: map-get($map: map-get($color, font), $key: muted);
+    }
+}
+
+@mixin interaction($el) {
+    @if $el == btn {
+        &:focus,
+        &:active {
+            box-shadow: map-get($map: $shadow, $key: focus);
+        }
+    }
+    @if $el == block {
+        transition: map-get($map: $transition, $key: default);
+        &:hover {
+            box-shadow: map-get($map: $shadow, $key: block);
+        }
+    }
+}
+
+@mixin scrollbar($style) {
+    @if $style == hidden {
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}
+
+/*css3*/
+@mixin keyframes($name) {
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+    @-ms-keyframes #{$name} {
+        @content;
+    }
+    @keyframes #{$name} {
+        @content;
+    }
+}
+@mixin transform($transforms) {
+    -moz-transform: $transforms;
+    -ms-transform: $transforms;
+    -o-transform: $transforms;
+    -webkit-transform: $transforms;
+    transform: $transforms;
+}
+@mixin scale($scale) {
+    @include transform(scale($scale));
+}
+@mixin rotate($rotate) {
+    @include transform(rotate($rotate));
+}
+@mixin skew($skew) {
+    @include transform(skew($skew));
+}
+@mixin translate($translateX, $translateY) {
+    @include transform(translate($translateX, $translateY));
+}
+@mixin transform-origin($origin) {
+    -moz-transform-origin: $origin;
+    -ms-transform-origin: $origin;
+    -o-transform-origin: $origin;
+    -webkit-transform-origin: $origin;
+    transform-origin: $origin;
+}
+@mixin transition($transition) {
+    transition: $transition;
+    -moz-transition: $transition;
+    -o-transition: $transition;
+    -ms-transition: $transition;
+    -webkit-transition: $transition;
+}
+@mixin bg_change($sec) {
+    @include transition(all $sec);
+}
+@mixin alpha($alpha: 1, $ie_alpha: 100) {
+    opacity: $alpha;
+    -moz-opacity: $alpha;
+    filter: alpha(opacity=$ie_alpha);
+}
+
+@mixin rwd($width) {
+    @media only screen and (max-width: $width) {
+        @content;
+    }
+}
+
+@mixin category() {
+    $col-red: #e29292;
+    $col-yel: #d5b943;
+    $col-blue: #61b8bf;
+    $col-green: #529a81;
+    @media screen {
+        &[data-color="all"] {
+            background: $col-green !important;
+            border: 1px solid $col-green !important;
+            color: #fff !important;
+        }
+        &[data-color="1"] {
+            background: $col-red !important;
+            border: 1px solid $col-red !important;
+        }
+        &[data-color="2"] {
+            background: #d5b943 !important;
+            border: 1px solid $col-yel !important;
+        }
+        &[data-color="0"] {
+            background: #61b8bf !important;
+            border: 1px solid $col-blue !important;
+        }
+    }
+}

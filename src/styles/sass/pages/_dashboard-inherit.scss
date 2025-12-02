@@ -1,0 +1,712 @@
+@use "../base/mixin" as *;
+
+.dashboard-inherit {
+    h2,
+    .h2 {
+        font-size: 60px;
+    }
+    h3,
+    .h3 {
+        font-size: 35px;
+    }
+    h4,
+    .h4 {
+        font-size: 28px;
+    }
+    h5,
+    .h5 {
+        font-size: 18px;
+    }
+    .marb_10 {
+        margin-bottom: 10px;
+    }
+    .marb_20 {
+        margin-bottom: 20px;
+    }
+    .marb_30 {
+        margin-bottom: 30px;
+    }
+    .marb_40 {
+        margin-bottom: 40px;
+    }
+    .marb_50 {
+        margin-bottom: 50px;
+    }
+    .marb_60 {
+        margin-bottom: 60px;
+    }
+    .marb_80 {
+        margin-bottom: 80px;
+    }
+    .marb_100 {
+        margin-bottom: 100px;
+    }
+    .marr_20 {
+        margin-right: 20px;
+    }
+    .marb_m_0 {
+        @media #{$mobile} {
+            margin-bottom: 0px;
+        }
+    }
+    .m_marb_20 {
+        @media #{$mobile} {
+            margin-bottom: 20px;
+        }
+    }
+    .m_marb_50 {
+        @media #{$mobile} {
+            margin-bottom: 50px;
+        }
+    }
+    .ul {
+        list-style: none;
+    }
+    .lileft {
+        li {
+            float: left;
+        }
+    }
+    .bold {
+        font-weight: bold;
+    }
+    .text_line {
+        text-decoration: underline;
+    }
+    .align_center {
+        text-align: center;
+    }
+    .align_left {
+        text-align: left;
+    }
+    .align_right {
+        text-align: right;
+    }
+    .m_align_center {
+        @media #{$mobile} {
+            text-align: center;
+        }
+    }
+    .m_align_left {
+        @media #{$mobile} {
+            text-align: left;
+        }
+    }
+    .m_align_right {
+        @media #{$mobile} {
+            text-align: right;
+        }
+    }
+    .img_link {
+        // @extend %inline_item;
+        font-size: 0;
+        letter-spacing: 0;
+        line-height: 0;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        img,
+        > .show_box {
+            max-width: 100%;
+            max-height: 100%;
+            // @extend %inline-block;
+            display: inline-block;
+            *display: inline;
+            *zoom: 1;
+            vertical-align: middle;
+        }
+        .span {
+            // @extend %inline-block;
+            display: inline-block;
+            *display: inline;
+            *zoom: 1;
+            width: 0px;
+            height: 100%;
+            vertical-align: middle;
+        }
+    }
+    .row {
+        margin-left: -10px;
+        margin-right: -10px;
+    }
+    .col-1 {
+        // @extend %row_padd;
+        padding-right: 10px;
+        padding-left: 10px;
+        width: calc($grid/12 * 1);
+    }
+    .col-2 {
+        // @extend %row_padd;
+        padding-right: 10px;
+        padding-left: 10px;
+        width: calc($grid/12 * 2);
+    }
+    .col-3 {
+        // @extend %row_padd;
+        padding-right: 10px;
+        padding-left: 10px;
+        width: calc($grid/12 * 3);
+    }
+    .col-4 {
+        // @extend %row_padd;
+        padding-right: 10px;
+        padding-left: 10px;
+        width: calc($grid/12 * 4);
+    }
+    .col-5 {
+        // @extend %row_padd;
+        padding-right: 10px;
+        padding-left: 10px;
+        width: calc($grid/12 * 5);
+    }
+    .col-6 {
+        // @extend %row_padd;
+        padding-right: 10px;
+        padding-left: 10px;
+        width: calc($grid/12 * 6);
+    }
+    .col-7 {
+        // @extend %row_padd;
+        padding-right: 10px;
+        padding-left: 10px;
+        width: calc($grid/12 * 7);
+    }
+    .col-8 {
+        // @extend %row_padd;
+        padding-right: 10px;
+        padding-left: 10px;
+        width: calc($grid/12 * 8);
+    }
+    .col-9 {
+        // @extend %row_padd;
+        padding-right: 10px;
+        padding-left: 10px;
+        width: calc($grid/12 * 9);
+    }
+    .col-10 {
+        // @extend %row_padd;
+        padding-right: 10px;
+        padding-left: 10px;
+        width: calc($grid/12 * 10);
+    }
+    .col-11 {
+        // @extend %row_padd;
+        padding-right: 10px;
+        padding-left: 10px;
+        width: calc($grid/12 * 11);
+    }
+    .col-12 {
+        // @extend %row_padd;
+        padding-right: 10px;
+        padding-left: 10px;
+        width: calc($grid/12 * 12);
+    }
+    @media #{$pad} {
+        .row-m {
+            margin-left: -10px;
+            margin-right: -10px;
+        }
+        .col-m-1 {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: calc($grid/12 * 1);
+        }
+        .col-m-2 {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: calc($grid/12 * 2);
+        }
+        .col-m-3 {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: calc($grid/12 * 3);
+        }
+        .col-m-4 {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: calc($grid/12 * 4);
+        }
+        .col-m-5 {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: calc($grid/12 * 5);
+        }
+        .col-m-6 {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: calc($grid/12 * 6);
+        }
+        .col-m-7 {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: calc($grid/12 * 7);
+        }
+        .col-m-8 {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: calc($grid/12 * 8);
+        }
+        .col-m-9 {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: calc($grid/12 * 9);
+        }
+        .col-m-10 {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: calc($grid/12 * 10);
+        }
+        .col-m-11 {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: calc($grid/12 * 11);
+        }
+        .col-m-12 {
+            padding-left: 10px;
+            padding-right: 10px;
+            width: calc($grid/12 * 12);
+        }
+    }
+    @media #{$mobile} {
+        .row-s {
+            margin-left: -5px;
+            margin-right: -5px;
+        }
+        .col-s-1 {
+            padding-left: 5px;
+            padding-right: 5px;
+            width: calc($grid/12 * 1);
+        }
+        .col-s-2 {
+            padding-left: 5px;
+            padding-right: 5px;
+            width: calc($grid/12 * 2);
+        }
+        .col-s-3 {
+            padding-left: 5px;
+            padding-right: 5px;
+            width: calc($grid/12 * 3);
+        }
+        .col-s-4 {
+            padding-left: 5px;
+            padding-right: 5px;
+            width: calc($grid/12 * 4);
+        }
+        .col-s-5 {
+            padding-left: 5px;
+            padding-right: 5px;
+            width: calc($grid/12 * 5);
+        }
+        .col-s-6 {
+            padding-left: 5px;
+            padding-right: 5px;
+            width: calc($grid/12 * 6);
+        }
+        .col-s-7 {
+            padding-left: 5px;
+            padding-right: 5px;
+            width: calc($grid/12 * 7);
+        }
+        .col-s-8 {
+            padding-left: 5px;
+            padding-right: 5px;
+            width: calc($grid/12 * 8);
+        }
+        .col-s-9 {
+            padding-left: 5px;
+            padding-right: 5px;
+            width: calc($grid/12 * 9);
+        }
+        .col-s-10 {
+            padding-left: 5px;
+            padding-right: 5px;
+            width: calc($grid/12 * 10);
+        }
+        .col-s-11 {
+            padding-left: 5px;
+            padding-right: 5px;
+            width: calc($grid/12 * 11);
+        }
+        .col-s-12 {
+            padding-left: 5px;
+            padding-right: 5px;
+            width: calc($grid/12 * 12);
+        }
+    }
+    .main {
+        max-width: $main;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 10px;
+        padding-right: 10px;
+
+        @media #{$pad} {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        @media #{$mobile} {
+            padding: 0px 15px;
+        }
+    }
+    .ovh {
+        overflow: hidden;
+    }
+
+    .e {
+        &-link {
+            color: $col-brown1;
+
+            display: flex;
+            align-items: center;
+            &:hover {
+                color: $col-brown1;
+                .e-icon {
+                    fill: $col-brown1;
+                }
+            }
+            &--icon {
+                &:hover {
+                    .e-icon {
+                        path {
+                            fill: $col-brown1;
+                        }
+                    }
+                }
+            }
+            &--light {
+                color: map-get(
+                    $map: map-get($color, font),
+                    $key: light
+                ) !important;
+            }
+        }
+        &-icon {
+            fill: $col-brown1;
+            &--start {
+                margin-right: 0.25rem;
+            }
+            &--light {
+                fill: map-get($map: $color, $key: light);
+            }
+        }
+        &-btn {
+            padding: map-get($map: $padding, $key: btn);
+
+            border-radius: map-get($map: $radius, $key: btn);
+
+            @include font(text);
+
+            display: flex;
+            align-items: center;
+
+            transition: map-get($map: $transition, $key: default);
+            &:hover {
+                background: $col-brown1;
+                color: map-get($map: $color, $key: light);
+            }
+            @include interaction(btn);
+            &--icon {
+                width: map-get($map: $height, $key: action);
+                min-width: map-get($map: $height, $key: action);
+                height: map-get($map: $height, $key: action);
+                padding: map-get($map: $padding, $key: icon);
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            &--primary {
+                background: $col-brown1;
+                color: map-get($map: $color, $key: light);
+            }
+            &--muted {
+                background: map-get($map: $color, $key: muted);
+                color: map-get($map: map-get($color, font), $key: text);
+            }
+            &--outline {
+                background: map-get($map: $color, $key: light);
+                border: 0.0625rem solid #776549;
+                color: #776549;
+            }
+        }
+    }
+
+    .u {
+        $height: calc(100vh - 9rem);
+        &-page {
+            padding: 2rem 0;
+            min-height: $height;
+        }
+        &-container {
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+            min-height: $height;
+        }
+        &-main {
+            height: 100%;
+            padding: map-get($map: $padding, $key: main);
+            background: map-get($map: map-get($color, bg), $key: muted);
+            border-radius: map-get($map: $radius, $key: main);
+        }
+    }
+
+    .c-btns {
+        display: flex;
+        align-items: center;
+        &__btn {
+            &:first-of-type {
+                margin-right: map-get($map: $margin, $key: text);
+            }
+        }
+    }
+
+    .c-title {
+        margin-bottom: map-get($map: $margin, $key: item);
+        position: relative;
+        padding-left: 1rem;
+        &__text {
+            color: map-get($map: $color, $key: primary);
+            font-size: 2rem;
+            font-weight: 500;
+        }
+        &__circle {
+            position: absolute;
+            top: -0.25rem;
+            left: -0.25rem;
+        }
+    }
+
+    .c-table {
+        $_: &;
+        $padding__section: map-get(
+            $map: $padding,
+            $key: section,
+        );
+        overflow-x: auto;
+        &__container {
+            width: 100%;
+
+            background: map-get($map: $color, $key: light);
+            box-shadow: map-get($map: $shadow, $key: table);
+            border-radius: map-get($map: $radius, $key: action);
+        }
+        &__td {
+            padding: $padding__section;
+            min-width: 5rem;
+            line-height: 150%;
+            @include font(text);
+            &--text {
+                min-width: 20rem;
+            }
+        }
+        &__tr {
+            border-bottom: 0.0625rem solid
+                map-get($map: map-get($color, border), $key: table);
+            &:not(#{$_}__tr--head) {
+                &:hover {
+                    box-shadow: map-get($map: $shadow, $key: block);
+                }
+                &:last-of-type {
+                    border: none;
+                    border-radius: 0 0 map-get($map: $radius, $key: action)
+                        map-get($map: $radius, $key: action);
+                }
+            }
+        }
+        &__th {
+            padding: $padding__section;
+
+            border-bottom: 0.0625rem solid
+                map-get($map: map-get($color, border), $key: table);
+            background: $col-brown1;
+            color: #fff;
+            @include font(title);
+            &:first-of-type {
+                border-radius: map-get($map: $radius, $key: action) 0 0 0;
+            }
+            &:last-of-type {
+                border-radius: 0 map-get($map: $radius, $key: action) 0 0;
+            }
+        }
+    }
+
+    .c-form {
+        $margin__set: map-get(
+            $map: $margin,
+            $key: item,
+        );
+        &__set {
+            width: 100%;
+            margin-bottom: $margin__set;
+
+            display: flex;
+            flex-direction: column;
+        }
+        &__label {
+            margin-bottom: map-get($map: $margin, $key: text);
+            @include font(text);
+        }
+        &__input {
+            width: 100%;
+            padding: map-get($map: $padding, $key: input);
+
+            border-radius: map-get($map: $radius, $key: input);
+            border: map-get($map: $border, $key: input);
+
+            @include font(text);
+        }
+        &__hint {
+            color: map-get($map: $color, $key: error);
+            font-size: 0.875rem;
+        }
+        &__img {
+            width: 100%;
+            padding: map-get($map: $padding, $key: input);
+            margin-bottom: $margin__set;
+
+            background: map-get($map: $color, $key: light);
+            border-radius: map-get($map: $radius, $key: input);
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            @include interaction(block);
+
+            &::last-of-type {
+                margin-bottom: 0;
+            }
+        }
+        &__thumbnail {
+            height: 6rem;
+            aspect-ratio: 4 / 3;
+            margin-right: 1rem;
+
+            border-radius: map-get($map: $radius, $key: block);
+            background: map-get($map: $color, $key: light);
+        }
+        &__text {
+            @include font(subtext);
+            &--title {
+                @include font(title);
+                color: map-get($map: $color, $key: primary);
+            }
+            &--overflow {
+                overflow-x: auto;
+                margin-right: map-get($map: $margin, $key: icon);
+                @include scrollbar(hidden);
+            }
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+        }
+        &__file {
+            width: 100%;
+            height: 5rem;
+
+            border: map-get($map: $height, $key: line) dashed
+                map-get($map: map-get($color, border), $key: muted);
+            border-radius: map-get($map: $radius, $key: block);
+            background: map-get($map: $color, $key: light);
+
+            @include font(subtext);
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        &__list {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: map-get($map: map-get($color, bg), $key: muted);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        &__item {
+            padding: map-get($map: $padding, $key: input);
+            margin-bottom: $margin__set;
+
+            background: map-get($map: $color, $key: light);
+            border-radius: map-get($map: $radius, $key: input);
+            @include interaction(block);
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &::last-of-type {
+                margin-bottom: 0;
+            }
+        }
+        &__checkbox-set {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .c-checkbox {
+        $color__input: map-get(
+            $map: $color,
+            $key: primary,
+        );
+        margin-right: map-get($map: $margin, $key: item);
+        &__input {
+            width: map-get($map: $height, $key: icon);
+            height: map-get($map: $height, $key: icon);
+
+            border: map-get($map: $border, $key: input);
+            border-radius: map-get($map: $radius, $key: input);
+            &:focus {
+                background-color: map-get($map: $color, $key: light);
+                border-color: $color__input;
+                box-shadow: map-get($map: $shadow, $key: focus);
+            }
+            &:checked {
+                background-color: $color__input;
+                border-color: $color__input;
+                box-shadow: map-get($map: $shadow, $key: focus);
+            }
+        }
+        &__label {
+            @include font(text);
+            margin-right: map-get($map: $margin, $key: text);
+        }
+        &:last-of-type {
+            margin-right: 0;
+        }
+    }
+
+    .c-tabs {
+        display: flex;
+        flex-direction: column;
+        &__btn {
+            width: 100%;
+            padding: map-get($map: $padding, $key: action);
+            margin-bottom: map-get($map: $margin, $key: item);
+
+            background: map-get($map: map-get($color, gray), $key: 6);
+            border-radius: map-get($map: $radius, $key: action);
+
+            @include font(text);
+            color: map-get($map: map-get($color, font), $key: text);
+
+            display: flex;
+            align-items: center;
+
+            transition: map-get($map: $transition, $key: default);
+            &:hover {
+                background: $col-brown1;
+                color: #fff;
+                @include interaction(btn);
+            }
+            &.active {
+                background: $col-brown1;
+                color: #fff;
+            }
+        }
+    }
+}

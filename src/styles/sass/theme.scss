@@ -1,0 +1,11 @@
+@use "base/reset";
+@use "base/style";
+@use "base/animation";
+@use "base/cont";
+// @use "base/dashboard";
+@use "pages/index";
+@use "pages/map";
+@use "pages/inherit";
+@use "pages/event";
+@use "pages/dashboard-inherit";
+@import "bootstrap.min.css";

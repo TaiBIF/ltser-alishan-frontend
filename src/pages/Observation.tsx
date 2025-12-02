@@ -1,0 +1,142 @@
+import { useRef, useState, useMemo, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+
+// types
+import type { AsideItemType } from "../types/item";
+
+// data
+import {
+    ecologyAsideItemList,
+    environmentAsideItemList,
+} from "../data/asideItem";
+
+// components
+import Banner from "../components/Banner";
+import Breadcrumb from "../components/Breadcrumb";
+import AsideItem from "../components/AsideItem";
+import ObservationItem from "../components/ObservationItem";
+
+// hooks
+import { useBreadcrumb } from "../hooks/useBreadcrumb";
+
+// animation
+import { gsapSlideToggle } from "../utils/animation";
+
+const Observation = () => {
+    const { path, item } = useParams<{ path: string; item?: string }>();
+    const navigate = useNavigate();
+    const [active, setActive] = useState<boolean>(false);
+    const targetRef = useRef<HTMLUListElement>(null);
+
+    const { node, trail } = useBreadcrumb();
+
+    const asideLists = useMemo<Record<string, AsideItemType[]>>(
+        () => ({
+            ecology: ecologyAsideItemList(),
+            environment: environmentAsideItemList(),
+            default: ecologyAsideItemList(),
+        }),
+        []
+    );
+
+    const allAside = useMemo<AsideItemType[]>(() => {
+        return (path && asideLists[path]) || asideLists.default;
+    }, [path, asideLists]);
+
+    const currentChild = useMemo(() => {
+        if (!item) return null;
+        for (const group of allAside ?? []) {
+            const hit = group.list?.find((child) => child.key === item);
+            if (hit) return hit;
+        }
+        return null;
+    }, [item, allAside]);
+
+    const currentId = currentChild?.id ?? null; // 內部用這個 id
+
+    const handleMobileClick = () => {
+        setActive(!active);
+    };
+
+    // 沒帶 itemKey 時導到第一個子項的 key
+    useEffect(() => {
+        if (!allAside?.length) return;
+        if (item) return;
+
+        const firstChild = allAside[0]?.list?.[0];
+        if (firstChild) {
+            navigate(`/observation/${path}/${firstChild.key}`, {
+                replace: true,
+            });
+        }
+    }, [allAside, item, path, navigate]);
+
+    useEffect(() => {
+        const target = targetRef.current;
+        if (!target) return;
+        target.style.display = "block";
+        gsapSlideToggle("auto", target, active);
+    }, [active]);
+
+    return (
+        <div className="inherit-page">
+            {node && (
+                <Banner
+                    title={node.title_zh}
+                    en={node.title_en}
+                    bgImg={node.bg_img}
+                />
+            )}
+            <Breadcrumb trail={trail} />
+
+            <div className="contentbox">
+                <div className="main-box">
+                    <div className="observation-box gray-bg">
+                        {/* 左側目錄 */}
+                        <div
+                            className="left-mainmenu"
+                            style={{ overflow: "visible" }}
+                        >
+                            <div className="btn-mb" onClick={handleMobileClick}>
+                                <p>觀測項目選擇</p>
+                            </div>
+
+                            <ul
+                                className="level-1 c-aside u-slide-toggle"
+                                ref={targetRef}
+                            >
+                                {allAside &&
+                                    allAside.map((aside, index) => {
+                                        return (
+                                            <AsideItem
+                                                key={aside.id}
+                                                item={aside}
+                                                currentItemKey={item ?? ""}
+                                                onSelect={(child: any) => {
+                                                    // 1) 更新網址顯示 key
+                                                    navigate(
+                                                        `/observation/${path}/${child.key}`
+                                                    );
+                                                }}
+                                                defaultOpen={index === 0}
+                                            />
+                                        );
+                                    })}
+                            </ul>
+                        </div>
+
+                        {/* 右側內容 */}
+                        {currentId && (
+                            <ObservationItem
+                                allItem={allAside}
+                                currentItem={currentId}
+                            />
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Observation;

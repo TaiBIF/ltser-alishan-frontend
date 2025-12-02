@@ -1,0 +1,347 @@
+@use "../base/mixin" as *;
+
+.event-filter-box {
+    width: 100%;
+    background: #fff;
+    border-radius: 30px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 50px;
+    @media #{$pad} {
+        padding: 20px;
+        border-radius: 15px;
+    }
+    @media #{$mobile} {
+        padding: 15px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+    }
+    .title {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 10px;
+        h2 {
+            color: #333;
+            font-size: 18px;
+        }
+        .line {
+            width: 20px;
+            height: 1px;
+            background: $col-brown1;
+        }
+    }
+    .top-select-item {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        @media #{$pad} {
+            flex-direction: column;
+        }
+        .item-set {
+            width: 100%;
+        }
+        .input-item {
+            position: relative;
+            width: 100%;
+            input,
+            select {
+                width: 100%;
+                height: 50px;
+                border-radius: 5px;
+                border: 1px solid #ddd;
+                padding: 0px 15px;
+                font-size: 16px;
+            }
+            select {
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                background: url(../image/ardown.svg) right 15px top 50%
+                    no-repeat;
+                background-color: #fff;
+            }
+            .react-datepicker-wrapper {
+                width: 100% !important;
+                z-index: 999 !important;
+            }
+        }
+        .flex-box {
+            gap: 20px;
+            position: relative;
+            @media #{$mobile} {
+                gap: 10px;
+                flex-direction: column;
+            }
+        }
+        .w_50 {
+            flex: 1 1 480px;
+            width: 50%;
+            @media #{$pad} {
+                flex: 1 1 100%;
+                width: 100%;
+            }
+        }
+        .w_25 {
+            flex: 1 1 240px;
+            width: 25%;
+            @media #{$pad} {
+                flex: 1 1 100%;
+                width: 100%;
+            }
+        }
+        .item-set-date {
+            .between-date-icon {
+                position: absolute;
+                color: $col-brown1;
+                left: 50%;
+                line-height: 50px;
+                margin-left: -5px;
+                @media #{$mobile} {
+                    display: none;
+                }
+            }
+            .date-btn {
+                cursor: pointer;
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                margin-top: -12px;
+                svg {
+                    display: block;
+                }
+            }
+        }
+    }
+    .other-filter-item {
+        .checkbox-ul {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            li {
+                list-style: none;
+                display: flex;
+                gap: 5px;
+                p {
+                    font-size: 16px;
+                }
+                input[type="checkbox"] {
+                    appearance: none; /* 移除瀏覽器預設樣式 */
+                    width: 20px;
+                    height: 20px;
+                    flex: 0 0 auto;
+                    display: block;
+                    border: 1px solid #cccccc;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    position: relative;
+                }
+                input[type="checkbox"]:checked {
+                    background-color: $col-brown1;
+                }
+                input[type="checkbox"]:checked::after {
+                    content: "";
+                    position: absolute;
+                    left: 5px;
+                    top: 1px;
+                    width: 5px;
+                    height: 10px;
+                    border: solid white;
+                    border-width: 0 2px 2px 0;
+                    transform: rotate(45deg);
+                }
+            }
+        }
+    }
+}
+.btn-area {
+    display: flex;
+    gap: 10px;
+    button {
+        width: 100%;
+        max-width: 180px;
+        font-size: 20px;
+        border-radius: 30px;
+        height: 60px;
+        background: #fff;
+        @include bg_change(0.3s);
+        @media #{$pad} {
+            height: 50px;
+        }
+    }
+    .og-btn {
+        border: 2px solid $col-brown1;
+        color: $col-brown1;
+        @media #{$pc} {
+            &:hover {
+                background: $col-brown1;
+                color: #fff;
+                @include bg_change(0.3s);
+            }
+        }
+    }
+    .g-btn {
+        background: $col-brown1;
+        color: #fff;
+        @media #{$pc} {
+            &:hover {
+                background: $col-brown2;
+                color: #fff;
+                @include bg_change(0.3s);
+            }
+        }
+    }
+}
+
+.event-result-box {
+    margin-bottom: 60px;
+    overflow: hidden;
+    border-radius: 30px;
+    @media #{$pad} {
+        width: 100%;
+        border-radius: 15px;
+        overflow: auto;
+    }
+    table {
+        width: 100%;
+
+        @media #{$pad} {
+            width: 1200px;
+        }
+        @media #{$mobile} {
+            width: 1000px;
+        }
+        td {
+            padding: 15px 20px;
+            background: #fff;
+            width: 20%;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+            @include bg_change(0.3s);
+            @media #{$mobile} {
+                padding: 10px 12px;
+            }
+            &.w_15 {
+                width: 15%;
+            }
+            &.w_20 {
+                width: 20%;
+            }
+            &.w_30 {
+                width: 30%;
+            }
+            &:nth-child(4) {
+                text-align: left;
+            }
+            .img-sbox {
+                width: 100px;
+                aspect-ratio: 4 / 3;
+                margin: 0 auto;
+                cursor: pointer;
+                overflow: hidden;
+                border-radius: 10px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                    object-fit: cover;
+                }
+            }
+        }
+        thead {
+            tr:first-child {
+                td {
+                    background: $col-brown1;
+                    color: #fff;
+                    font-weight: bold;
+                    border: 0;
+                }
+            }
+        }
+        tbody {
+            tr:last-child {
+                td {
+                    border: 0;
+                }
+            }
+            tr {
+                @media #{$pc} {
+                    &:hover {
+                        td {
+                            background: #f7f7f7;
+                            @include bg_change(0.3s);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+.pic-pop {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    .flex-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+        width: 100%;
+        height: 100%;
+        .imgbox {
+            position: relative;
+            max-width: 1000px;
+            max-height: 660px;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            @media #{$pc_s} {
+                height: initial;
+            }
+            .xx {
+                position: absolute;
+                top: 0;
+                right: -60px;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                display: flex;
+                border: 2px solid #fff;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                @include bg_change(0.3s);
+                @media #{$pc} {
+                    &:hover {
+                        @include bg_change(0.3s);
+                        background: #fff;
+                        svg {
+                            path {
+                                fill: $col-brown1;
+                            }
+                        }
+                    }
+                }
+                @media #{$pc_s} {
+                    right: 0;
+                    top: -50px;
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+            img {
+                display: block;
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+    }
+}

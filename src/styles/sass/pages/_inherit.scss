@@ -1,0 +1,173 @@
+@use "../base/mixin" as *;
+
+.inherit-page {
+    .bn-area {
+        width: 100%;
+        padding-bottom: calc(350 / 1920 * 100%);
+        background: $col-brown1;
+        position: relative;
+        overflow: hidden;
+        @media #{$pad} {
+            padding-bottom: calc(450 / 1920 * 100%);
+        }
+        @media #{$mobile} {
+            padding-bottom: 0;
+            height: 180px;
+        }
+        .bntitleboxarea {
+            z-index: 5;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            @media #{$pad} {
+                padding: 0px 20px;
+            }
+            .main-box {
+                display: flex;
+                align-items: center;
+                height: 100%;
+
+                margin: 0 auto;
+                max-width: 1640px;
+                padding: 0 20px;
+                @media #{$pc} {
+                    max-width: 1240px;
+                }
+            }
+            .bntitle {
+                @include alpha(0);
+                animation: alphleft30 0.5s 0.2s linear forwards;
+                h2 {
+                    color: #fff;
+                    font-size: calc(90 / 1920 * 100vw);
+                    font-family: "EB Garamond", serif;
+                    position: relative;
+                    text-transform: uppercase;
+                    line-height: calc(90 / 1920 * 100vw);
+                    @media #{$pad} {
+                        font-size: calc(45 / 768 * 100vw);
+                        line-height: calc(45 / 768 * 100vw);
+                    }
+                    @media #{$mobile} {
+                        font-size: calc(40 / 375 * 100vw);
+                        line-height: calc(40 / 375 * 100vw);
+                    }
+                    svg {
+                        position: absolute;
+                        top: -15px;
+                        left: -35px;
+                        @media #{$mobile} {
+                            width: 15px;
+                            height: auto;
+                            left: -20px;
+                        }
+                    }
+                }
+                h3 {
+                    color: #fff;
+                    font-weight: normal;
+                    font-size: calc(30 / 1920 * 100vw);
+                    margin-top: -0.2vw;
+                    @media #{$pad} {
+                        font-size: calc(22 / 768 * 100vw);
+                    }
+                    @media #{$mobile} {
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+        .mask-area {
+            z-index: 2;
+            position: absolute;
+            height: 100%;
+            img {
+                height: 100%;
+                @media #{$mobile} {
+                    width: 80%;
+                }
+            }
+        }
+        .pic-box {
+            position: absolute;
+            height: 100%;
+            right: 0;
+            width: 100%;
+            background: url("../image/newsbn.jpg");
+            background-size: auto 100%;
+            background-position: right top;
+            background-repeat: no-repeat;
+            @media #{$mobile} {
+                background-size: cover;
+            }
+        }
+    }
+
+    .mask-brown {
+        pointer-events: none;
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+
+        /* 可調參數 */
+        --solid-stop: 30%; /* 左側純色到這裡為止 */
+        --fade-end: 85%; /* 在這個位置完全透明 */
+
+        background: linear-gradient(
+            to right,
+            rgba(101, 77, 38, 1) 0%,
+            rgba(101, 77, 38, 1) var(--solid-stop),
+            rgba(101, 77, 38, 0) var(--fade-end),
+            rgba(101, 77, 38, 0) 100%
+        );
+    }
+}
+
+.c-aside {
+    $_: &;
+    @media only screen and (max-width: 999px) {
+        max-height: 60vh !important;
+        overflow: auto !important;
+    }
+    @media only screen and (min-width: 999px) {
+        height: auto !important;
+        display: block !important;
+    }
+    &__tab {
+        &.now {
+            border-radius: 20px;
+        }
+    }
+    &__list {
+        &:first-of-type {
+            #{$_}__item {
+                border-radius: 20px 20px 0 0;
+                @media only screen and (max-width: 999px) {
+                    border-radius: 0;
+                }
+            }
+        }
+        &:last-of-type {
+            #{$_}__item {
+                border-radius: 0 0 20px 20px;
+                @media only screen and (max-width: 999px) {
+                    border-radius: 0;
+                }
+                &.now {
+                    border-radius: 0;
+                }
+            }
+            #{$_}__menu {
+                box-shadow: none !important;
+            }
+        }
+        &:first-child:last-child {
+            #{$_}__item {
+                border-radius: 20px 20px 0 0;
+                @media only screen and (max-width: 999px) {
+                    border-radius: 0;
+                }
+            }
+        }
+    }
+}

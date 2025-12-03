@@ -49,7 +49,7 @@ const RegisterView = ({ setView }: RegisterViewProps) => {
                         const data = await res.json();
 
                         // 後端回欄位錯誤格式處理
-                        const backendErrors = {};
+                        let backendErrors: Record<string, string> = {};
                         for (const key in data)
                             backendErrors[key] = data[key].join
                                 ? data[key].join("、")

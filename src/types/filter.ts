@@ -6,6 +6,8 @@ export type FilterValue =
     | null
     | (string | number)[];
 
+export type FilterState<K extends string = string> = Record<K, FilterValue>;
+
 export type FilterFieldBase<K extends string = string> = {
     key: K; // 狀態用的鍵
     label: string; // 顯示標題

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // types
-import type { ecologicalEconomicsItemType } from "../types/item";
+import type { EcologicalEconomicsItemType } from "../types/item";
 
 // components
 import Banner from "../components/Banner";
@@ -15,9 +15,9 @@ const EcologicalEconomics = () => {
     // 找出符合 pathname 的項目 / 麵包屑
     const { node, trail } = useBreadcrumb();
 
-    const allInterview: ecologicalEconomicsItemType[] = [];
+    const allInterview: EcologicalEconomicsItemType[] = [];
     const [filteredInterview, setFilteredInterview] =
-        useState<ecologicalEconomicsItemType[]>(allInterview);
+        useState<EcologicalEconomicsItemType[]>(allInterview);
 
     return (
         <div className="inherit-page">

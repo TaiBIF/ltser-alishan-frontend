@@ -54,7 +54,7 @@ const SurveyMap = () => {
     const [iconPosition, setIconPosition] = useState<IconPositionItemType[]>(
         []
     );
-    const [filter, setFilter] = useState<FilterItemType[]>([]);
+    const [filter, setFilter] = useState<FilterItemType>({});
     const [yearOptions, setYearOptions] = useState<string[]>([]);
     const [itemOptions, setItemOptions] = useState<string[]>([]);
 
@@ -77,7 +77,7 @@ const SurveyMap = () => {
                 const url = `${API.map.position}?${params.toString()}`;
 
                 const res = await fetch(url, { signal });
-                const data = await res.json();
+                const data: IconPositionItemType[] = await res.json();
 
                 setIconPosition(data);
             } catch (err: any) {
@@ -98,7 +98,7 @@ const SurveyMap = () => {
                 const res = await fetch(API.map.filter, {
                     signal: controller.signal,
                 });
-                const data: FilterItemType[] = await res.json();
+                const data: FilterItemType = await res.json();
 
                 setFilter(data);
 
@@ -107,7 +107,7 @@ const SurveyMap = () => {
 
                 // 初始觀測項目（全部年份 union）
                 const allItems = Array.from(
-                    new Set(years.flatMap((y) => data[y]))
+                    new Set(years.flatMap((y) => data[y] ?? []))
                 );
                 setItemOptions(allItems);
             } catch (err: any) {
@@ -306,7 +306,7 @@ const SurveyMap = () => {
                                 zoom={11}
                                 scrollWheelZoom={false}
                                 zoomControl={false}
-                                style={{ height: "100%", width: "100%" }} // 自己調整高度
+                                style={{ height: "100%", width: "100%" }}
                             >
                                 <TileLayer
                                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'

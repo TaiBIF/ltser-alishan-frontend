@@ -1,18 +1,15 @@
 import { Formik, Form } from "formik";
+import type { Dispatch, SetStateAction } from "react";
 
 // types
-import type { ConvertedFieldItemType } from "../../types/item";
+import type { ConvertedFieldItemType, FilterItemType } from "../../types/item";
 
 // hooks
 import { useFieldRenderer } from "../../hooks/useObservation";
 
-type FilterValue = string | number | boolean | Date | null;
-
-type Filters = Record<string, FilterValue>;
-
 interface FieldFilterProps {
     fields: ConvertedFieldItemType[];
-    setFilters: React.Dispatch<React.SetStateAction<Record<string, Filters>>>;
+    setFilters: Dispatch<SetStateAction<Record<string, FilterItemType>>>;
     setCurrentPage: (value: number) => void;
 }
 

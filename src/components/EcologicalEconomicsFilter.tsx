@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 // types
-import type { FilterField } from "../types/filter";
+import type { FilterField, FilterState } from "../types/filter";
 import type {
     EcologicalEconomicsItemType,
-    EcologicalEconomicsFilterType,
+    // EcologicalEconomicsFilterType,
     EcologicalFilterKeys,
 } from "../types/item";
 
@@ -33,48 +33,48 @@ const fields: FilterField<EcologicalFilterKeys>[] = [
     },
 ];
 
-const initialFilter: EcologicalEconomicsFilterType = {
+const initialFilter: FilterState<EcologicalFilterKeys> = {
     content_keyword: "",
     start_date: null,
     end_date: null,
 };
 
-function filterFn(
-    item: EcologicalEconomicsItemType,
-    filter: EcologicalEconomicsFilterType
-): boolean {
-    // 關鍵字（string | null）
-    if (typeof filter.content_keyword === "string") {
-        const content = filter.content_keyword.trim();
-        if (content && !(item.content_keyword ?? "").includes(content)) {
-            return false;
-        }
-    }
+// function filterFn(
+//     item: EcologicalEconomicsItemType,
+//     filter: FilterState<EcologicalFilterKeys>
+// ): boolean {
+//     // 關鍵字（string | null）
+//     if (typeof filter.content_keyword === "string") {
+//         const content = String(filter.content_keyword).trim();
+//         if (content && !(item.content_keyword ?? "").includes(content)) {
+//             return false;
+//         }
+//     }
 
-    // 日期（Date | null）
-    if (item.date) {
-        const item_date = item.date.getTime();
-        if (
-            filter.start_date instanceof Date &&
-            item_date < filter.start_date.getTime()
-        )
-            return false;
-        if (
-            filter.end_date instanceof Date &&
-            item_date > filter.end_date.getTime()
-        )
-            return false;
-    }
+//     // 日期（Date | null）
+//     if (item.date) {
+//         const item_date = item.date.getTime();
+//         if (
+//             filter.start_date instanceof Date &&
+//             item_date < filter.start_date.getTime()
+//         )
+//             return false;
+//         if (
+//             filter.end_date instanceof Date &&
+//             item_date > filter.end_date.getTime()
+//         )
+//             return false;
+//     }
 
-    return true;
-}
+//     return true;
+// }
 
 const EcologicalEconomicsFilter = ({
     allEvent,
     onFiltered,
 }: EcologicalEconomicsFilterProps) => {
     const [filter, setFilter] =
-        useState<EcologicalEconomicsFilterType>(initialFilter);
+        useState<FilterState<EcologicalFilterKeys>>(initialFilter);
 
     const handleApply = (rows: EcologicalEconomicsItemType[]) =>
         onFiltered(rows);
@@ -91,8 +91,6 @@ const EcologicalEconomicsFilter = ({
             setFilter={setFilter}
             onApply={handleApply}
             onClear={handleClear}
-            items={allEvent}
-            filterFn={filterFn}
         />
     );
 };

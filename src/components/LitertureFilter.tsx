@@ -18,28 +18,12 @@ import { swalToast } from "../helpers/CustomSwal";
 interface LiteratureFilterProps {
     initialLiterature: LiteratureItemType[];
     onFiltered: (interview: LiteratureItemType[]) => void;
-    resultRef?: React.RefObject<HTMLDivElement>;
+    resultRef?: React.RefObject<HTMLDivElement | null>;
 }
-
-const fields: FilterField<LiteratureFilterKeys>[] = [
-    {
-        type: "date-range",
-        key: "date_range" as any,
-        label: "日期",
-        startKey: "start_date",
-        endKey: "end_date",
-    },
-    {
-        type: "text",
-        key: "content_keyword",
-        label: "關鍵字",
-        col: "half",
-        placeholder: "請輸入關鍵字",
-    },
-];
 
 const initialFilter: LiteratureFilterType = {
     content_keyword: "",
+    category: "",
     start_date: null,
     end_date: null,
 };
@@ -81,8 +65,11 @@ const LitertureFilter = ({
             params.append("types", joined);
         }
 
-        if (filter.content_keyword && filter.content_keyword.trim()) {
-            params.append("title__icontains", filter.content_keyword.trim());
+        if (filter.content_keyword && String(filter.content_keyword).trim()) {
+            params.append(
+                "title__icontains",
+                String(filter.content_keyword).trim()
+            );
         }
 
         const query = params.toString();

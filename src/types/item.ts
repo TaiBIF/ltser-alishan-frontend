@@ -1,4 +1,4 @@
-import type { FilterState, FilterValue } from "./filter";
+import type { FilterValue, FilterState } from "./filter";
 
 export type BreadcrumbType = {
     id: number | string;
@@ -174,7 +174,5 @@ export type LocationItemType = {
 };
 
 export type RowItemType = Record<string, unknown>;
-
-type FilterValue = string | number | boolean | Date | null;
 
 export type FilterItemType = Record<string, FilterValue>;

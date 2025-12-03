@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import type { FilterField, FilterValue } from "../types/filter";
@@ -14,7 +14,7 @@ export interface FilterPanelProps<TItem, K extends string = string> {
     fields: FilterField<K>[];
     filter: FilterState<K>;
     setFilter: Dispatch<SetStateAction<FilterState<K>>>;
-    onApply: () => void;
+    onApply: (rows: TItem[]) => void;
     onClear: () => void;
 }
 

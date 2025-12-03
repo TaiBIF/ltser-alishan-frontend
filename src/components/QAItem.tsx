@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 
 // types
-import type { QAItemType } from "../types/item";
+import type { QAType } from "../types/item";
 
 // animation
 import { gsapSlideToggle } from "../utils/animation";
 
-type QAItemProps = { data: QAItemType[] };
+type QAItemProps = { data: QAType[] };
 
 const QAItem = ({ data }: QAItemProps) => {
     const [active, setActive] = useState<boolean>(false);

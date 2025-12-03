@@ -18,12 +18,12 @@ interface ForgotViewProps {
     setView: Dispatch<SetStateAction<PopupView>>;
 }
 
-const ForgotView = ({ setIsLoginOpen, setView }: ForgotViewProps) => {
+const ForgotView = ({ setView }: ForgotViewProps) => {
     return (
         <Formik
             initialValues={{ email: "" }}
             validationSchema={ForgotViewSchema}
-            onSubmit={async (values, { setSubmitting, setErrors }) => {
+            onSubmit={async (values, { setSubmitting }) => {
                 try {
                     const res = await fetch("/api/password-reset/", {
                         method: "POST",

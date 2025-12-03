@@ -5,7 +5,7 @@ import { Navigation } from "swiper/modules";
 import { API } from "../../config/api";
 
 // types
-import type { NewsItemType, CategoryType } from "../types/item";
+import type { NewsItemType, CategoryType } from "../../types/item";
 
 const HomeNews = () => {
     const prevRef = useRef<HTMLDivElement | null>(null);
@@ -321,7 +321,7 @@ const HomeNews = () => {
                                 <Link to={`/news/${item.id}`}>
                                     <div className="imgbox">
                                         <img
-                                            src={item.cover_image[0]?.image}
+                                            src={item.cover_image?.[0]?.image}
                                             alt=""
                                         />
                                     </div>

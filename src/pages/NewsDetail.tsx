@@ -32,7 +32,7 @@ const NewsDetail = () => {
     });
 
     const [loading, setLoading] = useState<boolean>(false);
-    const [hasLoaded, setHasLoaded] = useState<boolean>(false);
+    // const [hasLoaded, setHasLoaded] = useState<boolean>(false);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -63,7 +63,7 @@ const NewsDetail = () => {
             } finally {
                 if (!signal.aborted) {
                     setLoading(false); // 結束載入
-                    setHasLoaded(true); // 已載入過一次
+                    // setHasLoaded(true); // 已載入過一次
                 }
             }
         };

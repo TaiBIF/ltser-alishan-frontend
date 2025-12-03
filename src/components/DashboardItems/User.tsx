@@ -1,7 +1,9 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 
 // components
 import FieldLayout from "./FieldLayout";
+
+import type { RelateTypes } from "../../types/dashboard";
 
 type FormValues = {
     email: string;

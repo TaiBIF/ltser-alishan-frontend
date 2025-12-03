@@ -2,10 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { Field, ErrorMessage, useFormikContext } from "formik";
 
-// components
-import FileImageItem from "./FileImageItem";
-import FileListItem from "./FileListIem";
-
 type TypeItem = {
     [key: string]: any;
     id?: number | string;

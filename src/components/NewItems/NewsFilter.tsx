@@ -18,7 +18,7 @@ import { swalToast } from "../../helpers/CustomSwal";
 interface NewsFilterProps {
     initialNews: NewsItemType[];
     onFiltered: (news: NewsItemType[]) => void;
-    resultRef?: React.RefObject<HTMLDivElement>;
+    resultRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 async function fetchCategories() {
@@ -63,8 +63,11 @@ const NewsFilter = ({
             params.append("types", joined);
         }
 
-        if (filter.content_keyword && filter.content_keyword.trim()) {
-            params.append("content__icontains", filter.content_keyword.trim());
+        if (filter.content_keyword && String(filter.content_keyword).trim()) {
+            params.append(
+                "content__icontains",
+                String(filter.content_keyword).trim()
+            );
         }
 
         const query = params.toString();

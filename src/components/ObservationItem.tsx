@@ -28,6 +28,8 @@ interface ObservationItemProps {
     currentItem: number;
 }
 
+type RowRecord = Record<string, unknown>;
+
 const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
     const [rows, setRows] = useState<RowItemType[]>([]);
     const [rowCount, setRowCount] = useState<number>(0);

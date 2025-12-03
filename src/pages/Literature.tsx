@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { API } from "../config/api";
 
 // types
-import type { LiteraturItemType } from "../types/item";
+import type { LiteratureItemType } from "../types/item";
 
 // components
 import Banner from "../components/Banner";
@@ -22,10 +22,10 @@ const Literature = () => {
     const { node, trail } = useBreadcrumb();
 
     const [initialLiterature, setInitialLiterature] = useState<
-        LiteraturItemType[]
+        LiteratureItemType[]
     >([]);
     const [filteredLiterature, setFilteredLiterature] = useState<
-        LiteraturItemType[]
+        LiteratureItemType[]
     >([]);
     const resultRef = useRef<HTMLDivElement | null>(null);
 
@@ -51,7 +51,7 @@ const Literature = () => {
                 }
 
                 const data = await response.json();
-                const results: LiteraturItemType[] = data.results ?? [];
+                const results: LiteratureItemType[] = data.results ?? [];
                 setInitialLiterature(results);
                 setFilteredLiterature(results);
 

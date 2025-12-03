@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { API } from "../../config/api";
 
 // types
-import type { FilterField } from "../../types/filter";
+import type { FilterField, FilterState } from "../../types/filter";
 import type {
     EventItemType,
-    CouEventFilterType,
+    // CouEventFilterType,
     CouEventFilterKeys,
 } from "../../types/item";
 
@@ -18,7 +18,7 @@ import { swalToast } from "../../helpers/CustomSwal";
 interface CoutEventFilterProps {
     initialEvent: EventItemType[];
     onFiltered: (event: EventItemType[]) => void;
-    resultRef?: React.RefObject<HTMLDivElement>;
+    resultRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 async function fetchCategories() {
@@ -31,7 +31,7 @@ async function fetchCategories() {
     }));
 }
 
-const initialFilter: CouEventFilterType = {
+const initialFilter: FilterState<CouEventFilterKeys> = {
     content_keyword: "",
     location_keyword: "",
     start_date: null,
@@ -46,16 +46,17 @@ const CoutEventFilter = ({
     onFiltered,
     resultRef,
 }: CoutEventFilterProps) => {
-    const [filter, setFilter] = useState<CouEventFilterType>(initialFilter);
+    const [filter, setFilter] =
+        useState<FilterState<CouEventFilterKeys>>(initialFilter);
     const [fields, setFields] = useState<FilterField<CouEventFilterKeys>[]>([]);
 
     const handleApply = async () => {
         const params = new URLSearchParams();
 
-        if (filter.location_keyword && filter.location_keyword.trim()) {
+        if (filter.location_keyword && String(filter.location_keyword).trim()) {
             params.append(
                 "location__icontains",
-                filter.location_keyword.trim()
+                String(filter.location_keyword).trim()
             );
         }
 
@@ -71,8 +72,11 @@ const CoutEventFilter = ({
             params.append("types", joined);
         }
 
-        if (filter.content_keyword && filter.content_keyword.trim()) {
-            params.append("content__icontains", filter.content_keyword.trim());
+        if (filter.content_keyword && String(filter.content_keyword).trim()) {
+            params.append(
+                "content__icontains",
+                String(filter.content_keyword).trim()
+            );
         }
 
         const query = params.toString();

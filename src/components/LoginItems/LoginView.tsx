@@ -220,7 +220,7 @@ const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
                                     type="submit"
                                     disabled={isSubmitting}
                                 >
-                                    {isSubmitting ? <Spinner /> : "登入"}
+                                    {isSubmitting ? "登入中" : "登入"}
                                 </button>
                                 <button
                                     className="logingoogle"

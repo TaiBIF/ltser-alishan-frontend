@@ -7,7 +7,7 @@ export const API = {
     auth: {
         login: `${API_BASE}/account/auth/token/`,
         googleLogin: "/api/auth/google-login/",
-        register: `${API_BASE}/account/auth/register/`,
+        register: `${API_BASE}/account/register/`,
         refresh: `${API_BASE}/account/auth/token/refresh/`,
     },
 

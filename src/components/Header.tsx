@@ -506,7 +506,9 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                         <div
                             className="loginbox"
                             onClick={() => {
-                                setIsLoginOpen(true);
+                                if (!isLoggedIn) {
+                                    setIsLoginOpen(true);
+                                }
                             }}
                         >
                             <div className="formb">

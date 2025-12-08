@@ -9,6 +9,7 @@ export const API = {
         login: `${API_BASE}/account/auth/token/`,
         googleLogin: `${API_BASE}/account/auth/google-login/`,
         refresh: `${API_BASE}/account/auth/token/refresh/`,
+        userMe: `${API_BASE}/account/auth/user/me/`,
     },
 
     // 關於

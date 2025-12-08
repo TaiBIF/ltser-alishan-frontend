@@ -555,7 +555,7 @@ header .logo .logo-txt span {
     color: #888;
     line-height: 16px;
     padding-left: 3px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 @media only screen and (max-width: 999px) {
     header .logo .logo-txt span {

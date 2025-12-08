@@ -57,10 +57,10 @@ const HomeBanner = () => {
                     <img className="mb" src="/kvbnm.jpg" alt="" />
                 </div>
                 <div className="kvtxt">
-                    <div className="kvtitle-en">LTSER INDIGENOUS</div>
+                    <div className="kvtitle-en">LTSER INDEGENOUS - Alishan</div>
                     <div className="kvtitle-cht">
                         <div className="line"></div>
-                        <h2>長期社會生態核心觀測站-原民站</h2>
+                        <h2>長期社會生態核心觀測站 阿里山站</h2>
                     </div>
                 </div>
             </div>

@@ -179,8 +179,8 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                 <a href="/" className="logo">
                     <img src="/logo.png" alt="長期社會生態核心觀測-原民站" />
                     <div className="logo-txt">
-                        <span>LTSER indigenous</span>
-                        <h1>長期社會生態核心觀測-阿里山站</h1>
+                        <span>LTSER INDEGENOUS - Alishan</span>
+                        <h1>長期社會生態核心觀測 阿里山站</h1>
                     </div>
                 </a>
                 <div

@@ -2059,14 +2059,16 @@
             }
             .flex-input {
                 display: flex;
+                flex-direction: column;
                 justify-content: space-between;
                 margin-bottom: 30px;
+                margin-top: 20px;
                 @media #{$mobile} {
                     flex-direction: column;
                     margin-bottom: 20px;
                 }
                 input {
-                    width: calc(50% - 10px);
+                    width: 100%;
                     border-radius: 10px;
                     border: 1px solid #ddd;
                     height: 50px;
@@ -2082,7 +2084,7 @@
             background: $col-brown1;
             color: #fff;
             height: 50px;
-            border-radius: 25px;
+            border-radius: 10px;
             width: 160px;
             display: block;
             margin: 0 auto;
@@ -2209,29 +2211,9 @@
         display: inline-block;
         position: relative;
         font-size: 35px;
-        color: #000;
+        color: $col-brown1;
         @media #{$mobile} {
             font-size: 30px;
-        }
-        .line1 {
-            width: 20px;
-            height: 3px;
-            border-radius: 3px;
-            background: $col-brown1;
-            position: absolute;
-            left: -30px;
-            top: 50%;
-            margin-top: -1px;
-        }
-        .line2 {
-            width: 20px;
-            height: 3px;
-            border-radius: 3px;
-            background: $col-yel;
-            position: absolute;
-            right: -30px;
-            top: 50%;
-            margin-top: -1px;
         }
     }
 }

@@ -23,6 +23,7 @@ import Observation from "./pages/Observation.tsx";
 import EcologicalEconomics from "./pages/EcologicalEconomics.tsx";
 import EcologicalCultrue from "./pages/EcologicalCultrue.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
+import ResetPsw from "./pages/ResetPsw.tsx";
 
 function App() {
     const [offset, setOffset] = useState(0);
@@ -78,6 +79,7 @@ function App() {
                         element={<Dashboard content={<User />} />}
                     />
                     <Route path="/news/:id" element={<NewsDetail />} />
+                    <Route path="/reset-password" element={<ResetPsw />} />
                 </Routes>
             </main>
             <Footer />

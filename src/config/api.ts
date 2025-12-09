@@ -6,6 +6,8 @@ export const API = {
     // 認證
     auth: {
         register: `${API_BASE}/account/register/`,
+        passReset: `${API_BASE}/account/password-reset/`,
+        passResetConfirm: `${API_BASE}/account/password-reset/confirm/`,
         login: `${API_BASE}/account/auth/token/`,
         googleLogin: `${API_BASE}/account/auth/google-login/`,
         refresh: `${API_BASE}/account/auth/token/refresh/`,

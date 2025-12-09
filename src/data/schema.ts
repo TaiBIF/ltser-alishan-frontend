@@ -31,3 +31,15 @@ export const ForgotViewSchema = Yup.object().shape({
         .email("*Email 格式不正確")
         .required("*請輸入 Email"),
 });
+
+export const ResetPswSchema = Yup.object().shape({
+    password: Yup.string()
+        .min(8, "*密碼至少 8 碼")
+        .matches(/[a-z]/, "*需含小寫字母")
+        .matches(/[A-Z]/, "*需含大寫字母")
+        .matches(/\d/, "*需含數字")
+        .required("*密碼不可為空"),
+    password2: Yup.string()
+        .oneOf([Yup.ref("password")], "*兩次密碼不一致")
+        .required("*請再次輸入密碼"),
+});

@@ -7,6 +7,8 @@ import { ForgotViewSchema } from "../../data/schema";
 // helpers
 import { swalToast } from "../../helpers/CustomSwal";
 
+import { API } from "../../config/api";
+
 type PopupView = "login" | "register" | "forgot";
 
 interface ForgotViewProps {
@@ -22,7 +24,7 @@ const ForgotView = ({ setView }: ForgotViewProps) => {
             validationSchema={ForgotViewSchema}
             onSubmit={async (values, { setSubmitting }) => {
                 try {
-                    const res = await fetch("/api/password-reset/", {
+                    const res = await fetch(API.auth.passReset, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ email: values.email.trim() }),
@@ -33,12 +35,6 @@ const ForgotView = ({ setView }: ForgotViewProps) => {
                         swalToast.fire({
                             icon: "success",
                             title: "如果帳號存在，我們已寄出重設密碼信件",
-                        });
-                        setView("login");
-                    } else {
-                        swalToast.fire({
-                            icon: "error",
-                            title: "找不到您的帳號，請重新註冊",
                         });
                         setView("login");
                     }

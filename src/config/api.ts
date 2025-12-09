@@ -69,6 +69,7 @@ export const API = {
         base: (model: string) => `${API_BASE}/api/${model}/`,
         chart: (item: string, locationID: string) =>
             `${API_BASE}/api/${item}/chart/?locationID=${locationID}`,
+        download: `${API_BASE}/api/download/`,
     },
 
     // 首頁地圖

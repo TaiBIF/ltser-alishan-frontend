@@ -9,12 +9,15 @@ import App from "./App.tsx";
 
 // context
 import { AuthProvider } from "./context/AuthContext.tsx";
+import { DownloadPopProvider } from "./context/DownloadPopContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <BrowserRouter>
             <AuthProvider>
-                <App />
+                <DownloadPopProvider>
+                    <App />
+                </DownloadPopProvider>
             </AuthProvider>
         </BrowserRouter>
     </StrictMode>

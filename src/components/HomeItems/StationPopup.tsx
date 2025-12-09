@@ -1,4 +1,14 @@
+import { useState } from "react";
 import { useMap } from "react-leaflet";
+
+// context
+import { useAuth } from "../../context/AuthContext";
+import { useDownloadPop } from "../../context/DownloadPopContext";
+
+// helpers
+import { swalToast } from "../../helpers/CustomSwal";
+
+import { API } from "../../config/api";
 
 interface StationPopupProps {
     locationID: string;
@@ -21,6 +31,12 @@ const StationPopup = ({
     onViewChart,
 }: StationPopupProps) => {
     const map = useMap();
+    const { isLoggedIn, authFetch } = useAuth();
+    const { open: openDownloadPop } = useDownloadPop();
+
+    const itemsThisYear = observationItem[selectedYear] ?? [];
+
+    const [email, setEmail] = useState("");
 
     const handleClose = () => {
         map.closePopup(); // 關掉目前開啟的 popup
@@ -37,7 +53,22 @@ const StationPopup = ({
         map.closePopup();
     };
 
-    const itemsThisYear = observationItem[selectedYear] ?? [];
+    const handleDownloadClick = async () => {
+        if (!isLoggedIn) {
+            swalToast.fire({
+                icon: "warning",
+                title: "請登入帳號以取得下載觀測資料權限",
+            });
+            return;
+        }
+
+        openDownloadPop({
+            locationID,
+            locationName,
+            year: selectedYear,
+            items: itemsThisYear,
+        });
+    };
 
     return (
         <div className="wbox-cont">
@@ -112,7 +143,7 @@ const StationPopup = ({
                         </svg>
                     </button>
 
-                    <button className="link-more">
+                    <button className="link-more" onClick={handleDownloadClick}>
                         <p>資料下載</p>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

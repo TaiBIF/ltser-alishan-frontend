@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import About from "./components/About.tsx";
 import Login from "./components/Login.tsx";
+import DownloadPop from "./components/DownloadPop.tsx";
 
 // dashboard items
 import User from "./components/DashboardItems/User.tsx";
@@ -44,6 +45,7 @@ function App() {
         <>
             <Login isOpen={isLoginOpen} setIsLoginOpen={setIsLoginOpen} />
             <Header setIsLoginOpen={setIsLoginOpen} />
+            <DownloadPop />
 
             <main style={{ paddingTop: isHome ? 0 : offset }}>
                 <Routes>

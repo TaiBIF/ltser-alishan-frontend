@@ -1319,6 +1319,13 @@ footer {
     width: 100%;
 }
 
+.c-form__set__column {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
 .c-form__set--row {
     align-items: center;
     display: flex;

@@ -2343,3 +2343,123 @@
     margin-top: 8px;
     margin-bottom: 8px;
 }
+
+.dowload-pop {
+    position: fixed;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.8);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    .flex100 {
+        padding: 0px 20px;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        display: flex;
+    }
+
+    .w_bgbox {
+        width: 430px;
+        padding: 30px 40px;
+        border-radius: 30px;
+        background: #fff;
+        position: relative;
+        @media #{$mobile} {
+            width: 100%;
+            padding: 20px 15px;
+            border-radius: 20px;
+        }
+        .xx {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            cursor: pointer;
+            @media #{$mobile} {
+                right: 15px;
+                top: 15px;
+            }
+            svg {
+                display: block;
+                @media #{$mobile} {
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+            &:hover {
+                svg {
+                    path.cirline {
+                        fill: $col-yel;
+                    }
+                    g.xline {
+                        stroke: $col-yel;
+                    }
+                }
+            }
+        }
+        .title {
+            font-size: 35px;
+            color: $col-brown1;
+            text-align: center;
+            margin-bottom: 15px;
+            @media #{$mobile} {
+                font-size: 26px;
+            }
+        }
+        .input-item {
+            margin-bottom: 10px;
+            input,
+            select {
+                display: block;
+                width: 100%;
+                height: 50px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 0px 15px;
+                font-size: 16px;
+                @media #{$mobile} {
+                    height: 40px;
+                }
+            }
+            select {
+                color: #555;
+                appearance: none;
+                -moz-appearance: none;
+                -webkit-appearance: none;
+                background: url("../image/select-ar.svg") center right 20px
+                    no-repeat;
+            }
+        }
+        p {
+            margin-bottom: 5px;
+            color: #555;
+        }
+        textarea {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            height: 120px;
+            resize: none;
+            width: 100%;
+            padding: 15px;
+            @media #{$mobile} {
+                height: 100px;
+            }
+        }
+        button {
+            border-radius: 10px;
+            background: $col-brown1;
+            color: #fff;
+            font-size: 18px;
+            height: 50px;
+            width: 100%;
+            @include bg_change(0.3s);
+            &:hover {
+                @include bg_change(0.3s);
+                background: $col-yel;
+            }
+        }
+    }
+}

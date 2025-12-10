@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import About from "./components/About.tsx";
 import Login from "./components/Login.tsx";
 import DownloadPop from "./components/DownloadPop.tsx";
+import RequireAuth from "./components/RequireAuth.tsx";
 
 // dashboard items
 import User from "./components/DashboardItems/User.tsx";
@@ -76,7 +77,11 @@ function App() {
                     />
                     <Route
                         path="/dashboard/user"
-                        element={<Dashboard content={<User />} />}
+                        element={
+                            <RequireAuth>
+                                <Dashboard content={<User />} />
+                            </RequireAuth>
+                        }
                     />
                     <Route path="/news/:id" element={<NewsDetail />} />
                     <Route path="/reset-password" element={<ResetPsw />} />

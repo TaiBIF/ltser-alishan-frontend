@@ -20,6 +20,12 @@ interface LoginViewProps {
     setView: Dispatch<SetStateAction<PopupView>>;
 }
 
+type LoginFormValues = {
+    email: string;
+    password: string;
+    remember: boolean;
+};
+
 function decodeExp(jwt: string): number | null {
     try {
         const payload = JSON.parse(atob(jwt.split(".")[1] ?? ""));
@@ -108,11 +114,25 @@ const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
         google.accounts.id.prompt();
     };
 
+    let savedEmail = "";
+    if (typeof window !== "undefined") {
+        savedEmail = localStorage.getItem("rememberedEmail") || "";
+    }
+
+    const initialValues: LoginFormValues = {
+        email: savedEmail,
+        password: "",
+        remember: !!savedEmail, // 有存過 email 就預設打勾
+    };
+
     return (
         <Formik
-            initialValues={{ email: "", password: "" }}
+            initialValues={initialValues}
             validationSchema={LoginViewSchema}
-            onSubmit={async (values, { setSubmitting, setErrors }) => {
+            onSubmit={async (
+                values,
+                { setSubmitting, setErrors, resetForm }
+            ) => {
                 try {
                     const res = await fetch(API.auth.login, {
                         method: "POST",
@@ -140,6 +160,26 @@ const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
                                 "accessExp",
                                 String(accessExp)
                             );
+
+                        // 記住帳號
+                        const trimmedEmail = values.email.trim();
+                        if (values.remember) {
+                            localStorage.setItem(
+                                "rememberedEmail",
+                                trimmedEmail
+                            );
+                        } else {
+                            localStorage.removeItem("rememberedEmail");
+                        }
+
+                        // 重置表單，把密碼清掉
+                        resetForm({
+                            values: {
+                                email: values.remember ? trimmedEmail : "",
+                                password: "",
+                                remember: values.remember,
+                            },
+                        });
 
                         swalToast.fire({ icon: "success", title: "登入成功" });
                         setIsLoginOpen(false);

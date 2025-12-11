@@ -27,6 +27,7 @@ import Dashboard from "./pages/Dashboard.tsx";
 import ResetPsw from "./pages/ResetPsw.tsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import TermsOfUse from "./pages/TermsOfUse.tsx";
+import ErrorPage from "./pages/ErrorPage.tsx";
 
 function App() {
     const [offset, setOffset] = useState(0);
@@ -89,6 +90,8 @@ function App() {
                     <Route path="/reset-password" element={<ResetPsw />} />
                     <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                     <Route path="/terms-of-use" element={<TermsOfUse />} />
+
+                    <Route path="*" element={<ErrorPage />} />
                 </Routes>
             </main>
             <Footer />

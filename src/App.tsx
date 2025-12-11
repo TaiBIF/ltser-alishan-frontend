@@ -25,6 +25,8 @@ import EcologicalEconomics from "./pages/EcologicalEconomics.tsx";
 import EcologicalCultrue from "./pages/EcologicalCultrue.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import ResetPsw from "./pages/ResetPsw.tsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
+import TermsOfUse from "./pages/TermsOfUse.tsx";
 
 function App() {
     const [offset, setOffset] = useState(0);
@@ -64,7 +66,7 @@ function App() {
                         element={<EcologicalEconomics />}
                     />
                     <Route
-                        path="/observation/ecological-culture"
+                        path="/observation/ecological-culture/:item?"
                         element={<EcologicalCultrue />}
                     />
                     <Route
@@ -85,6 +87,8 @@ function App() {
                     />
                     <Route path="/news/:id" element={<NewsDetail />} />
                     <Route path="/reset-password" element={<ResetPsw />} />
+                    <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                    <Route path="/terms-of-use" element={<TermsOfUse />} />
                 </Routes>
             </main>
             <Footer />

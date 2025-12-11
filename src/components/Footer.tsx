@@ -195,9 +195,9 @@ const Footer = () => {
             </div>
             <div className="footer-botbox">
                 <div className="linkbox">
-                    <a href="#">隱私權政策</a>
+                    <a href="/privacy-policy">隱私權政策</a>
                     <div className="line"> | </div>
-                    <a href="">使用者條款</a>
+                    <a href="/terms-of-use">使用者條款</a>
                 </div>
                 <h6>©2025 LTSER 長期社會生態核心觀測原民站</h6>
             </div>

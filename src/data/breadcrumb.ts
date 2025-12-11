@@ -86,11 +86,18 @@ export const breadcrumbList = (): BreadcrumbType[] => [
         title_en: "CONTACTS",
         bg_img: keventbn,
     },
-    // {
-    //     id: 8,
-    //     path: "/dashboard",
-    //     title_zh: "後台",
-    //     title_en: "DASHBOARD",
-    //     bg_img: keventbn,
-    // },
+    {
+        id: 8,
+        path: "/privacy-policy",
+        title_zh: "隱私權政策",
+        title_en: "PRIVACY POLICY",
+        bg_img: keventbn,
+    },
+    {
+        id: 8,
+        path: "/terms-of-use",
+        title_zh: "使用者條款",
+        title_en: "TERMS OF USE",
+        bg_img: keventbn,
+    },
 ];

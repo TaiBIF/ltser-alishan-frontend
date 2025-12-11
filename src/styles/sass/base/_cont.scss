@@ -2445,3 +2445,42 @@
         }
     }
 }
+
+.c-subtitle {
+    color: $col-brown1;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.u-section {
+    margin: 3rem 0;
+}
+
+.village-population-line-chart {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+
+    @media #{$pad} {
+        grid-template-columns: 1fr;
+    }
+
+    @media #{$mobile} {
+        grid-template-columns: 1fr;
+    }
+}
+
+.population-data-source {
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: end;
+    color: #333;
+
+    @media #{$pad} {
+        text-align: center;
+    }
+
+    @media #{$mobile} {
+        text-align: center;
+    }
+}

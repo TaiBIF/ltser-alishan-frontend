@@ -70,3 +70,25 @@ export const environmentAsideItemList = (): AsideItemType[] => [
         ],
     },
 ];
+
+export const ecologicalCultureAsideItemList = (): AsideItemType[] => [
+    {
+        id: 1,
+        title: "外部資料介接",
+        key: "ecological-culture",
+        list: [
+            {
+                id: 11,
+                title: "人口結構",
+                key: "population",
+                // link: "https://data.depositar.io/dataset/ltser-indigenous-weather",
+            },
+            {
+                id: 12,
+                title: "產業結構",
+                key: "industry",
+                // link: "https://data.depositar.io/dataset/ltser-indigenous-weather",
+            },
+        ],
+    },
+];

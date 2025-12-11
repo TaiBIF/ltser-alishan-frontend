@@ -106,7 +106,7 @@ const EcologicalCultrue = () => {
                             </ul>
                         </div>
 
-                        {/* 右側內容：目前先只放地圖 */}
+                        {/* 右側內容 */}
                         <div className="right-infbox">
                             {view === "population" && <PopluationStructure />}
 

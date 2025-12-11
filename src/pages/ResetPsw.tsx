@@ -4,12 +4,16 @@ import { Form, Formik, Field, ErrorMessage } from "formik";
 // data
 import { ResetPswSchema } from "../data/schema";
 
+// hooks
+import { usePageTitle } from "../hooks/usePageTitle";
+
 // helpers
 import { swalToast } from "../helpers/CustomSwal";
 
 import { API } from "../config/api";
 
 const ResetPsw = () => {
+    usePageTitle("重新設定密碼");
     const [params] = useSearchParams();
     const navigate = useNavigate();
 

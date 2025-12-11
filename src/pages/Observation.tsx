@@ -18,6 +18,7 @@ import ObservationItem from "../components/ObservationItem";
 
 // hooks
 import { useBreadcrumb } from "../hooks/useBreadcrumb";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 // animation
 import { gsapSlideToggle } from "../utils/animation";
@@ -29,6 +30,7 @@ const Observation = () => {
     const targetRef = useRef<HTMLUListElement>(null);
 
     const { node, trail } = useBreadcrumb();
+    usePageTitle(node?.title_zh ?? "");
 
     const asideLists = useMemo<Record<string, AsideItemType[]>>(
         () => ({

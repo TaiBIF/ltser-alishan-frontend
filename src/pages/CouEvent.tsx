@@ -14,6 +14,7 @@ import Spinner from "../components/Spinner";
 
 // hooks
 import { useBreadcrumb } from "../hooks/useBreadcrumb";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 // helpers
 import { swalToast } from "../helpers/CustomSwal";
@@ -21,6 +22,8 @@ import { swalToast } from "../helpers/CustomSwal";
 const CouEvent = () => {
     // 找出符合 pathname 的項目 / 麵包屑
     const { node, trail } = useBreadcrumb();
+    usePageTitle(node?.title_zh ?? "");
+
     const [initialEvent, setInitialEvent] = useState<EventItemType[]>([]);
     const [filteredEvent, setFilteredEvent] = useState<EventItemType[]>([]);
     const resultRef = useRef<HTMLDivElement | null>(null);

@@ -14,12 +14,14 @@ import Spinner from "../components/Spinner";
 
 // hooks
 import { useBreadcrumb } from "../hooks/useBreadcrumb";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 // helpers
 import { swalToast } from "../helpers/CustomSwal";
 
 const Literature = () => {
     const { node, trail } = useBreadcrumb();
+    usePageTitle(node?.title_zh ?? "");
 
     const [initialLiterature, setInitialLiterature] = useState<
         LiteratureItemType[]

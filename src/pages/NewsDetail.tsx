@@ -10,6 +10,7 @@ import { swalToast } from "../helpers/CustomSwal";
 
 // hooks
 import { useBreadcrumb } from "../hooks/useBreadcrumb";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 // components
 import Banner from "../components/Banner";
@@ -20,6 +21,8 @@ import ImageSwiper from "../components/ImageSwiper";
 const NewsDetail = () => {
     // 找出符合 pathname 的項目 / 麵包屑
     const { node, trail } = useBreadcrumb();
+    usePageTitle(node?.title_zh ?? "");
+
     const { id } = useParams<{ id: string }>();
     const [currentNews, setCurrentNews] = useState<NewsItemType>({
         id: 0,

@@ -8,6 +8,9 @@ import type { AboutItemType, AboutApiItemType } from "../types/item";
 // helpers
 import { swalToast } from "../helpers/CustomSwal";
 
+// hooks
+import { usePageTitle } from "../hooks/usePageTitle";
+
 const typeMap: Record<string, string> = {
     ecology: "生態觀測",
     environment: "環境觀測",
@@ -17,6 +20,7 @@ const typeMap: Record<string, string> = {
 
 const About = () => {
     const { path } = useParams<{ path: string }>();
+    usePageTitle("關於LTSER 阿里山");
     const navigate = useNavigate();
     const [currentAbout, setCurrentAbout] = useState<AboutItemType | null>(
         null

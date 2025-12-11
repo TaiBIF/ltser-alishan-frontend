@@ -94,7 +94,7 @@ export const breadcrumbList = (): BreadcrumbType[] => [
         bg_img: keventbn,
     },
     {
-        id: 8,
+        id: 9,
         path: "/terms-of-use",
         title_zh: "使用者條款",
         title_en: "TERMS OF USE",

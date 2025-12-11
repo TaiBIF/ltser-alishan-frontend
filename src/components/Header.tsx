@@ -436,7 +436,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                 }
                             >
                                 <div className="w_bg">
-                                    <a href="/cou/event">鄒族活動紀錄</a>
+                                    <a href="/cou/event">重要活動紀錄</a>
                                 </div>
                             </div>
                         </li>

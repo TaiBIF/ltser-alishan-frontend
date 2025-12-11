@@ -10,10 +10,12 @@ import EcologicalEconomicsFilter from "../components/EcologicalEconomicsFilter";
 
 // hooks
 import { useBreadcrumb } from "../hooks/useBreadcrumb";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const EcologicalEconomics = () => {
     // 找出符合 pathname 的項目 / 麵包屑
     const { node, trail } = useBreadcrumb();
+    usePageTitle(node?.title_zh ?? "");
 
     const allInterview: EcologicalEconomicsItemType[] = [];
     const [filteredInterview, setFilteredInterview] =

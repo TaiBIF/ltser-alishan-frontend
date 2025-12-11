@@ -9,10 +9,12 @@ import SubContact from "../components/SubContact";
 
 // hooks
 import { useBreadcrumb } from "../hooks/useBreadcrumb";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const Contact = () => {
     // 找出符合 pathname 的項目 / 麵包屑
     const { node, trail } = useBreadcrumb();
+    usePageTitle(node?.title_zh ?? "");
     const contacts = contactItemList();
 
     const mainContact = contacts[0];

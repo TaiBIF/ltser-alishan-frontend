@@ -12,12 +12,14 @@ import Spinner from "../components/Spinner";
 
 // hooks
 import { useBreadcrumb } from "../hooks/useBreadcrumb";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 // helpers
 import { swalToast } from "../helpers/CustomSwal";
 
 const Faq = () => {
     const { node, trail } = useBreadcrumb();
+    usePageTitle(node?.title_zh ?? "");
 
     const [faqCategory, setFaqCategory] = useState<CategoryType[]>([]);
     const [allQA, setAllQA] = useState<QAType[]>([]);

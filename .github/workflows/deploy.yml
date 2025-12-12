@@ -49,6 +49,9 @@ jobs:
 
             - name: Invalidate CloudFront cache
               run: |
-                  aws cloudfront create-invalidation \
-                    --distribution-id E1EGGSSKYJZLXZ  \
-                    --paths "/*"
+                  for id in E1EGGSSKYJZLXZ E21Z15MZEI2SJ0; do
+                    echo "Invalidating distribution $id ..."
+                    aws cloudfront create-invalidation \
+                      --distribution-id "$id" \
+                      --paths "/*"
+                  done

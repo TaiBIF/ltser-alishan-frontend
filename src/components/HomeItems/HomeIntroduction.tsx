@@ -185,7 +185,7 @@ const HomeIntroduction = () => {
                             ，都在環境變遷、經濟發展和社會動態的影響下進行著調整。為了對此重要的耦合
                             的人類環境系統有進一步的瞭解，學術團隊特別是核心觀測站將扮演著關鍵角色。
                         </p>
-                        <div className="flex-end">
+                        {/* <div className="flex-end">
                             <Link to="/about/camtrap/" className="btn-linkto">
                                 <p>了解更多</p>
                                 <svg
@@ -203,7 +203,7 @@ const HomeIntroduction = () => {
                                     />
                                 </svg>
                             </Link>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="flower">
                         <img src="/flower.svg" alt="" />

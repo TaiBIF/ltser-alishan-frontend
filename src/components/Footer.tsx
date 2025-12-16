@@ -115,8 +115,8 @@ const Footer = () => {
                     </div>
                     <ul className="footer-menu">
                         <li>
-                            <p className="btitle">關於LTSER_原民</p>
-                            <a href="/about/cameratrap" className="stitle">
+                            <p className="btitle">關於LTSER_阿里山</p>
+                            <a href="/about/camtrap" className="stitle">
                                 生態觀測
                             </a>
                             <a href="/about/weather" className="stitle">
@@ -199,7 +199,7 @@ const Footer = () => {
                     <div className="line"> | </div>
                     <a href="/terms-of-use">使用者條款</a>
                 </div>
-                <h6>©2025 LTSER 長期社會生態核心觀測原民站</h6>
+                <h6>©2025 LTSER 長期社會生態核心觀測 阿里山站</h6>
             </div>
         </footer>
     );

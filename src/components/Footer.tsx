@@ -116,7 +116,7 @@ const Footer = () => {
                     <ul className="footer-menu">
                         <li>
                             <p className="btitle">關於LTSER_原民</p>
-                            <a href="/about/camera-trap" className="stitle">
+                            <a href="/about/cameratrap" className="stitle">
                                 生態觀測
                             </a>
                             <a href="/about/weather" className="stitle">

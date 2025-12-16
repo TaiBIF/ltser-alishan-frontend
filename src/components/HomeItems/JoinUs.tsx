@@ -133,7 +133,7 @@ const JoinUs = () => {
                     </div>
                     <p>加入我們，一起探索臺灣原住民的社會－生態系統</p>
                     <div className="btn-two">
-                        <Link to="/contact/" className="btn-linkto">
+                        <Link to="/contact" className="btn-linkto">
                             <p>聯絡資訊</p>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +150,7 @@ const JoinUs = () => {
                                 />
                             </svg>
                         </Link>
-                        <Link to="/terms-of-use/" className="btn-linkto">
+                        <Link to="/terms-of-use" className="btn-linkto">
                             <p>資料使用說明</p>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import ReactECharts from "echarts-for-react";
 
@@ -22,18 +23,33 @@ const tsouColors = [
 // 在元件外面先註冊一次地圖（避免每次 render 重複註冊）
 echarts.registerMap("subVillage", villageJson as any);
 
-const AreaMap = () => {
+interface AreaMapProps {
+    populationByVillName: Record<string, number>;
+}
+
+const AreaMap = ({ populationByVillName }: AreaMapProps) => {
     // 從 GeoJSON 抓所有村名
     const villageList =
         villageJson.features?.map((f: any) => f.properties.VILLNAME) ?? [];
 
     const seriesData = villageList.map((name: string, idx: number) => ({
         name,
-        value: idx + 1, // 保留給 visualMap 用來上色
-        population: 1000 + idx * 137, // 🔸假資料：每村不同人口數
+        value: idx + 1,
+        population: populationByVillName[name] ?? 0,
     }));
 
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [height, setHeight] = useState(600);
+
     const option = {
+        title: {
+            subtext:
+                "本圖表以地圖方式呈現嘉義縣阿里山鄉及其周邊設有觀測站之村里分布情形，其中包含一處位於番路鄉之觀測村里。\n滑鼠懸停於各村里時可查看人口數，資料採用每年最新月份之統計數據。",
+            subtextStyle: {
+                color: "#333333",
+                lineHeight: 16,
+            },
+        },
         tooltip: {
             trigger: "item",
             formatter: (params: any) => {
@@ -76,14 +92,31 @@ const AreaMap = () => {
         ],
     };
 
+    useEffect(() => {
+        if (!containerRef.current) return;
+
+        const observer = new ResizeObserver((entries) => {
+            const width = entries[0].contentRect.width;
+
+            // 👇 地圖比例（可調）
+            const calculatedHeight = Math.max(360, width * 0.75);
+            setHeight(calculatedHeight);
+        });
+
+        observer.observe(containerRef.current);
+        return () => observer.disconnect();
+    }, []);
+
     return (
-        <ReactECharts
-            option={option}
-            notMerge={true}
-            lazyUpdate={true}
-            style={{ height }}
-            opts={{ renderer: "canvas" }}
-        />
+        <div ref={containerRef} style={{ width: "100%" }}>
+            <ReactECharts
+                option={option}
+                notMerge={true}
+                lazyUpdate={true}
+                style={{ height }}
+                opts={{ renderer: "canvas" }}
+            />
+        </div>
     );
 };
 

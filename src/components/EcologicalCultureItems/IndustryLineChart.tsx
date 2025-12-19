@@ -1,38 +1,42 @@
 import BaseLineChart from "./BaseLineChart";
 import type { LineSeries } from "./BaseLineChart";
+import type { ThemeItem } from "../../data/villagePopulationTheme";
 
-export type ThemeItem = {
-    title: string;
-    subtitle: string;
+type IndustryPayload = {
+    years: number[];
+    charts: Record<
+        string,
+        {
+            title?: string;
+            series: { key?: string; name: string; data: (number | null)[] }[];
+        }
+    >;
 };
 
-// 產業類別
-const industryCategories = [
-    "農業",
-    "服務業",
-    "觀光業",
-    "製造業",
-    "文化創意產業",
-];
+const IndustryLineChart = ({
+    theme,
+    payload,
+}: {
+    theme: ThemeItem;
+    payload: IndustryPayload;
+}) => {
+    const xAxisData = (payload.years ?? []).map((y) => `${y}年`);
 
-// x 軸
-const xAxisData = ["2018年", "2019年", "2020年", "2021年", "2022年"];
+    const chart = payload.charts?.[theme.key];
 
-// 產生各產業的假資料
-const makeIndustrySeries = (): LineSeries[] =>
-    industryCategories.map((name, idx) => ({
+    const series: LineSeries[] = (chart?.series ?? []).map((s) => ({
         type: "line",
-        name,
-        data: xAxisData.map((_year, yearIdx) => 200 + idx * 80 + yearIdx * 40),
+        name: s.name,
+        data: s.data,
     }));
 
-const IndustryLineChart = ({ theme }: { theme: ThemeItem }) => {
     return (
         <BaseLineChart
             title={theme.title}
             subtitle={theme.subtitle}
             xAxisData={xAxisData}
-            series={makeIndustrySeries()}
+            series={series}
+            legendPosition="right"
         />
     );
 };

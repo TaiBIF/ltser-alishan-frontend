@@ -3,7 +3,7 @@ import ReactECharts from "echarts-for-react";
 export type LineSeries = {
     type: "line";
     name: string;
-    data: number[];
+    data: (number | null)[];
 };
 
 interface BaseLineChartProps {
@@ -11,6 +11,7 @@ interface BaseLineChartProps {
     subtitle?: string;
     xAxisData: string[];
     series: LineSeries[];
+    legendPosition?: "bottom" | "right";
 }
 
 const height = 400;
@@ -33,9 +34,16 @@ const BaseLineChart = ({
     subtitle,
     xAxisData,
     series,
+    legendPosition = "bottom",
 }: BaseLineChartProps) => {
     const hasSubtitle = !!subtitle;
     const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
+    // 只有桌機才真的放右邊
+    const legendRightLayout = legendPosition === "right" && !isMobile;
+
+    // ✅ 只要你指定 right，就強制 legend 用 scroll（手機也一樣）
+    const legendShouldScroll = legendPosition === "right";
 
     const option = {
         title: {
@@ -50,19 +58,34 @@ const BaseLineChart = ({
         tooltip: {
             trigger: "axis",
         },
-        legend: {
-            ...(isMobile ? {} : { top: "auto" }),
-            left: "center",
-            bottom: isMobile ? 10 : 0,
-        },
-        grid: {
-            top: isMobile ? "18%" : "22.5%",
-            left: "15%",
-            right: "10%",
-            height: isMobile ? "45%" : "55%",
-            bottom: isMobile ? 120 : 60,
-        },
+        legend: legendRightLayout
+            ? {
+                  type: "scroll",
+                  orient: "vertical",
+                  right: 10,
+                  top: "middle",
+              }
+            : {
+                  type: legendShouldScroll ? "scroll" : "plain", // ✅ 手機也會 scroll
+                  orient: "horizontal",
+                  left: "center",
+                  bottom: isMobile ? 6 : 0,
+                  itemGap: 12,
+              },
 
+        grid: legendRightLayout
+            ? {
+                  top: isMobile ? "18%" : "22.5%",
+                  left: "12%",
+                  right: "28%",
+                  bottom: isMobile ? 60 : 40,
+              }
+            : {
+                  top: isMobile ? "18%" : "22.5%",
+                  left: "15%",
+                  right: "10%",
+                  bottom: isMobile ? 120 : 90, // 手機 + scroll legend 給多一點空間
+              },
         xAxis: {
             type: "category",
             boundaryGap: true,

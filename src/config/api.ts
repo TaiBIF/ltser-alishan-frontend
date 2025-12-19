@@ -96,6 +96,16 @@ export const API = {
     weather: {
         chart: `${API_BASE}/api/weather/chart/`,
     },
+
+    // 社會經濟資料
+    village: {
+        population: `${API_BASE}/api/segis/village-population/`,
+        dynamics: `${API_BASE}/api/segis/village-dynamics/`,
+    },
+    town: {
+        pyramid: `${API_BASE}/api/segis/town-pyramid/`,
+        industry: `${API_BASE}/api/segis/town-industry/`,
+    },
 } as const;
 
 export type ItemKey = keyof typeof API;

@@ -11,6 +11,14 @@ const PyramidChart = ({ xAxis, male, female }: PyramidChartProps) => {
 
     const option = {
         color: ["#6FA6C4", "#D36A5C"],
+        title: {
+            subtext:
+                "本圖表為嘉義縣「阿里山鄉」的人口金字塔，用以呈現該鄉各年齡層與性別的人口分布情形，資料採用每年最新月份之統計數據，不包含嘉義縣其他行政區。",
+            subtextStyle: {
+                color: "#333333",
+                lineHeight: 16,
+            },
+        },
         tooltip: {
             trigger: "axis",
             axisPointer: { type: "shadow" },

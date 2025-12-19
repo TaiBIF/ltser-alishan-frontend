@@ -1,34 +1,43 @@
 import BaseLineChart from "./BaseLineChart";
 import type { LineSeries } from "./BaseLineChart";
+import type { ThemeItem } from "../../data/villagePopulationTheme";
 
-// data
-import villageJson from "../../data/villageGeojson.json";
-
-export type ThemeItem = {
-    title: string;
-    subtitle: string;
+type Payload = {
+    years: number[];
+    metrics: Record<
+        string,
+        {
+            label: string;
+            series: Record<string, (number | null)[]>;
+        }
+    >;
 };
 
-const villageNames =
-    villageJson.features?.map((f: any) => f.properties.VILLNAME) ?? [];
+const PopulationLineChart = ({
+    theme,
+    payload,
+}: {
+    theme: ThemeItem;
+    payload: Payload;
+}) => {
+    const xAxisData = payload.years.map((y) => `${y}年`);
 
-const xAxisData = ["2018年", "2019年", "2020年", "2021年", "2022年"];
+    const metric = payload.metrics?.[theme.key];
 
-// 假資料
-const makePopulationSeries = (): LineSeries[] =>
-    villageNames.map((name, idx) => ({
-        type: "line",
-        name,
-        data: xAxisData.map((_year, yearIdx) => 800 + idx * 120 + yearIdx * 60),
-    }));
+    const series: LineSeries[] = metric
+        ? Object.entries(metric.series).map(([name, data]) => ({
+              type: "line",
+              name,
+              data, // ✅ 裡面允許 null 才能斷線
+          }))
+        : [];
 
-const PopulationLineChart = ({ theme }: { theme: ThemeItem }) => {
     return (
         <BaseLineChart
-            title={theme.title}
+            title={theme.title || metric?.label || theme.key}
             subtitle={theme.subtitle}
             xAxisData={xAxisData}
-            series={makePopulationSeries()}
+            series={series}
         />
     );
 };

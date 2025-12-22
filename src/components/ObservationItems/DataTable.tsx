@@ -1,5 +1,6 @@
 // types
 import type { HeaderItemType, RowItemType } from "../../types/item";
+import type { DownloadMode } from "../../context/DownloadPopContext";
 
 // hooks
 import { renderCell } from "../../hooks/useObservation";
@@ -8,7 +9,15 @@ import { renderCell } from "../../hooks/useObservation";
 import Pagination from "../Pagination";
 import ArrowIcon from "../Icons/ArrowIcon";
 
+// context
+import { useAuth } from "../../context/AuthContext";
+import { useDownloadPop } from "../../context/DownloadPopContext";
+
+// helpers
+import { swalToast } from "../../helpers/CustomSwal";
+
 interface DataTableProps {
+    observationItem: string | null | undefined;
     rowCount: number;
     rowCountPerPage: number;
     loading: boolean;
@@ -22,7 +31,15 @@ interface DataTableProps {
     setRowCountPerPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
+const CATALOG_AVAILABLE_ITEMS = [
+    "cameratrap",
+    "plantphenology",
+    "birdnetsound",
+    "biosound",
+];
+
 const DataTable = ({
+    observationItem,
     rowCount,
     rowCountPerPage,
     loading,
@@ -35,6 +52,38 @@ const DataTable = ({
     setCurrentPage,
     setRowCountPerPage,
 }: DataTableProps) => {
+    const { isLoggedIn } = useAuth();
+    const { open: openDownloadPop } = useDownloadPop();
+    const hasCatalog =
+        typeof observationItem === "string" &&
+        CATALOG_AVAILABLE_ITEMS.includes(observationItem);
+
+    const handleDownloadClick = async (mode: DownloadMode) => {
+        if (!isLoggedIn) {
+            swalToast.fire({
+                icon: "warning",
+                title: "請登入帳號以取得下載觀測資料權限",
+            });
+            return;
+        }
+
+        if (typeof observationItem !== "string") {
+            swalToast.fire({
+                icon: "error",
+                title: "觀測項目不存在，無法下載",
+            });
+            return;
+        }
+
+        openDownloadPop({
+            locationID: "",
+            locationName: "",
+            year: "",
+            items: [observationItem],
+            mode: mode,
+        });
+    };
+
     return (
         <div className="result-area">
             <div className="toptool">
@@ -73,6 +122,25 @@ const DataTable = ({
                             </label>
                         </div>
                     </div>
+                </div>
+
+                {/* 下載按鈕 */}
+                <div className="btnr-box">
+                    <button
+                        type="button"
+                        className="dowapply"
+                        onClick={() => handleDownloadClick("item_all")}
+                    >
+                        觀測資料下載
+                    </button>
+                    {hasCatalog && (
+                        <button
+                            type="button"
+                            onClick={() => handleDownloadClick("catalog")}
+                        >
+                            名錄下載
+                        </button>
+                    )}
                 </div>
             </div>
             <div className="ovhbox" style={{ overflowX: "scroll" }}>

@@ -246,6 +246,7 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
 
                 {/* 結果 */}
                 <DataTable
+                    observationItem={entry?.key}
                     rowCount={rowCount}
                     rowCountPerPage={rowCountPerPage}
                     loading={loading}

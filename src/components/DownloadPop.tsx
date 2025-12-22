@@ -111,6 +111,9 @@ const DownloadPop = () => {
                 return;
             }
 
+            console.log("values from pop:", values);
+            console.log("params from pop:", params);
+
             const res = await authFetch(API.data.download, {
                 method: "POST",
                 headers: {
@@ -125,6 +128,7 @@ const DownloadPop = () => {
                     location_name: params.locationName,
                     year: params.year,
                     items: params.items,
+                    mode: params.mode,
                 }),
             });
 

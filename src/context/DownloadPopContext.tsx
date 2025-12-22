@@ -6,11 +6,14 @@ import {
     useCallback,
 } from "react";
 
+export type DownloadMode = "selected" | "item_all" | "catalog";
+
 type DownloadParams = {
     locationID: string;
     locationName: string;
     year: string;
     items: string[];
+    mode: DownloadMode;
 };
 
 type DownloadPopContextType = {

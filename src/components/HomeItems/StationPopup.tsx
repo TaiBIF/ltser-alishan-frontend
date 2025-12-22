@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useMap } from "react-leaflet";
 
 // context
@@ -7,8 +6,6 @@ import { useDownloadPop } from "../../context/DownloadPopContext";
 
 // helpers
 import { swalToast } from "../../helpers/CustomSwal";
-
-import { API } from "../../config/api";
 
 interface StationPopupProps {
     locationID: string;
@@ -31,12 +28,10 @@ const StationPopup = ({
     onViewChart,
 }: StationPopupProps) => {
     const map = useMap();
-    const { isLoggedIn, authFetch } = useAuth();
+    const { isLoggedIn } = useAuth();
     const { open: openDownloadPop } = useDownloadPop();
 
     const itemsThisYear = observationItem[selectedYear] ?? [];
-
-    const [email, setEmail] = useState("");
 
     const handleClose = () => {
         map.closePopup(); // 關掉目前開啟的 popup
@@ -67,6 +62,7 @@ const StationPopup = ({
             locationName,
             year: selectedYear,
             items: itemsThisYear,
+            mode: "selected",
         });
     };
 

@@ -15,6 +15,11 @@ const dashboardItemList: TabItem[] = [
         title: "個人帳號管理",
         auth: ["superuser", "social_project_staff", "staff", "none"],
     },
+    {
+        id: "download",
+        title: "申請下載資料紀錄",
+        auth: ["superuser", "social_project_staff", "staff", "none"],
+    },
 ];
 
 interface DashboarProps {

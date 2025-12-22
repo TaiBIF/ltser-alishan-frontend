@@ -11,6 +11,7 @@ import RequireAuth from "./components/RequireAuth.tsx";
 
 // dashboard items
 import User from "./components/DashboardItems/User.tsx";
+import Download from "./components/DashboardItems/Download.tsx";
 
 // pages
 import Home from "./pages/Home.tsx";
@@ -83,6 +84,14 @@ function App() {
                         element={
                             <RequireAuth>
                                 <Dashboard content={<User />} />
+                            </RequireAuth>
+                        }
+                    />
+                    <Route
+                        path="/dashboard/download"
+                        element={
+                            <RequireAuth>
+                                <Dashboard content={<Download />} />
                             </RequireAuth>
                         }
                     />

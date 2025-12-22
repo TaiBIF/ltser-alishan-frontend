@@ -28,7 +28,7 @@ const ListLayout = <T extends { id: string | number }>({
 
     return (
         <>
-            <div className="d-flex mb-3">
+            {/* <div className="d-flex mb-3">
                 <Link
                     className="e-btn e-btn--primary e-btn--wmax"
                     to={`/dashboard/${lastPath}/add`}
@@ -36,7 +36,7 @@ const ListLayout = <T extends { id: string | number }>({
                     <AddIcon />
                     新增
                 </Link>
-            </div>
+            </div> */}
 
             <div className="d-flex flex-column justify-content-between">
                 <div className="c-table">

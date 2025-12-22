@@ -106,6 +106,12 @@ export const API = {
         pyramid: `${API_BASE}/api/segis/town-pyramid/`,
         industry: `${API_BASE}/api/segis/town-industry/`,
     },
+
+    // 後台
+    dashboard: {
+        downloadHisotry: (email: string) =>
+            `${API_BASE}/api/download/history/?email=${email}`,
+    },
 } as const;
 
 export type ItemKey = keyof typeof API;

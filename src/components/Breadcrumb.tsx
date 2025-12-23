@@ -50,7 +50,7 @@ const Breadcrumb = ({ trail }: { trail: string[] }) => {
                                 </g>
                             </g>
                         </svg>
-                    </a>
+                    </Link>
                     <span> &gt; </span>
                     {trail?.map((v, i) => (
                         <React.Fragment key={i}>

@@ -26,9 +26,17 @@ const Contact = () => {
     const [allContact, setAllContact] = useState<ContactItemType[]>([]);
 
     const { mainContact, subContacts } = useMemo(() => {
-        const main = allContact[0] ?? null;
-        const subs = allContact.slice(1);
-        return { mainContact: main, subContacts: subs };
+        const main = allContact.find((c) => c.sorting_order === 0) ?? null;
+
+        const subs = allContact
+            .filter((c) => c.sorting_order !== 0)
+            .slice() //
+            .sort((a, b) => a.sorting_order - b.sorting_order);
+
+        return {
+            mainContact: main,
+            subContacts: subs,
+        };
     }, [allContact]);
 
     useEffect(() => {

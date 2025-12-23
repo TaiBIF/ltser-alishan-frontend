@@ -2540,3 +2540,94 @@
         }
     }
 }
+
+.link-list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    li {
+        list-style: none;
+        width: calc(50% - 10px);
+        background: #fff;
+        border-radius: 30px;
+        display: flex;
+        padding: 20px;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        @include bg_change(0.3s);
+        @media #{$pad} {
+            width: 100%;
+        }
+        @media #{$mobile} {
+            padding: 15px;
+            border-radius: 15px;
+        }
+        &:hover {
+            @include bg_change(0.3s);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.07);
+            .leftbox {
+                p {
+                    color: $col-brown1;
+                    @include bg_change(0.3s);
+                }
+            }
+        }
+        .leftbox {
+            .date {
+                margin-bottom: 5px;
+                color: #888;
+            }
+            p {
+                @include bg_change(0.3s);
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                color: #555;
+            }
+        }
+        .right-icob {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            flex: 0 0 60px;
+            margin-left: 20px;
+            border-radius: 50%;
+            border: 1px solid $col-brown1;
+            @include bg_change(0.3s);
+            @media #{$mobile} {
+                margin-left: 10px;
+                width: 45px;
+                height: 45px;
+                flex: 0 0 45px;
+            }
+            .form-icon,
+            .link-icon {
+                @media #{$mobile} {
+                    width: 20px;
+                    height: auto;
+                }
+                path {
+                    @include bg_change(0.3s);
+                }
+            }
+            &:hover {
+                @include bg_change(0.3s);
+                background: $col-brown1;
+                cursor: pointer;
+                .form-icon,
+                .link-icon {
+                    path {
+                        fill: #fff;
+                        @include bg_change(0.3s);
+                    }
+                }
+            }
+        }
+    }
+}

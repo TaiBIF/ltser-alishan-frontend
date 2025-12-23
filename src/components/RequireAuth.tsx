@@ -8,10 +8,11 @@ import { swalToast } from "../helpers/CustomSwal";
 
 interface RequireAuthProps {
     children: React.ReactNode;
+    staffOnly?: boolean;
 }
 
-const RequireAuth = ({ children }: RequireAuthProps) => {
-    const { isLoggedIn } = useAuth();
+const RequireAuth = ({ children, staffOnly = false }: RequireAuthProps) => {
+    const { isLoggedIn, isStaff } = useAuth();
     const location = useLocation();
 
     if (!isLoggedIn) {
@@ -22,6 +23,10 @@ const RequireAuth = ({ children }: RequireAuthProps) => {
         });
 
         // 導回首頁或其他頁面
+        return <Navigate to="/" replace state={{ from: location.pathname }} />;
+    }
+
+    if (staffOnly && !isStaff) {
         return <Navigate to="/" replace state={{ from: location.pathname }} />;
     }
 

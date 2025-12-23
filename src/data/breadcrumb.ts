@@ -100,4 +100,11 @@ export const breadcrumbList = (): BreadcrumbType[] => [
         title_en: "TERMS OF USE",
         bg_img: keventbn,
     },
+    {
+        id: 10,
+        path: "/form-link",
+        title_zh: "常用表單與連結",
+        title_en: "FORMS & LINKS",
+        bg_img: keventbn,
+    },
 ];

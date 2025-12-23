@@ -16,7 +16,7 @@ interface HeaderProps {
 }
 
 const Header = ({ setIsLoginOpen }: HeaderProps) => {
-    const { isLoggedIn, logout } = useAuth();
+    const { isLoggedIn, logout, isStaff, authReady } = useAuth();
     const [items, setItems] = useState<AboutApiItemType[]>([]);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDesktop, setIsDesktop] = useState(
@@ -458,6 +458,14 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                 <span></span>
                             </a>
                         </li>
+                        {isLoggedIn && isStaff && (
+                            <li>
+                                <a href="/form-link" className="big_title">
+                                    常用表單與連結
+                                    <span></span>
+                                </a>
+                            </li>
+                        )}
                     </ul>
                     <div className="header-iconbox">
                         <div className="lang">

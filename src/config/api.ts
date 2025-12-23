@@ -111,6 +111,7 @@ export const API = {
     dashboard: {
         downloadHisotry: (email: string) =>
             `${API_BASE}/api/download/history/?email=${email}`,
+        formLink: `${API_BASE}/dashboard/form-link/`,
     },
 } as const;
 

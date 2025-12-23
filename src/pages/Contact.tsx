@@ -1,5 +1,7 @@
-// data
-import { contactItemList } from "../data/contact";
+import { useState, useEffect, useMemo } from "react";
+
+// types
+import type { ContactItemType } from "../types/item";
 
 // components
 import Banner from "../components/Banner";
@@ -11,14 +13,53 @@ import SubContact from "../components/SubContact";
 import { useBreadcrumb } from "../hooks/useBreadcrumb";
 import { usePageTitle } from "../hooks/usePageTitle";
 
+// helpers
+import { swalToast } from "../helpers/CustomSwal";
+
+import { API } from "../config/api";
+
 const Contact = () => {
     // 找出符合 pathname 的項目 / 麵包屑
     const { node, trail } = useBreadcrumb();
     usePageTitle(node?.title_zh ?? "");
-    const contacts = contactItemList();
 
-    const mainContact = contacts[0];
-    const subContacts = contacts.slice(1);
+    const [allContact, setAllContact] = useState<ContactItemType[]>([]);
+
+    const { mainContact, subContacts } = useMemo(() => {
+        const main = allContact[0] ?? null;
+        const subs = allContact.slice(1);
+        return { mainContact: main, subContacts: subs };
+    }, [allContact]);
+
+    useEffect(() => {
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        async function loadAll() {
+            try {
+                const res = await fetch(API.dashboard.contact, { signal });
+                if (!res.ok) throw new Error(`Contact HTTP ${res.status}`);
+
+                const json = await res.json();
+                const data: ContactItemType[] = Array.isArray(json)
+                    ? json
+                    : json?.results ?? [];
+
+                setAllContact(data);
+            } catch (err: any) {
+                if (err?.name !== "AbortError") {
+                    swalToast.fire({
+                        icon: "error",
+                        title: "獲取資料失敗，請稍後再試",
+                    });
+                }
+            } finally {
+            }
+        }
+
+        loadAll();
+        return () => controller.abort();
+    }, []);
 
     return (
         <div className="inherit-page">
@@ -33,7 +74,7 @@ const Contact = () => {
                 <Breadcrumb trail={trail} />
                 <div className="contentbox gray-bg">
                     <div className="main-box">
-                        <MainContact data={mainContact} />
+                        {mainContact && <MainContact data={mainContact} />}
                         <div className="line-titlarea">
                             <div className="peo-title">
                                 <div className="line1" />
@@ -41,7 +82,7 @@ const Contact = () => {
                                 <div className="line2" />
                             </div>
                         </div>
-                        <SubContact data={subContacts} />
+                        {subContacts && <SubContact data={subContacts} />}
                     </div>
                 </div>
             </div>

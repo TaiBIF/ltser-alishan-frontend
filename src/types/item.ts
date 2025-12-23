@@ -57,7 +57,7 @@ export type ContactItemType = {
     position: string;
     name: string;
     mail: string;
-    img: string;
+    image: string;
 };
 
 export type QAType = {

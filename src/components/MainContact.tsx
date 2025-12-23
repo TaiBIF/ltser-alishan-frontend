@@ -19,7 +19,7 @@ const MainContact = ({ data }: MainContactProps) => {
 
                 <div className="picbox">
                     <div className="peoimg">
-                        <img src={data.img} alt={data.name} />
+                        <img src={data.image} alt={data.name} />
                     </div>
                     <div className="iconbox">
                         <img src={MainPeoIcon} alt="" />

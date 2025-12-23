@@ -112,6 +112,7 @@ export const API = {
         downloadHisotry: (email: string) =>
             `${API_BASE}/api/download/history/?email=${email}`,
         formLink: `${API_BASE}/dashboard/form-link/`,
+        contact: `${API_BASE}/dashboard/contact/`,
     },
 } as const;
 

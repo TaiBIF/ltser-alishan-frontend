@@ -13,7 +13,7 @@ const SubContact = ({ data }: SubContactProps) => {
                 <div className="wbox">
                     <div className="picbox">
                         <div className="peoimg">
-                            <img src={contact.img} alt={contact.name} />
+                            <img src={contact.image} alt={contact.name} />
                         </div>
                         <div className="iconbox">
                             <img src={SubPeoIcon} alt="peoicon2" />

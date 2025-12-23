@@ -5,6 +5,7 @@ import { API } from "../config/api";
 interface AuthContextValue {
     isLoggedIn: boolean;
     isStaff: boolean;
+    isReady: boolean;
     login: (access: string, refresh: string) => void;
     logout: () => void;
     authFetch: (
@@ -23,6 +24,7 @@ type MeResponse = {
 const AuthContext = createContext<AuthContextValue>({
     isLoggedIn: false,
     isStaff: false,
+    isReady: false,
     login: () => {},
     logout: () => {},
     authFetch: (input: RequestInfo | URL, init?: RequestInit) =>
@@ -74,6 +76,7 @@ function isAccessExpired(skewSeconds = 30) {
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(Boolean(getAccess()));
     const [isStaff, setIsStaff] = useState<boolean>(false);
+    const [isReady, setIsReady] = useState(false);
 
     // 嘗試用 refresh 恢復 session（例如頁面重整後 access 過期）
     useEffect(() => {
@@ -96,6 +99,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                     setIsStaff(false);
                 }
             } finally {
+                setIsReady(true);
             }
         };
 
@@ -201,7 +205,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <AuthContext.Provider
-            value={{ isLoggedIn, isStaff, login, logout, authFetch }}
+            value={{ isLoggedIn, isStaff, isReady, login, logout, authFetch }}
         >
             {children}
         </AuthContext.Provider>

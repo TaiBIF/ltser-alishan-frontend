@@ -12,8 +12,10 @@ interface RequireAuthProps {
 }
 
 const RequireAuth = ({ children, staffOnly = false }: RequireAuthProps) => {
-    const { isLoggedIn, isStaff } = useAuth();
+    const { isLoggedIn, isStaff, isReady } = useAuth();
     const location = useLocation();
+
+    if (!isReady) return null;
 
     if (!isLoggedIn) {
         // 彈出提醒

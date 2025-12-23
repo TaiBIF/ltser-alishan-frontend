@@ -8,6 +8,7 @@ import About from "./components/About.tsx";
 import Login from "./components/Login.tsx";
 import DownloadPop from "./components/DownloadPop.tsx";
 import RequireAuth from "./components/RequireAuth.tsx";
+import ScrollToTop from "./components/ScrollToTop.tsx";
 
 // dashboard items
 import User from "./components/DashboardItems/User.tsx";
@@ -50,6 +51,7 @@ function App() {
 
     return (
         <>
+            <ScrollToTop />
             <Login isOpen={isLoginOpen} setIsLoginOpen={setIsLoginOpen} />
             <Header setIsLoginOpen={setIsLoginOpen} />
             <DownloadPop />

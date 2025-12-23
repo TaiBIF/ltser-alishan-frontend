@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Breadcrumb = ({ trail }: { trail: string[] }) => {
     return (
         <div className="path">
             <div className="main-box">
                 <div className="path-area">
-                    <a href="/" className="home">
+                    <Link to="/" className="home">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="22.633"

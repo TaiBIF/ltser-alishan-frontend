@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Footer = () => {
     return (
         <footer>
@@ -116,59 +118,59 @@ const Footer = () => {
                     <ul className="footer-menu">
                         <li>
                             <p className="btitle">關於LTSER_阿里山</p>
-                            <a href="/about/camtrap" className="stitle">
+                            <Link to="/about/camtrap" className="stitle">
                                 生態觀測
-                            </a>
-                            <a href="/about/weather" className="stitle">
+                            </Link>
+                            <Link tp="/about/weather" className="stitle">
                                 環境觀測
-                            </a>
-                            <a
-                                href="/about/ecological-economics"
+                            </Link>
+                            <Link
+                                to="/about/ecological-economics"
                                 className="stitle"
                             >
                                 生態經濟
-                            </a>
-                            <a
-                                href="/about/ecological-culture"
+                            </Link>
+                            <Link
+                                to="/about/ecological-culture"
                                 className="stitle"
                             >
                                 經濟與文化面向
-                            </a>
+                            </Link>
                         </li>
                         <li>
                             <p className="btitle">觀測站資料</p>
-                            <a href="/observation/ecology" className="stitle">
+                            <Link to="/observation/ecology" className="stitle">
                                 生態觀測
-                            </a>
-                            <a
-                                href="/observation/environment"
+                            </Link>
+                            <Link
+                                to="/observation/environment"
                                 className="stitle"
                             >
                                 環境觀測
-                            </a>
-                            <a
-                                href="/observation/ecological-economics"
+                            </Link>
+                            <Link
+                                to="/observation/ecological-economics"
                                 className="stitle"
                             >
                                 生態經濟
-                            </a>
-                            <a
-                                href="/observation/ecological-culture"
+                            </Link>
+                            <Link
+                                to="/observation/ecological-culture"
                                 className="stitle"
                             >
                                 經濟與文化面向
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/news" className="btitle">
+                            <Link to="/news" className="btitle">
                                 最新消息
-                            </a>
-                            <a href="/literature" className="btitle">
+                            </Link>
+                            <Link to="/literature" className="btitle">
                                 相關文獻
-                            </a>
-                            <a href="/faq" className="btitle">
+                            </Link>
+                            <Link to="/faq" className="btitle">
                                 常見Q&A
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                     <div className="item-right">
@@ -195,9 +197,9 @@ const Footer = () => {
             </div>
             <div className="footer-botbox">
                 <div className="linkbox">
-                    <a href="/privacy-policy">隱私權政策</a>
+                    <Link to="/privacy-policy">隱私權政策</Link>
                     <div className="line"> | </div>
-                    <a href="/terms-of-use">使用者條款</a>
+                    <Link to="/terms-of-use">使用者條款</Link>
                 </div>
                 <h6>©2025 LTSER 長期社會生態核心觀測 阿里山站</h6>
             </div>

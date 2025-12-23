@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import type { Dispatch, SetStateAction } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { API } from "../../config/api";
@@ -136,7 +137,7 @@ const RegisterView = ({ setView }: RegisterViewProps) => {
                         </button>
                         <div className="link">
                             <span className="col-red">*註冊即同意</span>{" "}
-                            <a href="#">使⽤者條款</a>
+                            <Link to="#">使⽤者條款</Link>
                         </div>
                     </div>
                 </Form>

@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import type { Dispatch, SetStateAction } from "react";
 import { API } from "../config/api";
 
@@ -16,7 +17,7 @@ interface HeaderProps {
 }
 
 const Header = ({ setIsLoginOpen }: HeaderProps) => {
-    const { isLoggedIn, logout, isStaff, authReady } = useAuth();
+    const { isLoggedIn, logout, isStaff } = useAuth();
     const [items, setItems] = useState<AboutApiItemType[]>([]);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDesktop, setIsDesktop] = useState(
@@ -176,13 +177,13 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                 </svg>
             </div>
             <div className="flex-box">
-                <a href="/" className="logo">
+                <Link to="/" className="logo">
                     <img src="/logo.png" alt="長期社會生態核心觀測-原民站" />
                     <div className="logo-txt">
                         <span>LTSER INDEGENOUS - Alishan</span>
                         <h1>長期社會生態核心觀測 阿里山站</h1>
                     </div>
-                </a>
+                </Link>
                 <div
                     ref={mainMenuRef}
                     className={`main_menu u-slide-toggle ${
@@ -400,16 +401,18 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                 }
                             >
                                 <div className="w_bg">
-                                    <a href="/observation/ecology">生態觀測</a>
-                                    <a href="/observation/environment">
+                                    <Link to="/observation/ecology">
+                                        生態觀測
+                                    </Link>
+                                    <Link to="/observation/environment">
                                         環境觀測
-                                    </a>
-                                    <a href="/observation/ecological-economics">
+                                    </Link>
+                                    <Link to="/observation/ecological-economics">
                                         生態經濟
-                                    </a>
-                                    <a href="/observation/ecological-culture">
+                                    </Link>
+                                    <Link to="/observation/ecological-culture">
                                         經濟與文化面向
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </li>
@@ -436,34 +439,34 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                 }
                             >
                                 <div className="w_bg">
-                                    <a href="/cou/event">重要活動紀錄</a>
+                                    <Link to="/cou/event">重要活動紀錄</Link>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <a href="/news" className="big_title">
+                            <Link to="/news" className="big_title">
                                 最新消息
                                 <span></span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/literature" className="big_title">
+                            <Link to="/literature" className="big_title">
                                 相關文獻
                                 <span></span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a href="/faq" className="big_title">
+                            <Link to="/faq" className="big_title">
                                 常見Q&A
                                 <span></span>
-                            </a>
+                            </Link>
                         </li>
                         {isLoggedIn && isStaff && (
                             <li>
-                                <a href="/form-link" className="big_title">
+                                <Link to="/form-link" className="big_title">
                                     常用表單與連結
                                     <span></span>
-                                </a>
+                                </Link>
                             </li>
                         )}
                     </ul>
@@ -492,7 +495,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                 </div>
                             </div>
                         </div>
-                        <a href="/contact" className="contact">
+                        <Link to="/contact" className="contact">
                             <div className="iconcir">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -510,7 +513,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                 </svg>
                             </div>
                             <p>聯絡我們</p>
-                        </a>
+                        </Link>
                         <div
                             className="loginbox"
                             onClick={() => {
@@ -541,7 +544,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                 <div className="w_bg">
                                     {isLoggedIn ? (
                                         <>
-                                            <a href="/dashboard">後台</a>
+                                            <Link to="/dashboard">後台</Link>
                                             <a
                                                 href="/"
                                                 onClick={(e) => {

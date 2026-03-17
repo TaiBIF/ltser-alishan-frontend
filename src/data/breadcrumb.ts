@@ -13,6 +13,13 @@ export const breadcrumbList = (): BreadcrumbType[] => [
         bg_img: keventbn,
         list: [
             {
+                id: 20,
+                path: "/observation/data-catalog",
+                title_zh: "資料目錄",
+                title_en: "DATA\nCATALOG",
+                bg_img: keventbn,
+            },
+            {
                 id: 21,
                 path: "/observation/ecology",
                 title_zh: "生態觀測",

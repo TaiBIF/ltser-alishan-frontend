@@ -31,6 +31,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import TermsOfUse from "./pages/TermsOfUse.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import FormLink from "./pages/FormLink.tsx";
+import DataCatalog from "./pages/DataCatalog.tsx";
 
 function App() {
     const [offset, setOffset] = useState(0);
@@ -73,6 +74,10 @@ function App() {
                     <Route
                         path="/observation/ecological-culture/:item?"
                         element={<EcologicalCultrue />}
+                    />
+                    <Route
+                        path="/observation/data-catalog"
+                        element={<DataCatalog />}
                     />
                     <Route
                         path="/observation/:path/:item?"

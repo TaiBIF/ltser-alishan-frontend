@@ -139,6 +139,12 @@ const Footer = () => {
                         </li>
                         <li>
                             <p className="btitle">觀測站資料</p>
+                            <Link
+                                to="/observation/data-catalog"
+                                className="stitle"
+                            >
+                                資料目錄
+                            </Link>
                             <Link to="/observation/ecology" className="stitle">
                                 生態觀測
                             </Link>

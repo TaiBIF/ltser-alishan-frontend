@@ -21,7 +21,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
     const [items, setItems] = useState<AboutApiItemType[]>([]);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDesktop, setIsDesktop] = useState(
-        typeof window !== "undefined" ? window.innerWidth >= 1279 : false
+        typeof window !== "undefined" ? window.innerWidth >= 1279 : false,
     );
     const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
     const [openTitleBox, setOpenTitleBox] = useState<string | null>(null);
@@ -227,7 +227,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                                 }
                                                 onClick={() =>
                                                     handleTitleBoxClick(
-                                                        "ecology"
+                                                        "ecology",
                                                     )
                                                 }
                                             >
@@ -266,7 +266,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                                 }
                                                 onClick={() =>
                                                     handleTitleBoxClick(
-                                                        "environment"
+                                                        "environment",
                                                     )
                                                 }
                                             >
@@ -305,7 +305,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                                 }
                                                 onClick={() =>
                                                     handleTitleBoxClick(
-                                                        "economic"
+                                                        "economic",
                                                     )
                                                 }
                                             >
@@ -344,7 +344,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                                 }
                                                 onClick={() =>
                                                     handleTitleBoxClick(
-                                                        "culture"
+                                                        "culture",
                                                     )
                                                 }
                                             >
@@ -401,6 +401,9 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                 }
                             >
                                 <div className="w_bg">
+                                    <Link to="/observation/data-catalog">
+                                        資料目錄
+                                    </Link>
                                     <Link to="/observation/ecology">
                                         生態觀測
                                     </Link>

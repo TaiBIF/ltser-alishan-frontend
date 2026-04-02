@@ -333,7 +333,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                                 </div>
                                             ))}
                                         </div>
-                                        <div className="item-set1">
+                                        {/* <div className="item-set1">
                                             <div
                                                 className={
                                                     "titlebox" +
@@ -371,7 +371,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                                     </a>
                                                 </div>
                                             ))}
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>

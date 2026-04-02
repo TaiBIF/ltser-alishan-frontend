@@ -121,7 +121,7 @@ const Footer = () => {
                             <Link to="/about/camtrap" className="stitle">
                                 生態觀測
                             </Link>
-                            <Link tp="/about/weather" className="stitle">
+                            <Link to="/about/weather" className="stitle">
                                 環境觀測
                             </Link>
                             <Link
@@ -130,12 +130,12 @@ const Footer = () => {
                             >
                                 生態經濟
                             </Link>
-                            <Link
+                            {/* <Link
                                 to="/about/ecological-culture"
                                 className="stitle"
                             >
                                 經濟與文化面向
-                            </Link>
+                            </Link> */}
                         </li>
                         <li>
                             <p className="btitle">觀測站資料</p>

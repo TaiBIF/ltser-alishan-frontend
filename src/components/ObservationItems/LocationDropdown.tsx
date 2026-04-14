@@ -1,5 +1,7 @@
 // components
 import ArrowIcon from "../Icons/ArrowIcon";
+import { useLang } from "../../context/LangContext";
+import { getObservationText } from "../../i18n/observation";
 
 type LocationItemType = {
     id: number;
@@ -18,10 +20,12 @@ const LocationDropdown = ({
     locations,
     setLocationID,
 }: LocationDropdownProps) => {
+    const { lang } = useLang();
+
     if (!locations || locations.length === 0) {
         return (
             <div className="c-select c-form__set c-select__flex-container">
-                <div>目前沒有可用樣站</div>
+                <div>{getObservationText(lang, "locationUnavailable")}</div>
             </div>
         );
     }
@@ -30,7 +34,7 @@ const LocationDropdown = ({
         <div className="c-select c-form__set c-select__flex-container">
             <div>
                 <label htmlFor="site" className="c-select__label c-form__label">
-                    請選擇測站/樣區
+                    {getObservationText(lang, "locationSelect")}
                 </label>
                 <div className="c-select__wrapper">
                     <select
@@ -40,12 +44,12 @@ const LocationDropdown = ({
                         }}
                     >
                         <option value="" disabled>
-                            請選擇測站/樣區
+                            {getObservationText(lang, "locationSelect")}
                         </option>
 
                         {locations.map((l: LocationItemType) => (
                             <option key={l.id} value={l.location_id}>
-                                {l.location_name}
+                                {lang === "en" ? l.location_id : l.location_name}
                             </option>
                         ))}
                     </select>

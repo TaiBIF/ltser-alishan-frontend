@@ -1,4 +1,6 @@
 import ReactECharts from "echarts-for-react";
+import { useLang } from "../../context/LangContext";
+import { getObservationText } from "../../i18n/observation";
 
 interface PyramidChartProps {
     xAxis: string[]; // 年齡階層，例如 ['0-4歲', '5-9歲', ...]
@@ -7,13 +9,14 @@ interface PyramidChartProps {
 }
 
 const PyramidChart = ({ xAxis, male, female }: PyramidChartProps) => {
+    const { lang } = useLang();
     const height = 600;
 
     const option = {
         color: ["#6FA6C4", "#D36A5C"],
         title: {
             subtext:
-                "本圖表為嘉義縣「阿里山鄉」的人口金字塔，用以呈現該鄉各年齡層與性別的人口分布情形，資料採用每年最新月份之統計數據，不包含嘉義縣其他行政區。",
+                getObservationText(lang, "pyramidSubtext"),
             subtextStyle: {
                 color: "#333333",
                 lineHeight: 16,
@@ -57,26 +60,26 @@ const PyramidChart = ({ xAxis, male, female }: PyramidChartProps) => {
         ],
         xAxis: [
             {
-                name: "女性(人)",
+                name: getObservationText(lang, "femalePeople"),
                 type: "value",
             },
             {
                 gridIndex: 1,
-                name: "男性(人)",
+                name: getObservationText(lang, "malePeople"),
                 type: "value",
                 inverse: true,
             },
         ],
         series: [
             {
-                name: "男性",
+                name: getObservationText(lang, "male"),
                 type: "bar",
                 xAxisIndex: 1,
                 yAxisIndex: 1,
                 data: male,
             },
             {
-                name: "女性",
+                name: getObservationText(lang, "female"),
                 type: "bar",
                 data: female,
             },

@@ -1,4 +1,9 @@
+import { useLang } from "../../context/LangContext";
+import { getHomeIntroDescription } from "../../i18n/homeSections";
+
 const HomeIntroduction = () => {
+    const { lang } = useLang();
+
     return (
         <section className="s2-about">
             <div className="main-1400">
@@ -174,14 +179,8 @@ const HomeIntroduction = () => {
                             <h2>ABOUT</h2>
                         </div>
 
-                        <p>
-                            在複雜的自然和社會背景以及氣候變遷下，原住民傳統領域正經歷著環境、社會組織、經濟產業以及土地利用的顯著變化，而原住民族面臨到主要的兩大驅動力為氣候變遷與治理制度轉型。
-                            <br />
-                            <br />
-                            這些驅動力從社區部落跨越到全國尺度的範圍，涉及生活
-                            、生產和生態方面的多個層面。而這些場域不論是在平原、海岸、山地或高山地區
-                            ，都在環境變遷、經濟發展和社會動態的影響下進行著調整。為了對此重要的耦合
-                            的人類環境系統有進一步的瞭解，學術團隊特別是核心觀測站將扮演著關鍵角色。
+                        <p style={{ whiteSpace: "pre-line" }}>
+                            {getHomeIntroDescription(lang)}
                         </p>
                         {/* <div className="flex-end">
                             <Link to="/about/camtrap/" className="btn-linkto">

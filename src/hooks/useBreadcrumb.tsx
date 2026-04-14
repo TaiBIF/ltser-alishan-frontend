@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useMemo } from "react";
+import { useLang } from "../context/LangContext";
 
 // types
 import type { BreadcrumbType } from "../types/item";
@@ -17,6 +18,7 @@ type Options = {
 };
 
 export function useBreadcrumb(options?: Options) {
+    const { lang } = useLang();
     const location = useLocation();
     let pathname = options?.pathname ?? location.pathname;
 
@@ -56,7 +58,8 @@ export function useBreadcrumb(options?: Options) {
             nodes: BreadcrumbType[]
         ): Res | undefined => {
             for (const item of list) {
-                const nextTitles = [...titles, item.title_zh];
+                const nextTitle = lang === "en" ? item.title_en : item.title_zh;
+                const nextTitles = [...titles, nextTitle];
                 const nextNodes = [...nodes, item];
 
                 if (match(item.path, pathname)) {
@@ -71,7 +74,7 @@ export function useBreadcrumb(options?: Options) {
         };
 
         return dfs(items, [], []) ?? { node: undefined, trail: [], nodes: [] };
-    }, [items, pathname, match]);
+    }, [items, pathname, match, lang]);
 
     return {
         node: result.node, // 當前節點

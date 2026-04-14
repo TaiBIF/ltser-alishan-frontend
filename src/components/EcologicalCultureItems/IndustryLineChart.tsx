@@ -1,6 +1,13 @@
 import BaseLineChart from "./BaseLineChart";
 import type { LineSeries } from "./BaseLineChart";
 import type { ThemeItem } from "../../data/villagePopulationTheme";
+import { useLang } from "../../context/LangContext";
+import {
+    getObservationText,
+    resolveObservationChartLegend,
+    resolveIndustryThemeSubtitle,
+    resolveIndustryThemeTitle,
+} from "../../i18n/observation";
 
 type IndustryPayload = {
     years: number[];
@@ -20,20 +27,27 @@ const IndustryLineChart = ({
     theme: ThemeItem;
     payload: IndustryPayload;
 }) => {
-    const xAxisData = (payload.years ?? []).map((y) => `${y}年`);
+    const { lang } = useLang();
+    const xAxisData = (payload.years ?? []).map(
+        (y) => `${y}${getObservationText(lang, "yearSuffix")}`,
+    );
 
     const chart = payload.charts?.[theme.key];
 
     const series: LineSeries[] = (chart?.series ?? []).map((s) => ({
         type: "line",
-        name: s.name,
+        name: resolveObservationChartLegend(s.name, lang),
         data: s.data,
     }));
 
     return (
         <BaseLineChart
-            title={theme.title}
-            subtitle={theme.subtitle}
+            title={resolveIndustryThemeTitle(theme.key, theme.title, lang)}
+            subtitle={resolveIndustryThemeSubtitle(
+                theme.key,
+                theme.subtitle,
+                lang,
+            )}
             xAxisData={xAxisData}
             series={series}
             legendPosition="right"

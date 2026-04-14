@@ -20,6 +20,7 @@ export type NewsItemType = {
     date: string;
     title: string;
     content: string;
+    types?: string[];
     types_display: string[];
     cover_image?: { id: number; image: string }[];
     images?: { id: number; image: string }[];
@@ -84,6 +85,7 @@ export type EventItemType = {
     id: number;
     date: string;
     location: string;
+    types?: string[];
     types_display: string[];
     content: string;
     images?: { id: number; image: string }[];
@@ -116,6 +118,7 @@ export type LiteratureItemType = {
     published_year: number;
     affiliation: string;
     link: string;
+    types?: string[];
     types_display: string[];
 };
 

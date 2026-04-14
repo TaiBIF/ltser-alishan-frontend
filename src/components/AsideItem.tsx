@@ -14,6 +14,7 @@ interface AsideItemProps {
     currentItemKey: string;
     onSelect: (child: { id: number; key: string }) => void;
     defaultOpen?: boolean;
+    resolveLabel?: (key: string, label: string) => string;
 }
 
 const AsideItem = ({
@@ -21,6 +22,7 @@ const AsideItem = ({
     currentItemKey,
     onSelect,
     defaultOpen,
+    resolveLabel,
 }: AsideItemProps) => {
     const targetRef = useRef<HTMLUListElement>(null);
 
@@ -53,7 +55,7 @@ const AsideItem = ({
                 className={`item-box c-aside__item ${active ? "now" : ""}`}
                 onClick={handleMenuClick}
             >
-                <p>{item.title}</p>
+                <p>{resolveLabel ? resolveLabel(item.key, item.title) : item.title}</p>
                 <ArrowIcon />
             </div>
 
@@ -69,7 +71,11 @@ const AsideItem = ({
                             }
                         >
                             <div className="paddborderb">
-                                <p>{child.title}</p>
+                                <p>
+                                    {resolveLabel
+                                        ? resolveLabel(child.key, child.title)
+                                        : child.title}
+                                </p>
                             </div>
                         </a>
                     </li>

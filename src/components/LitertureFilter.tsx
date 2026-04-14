@@ -14,6 +14,11 @@ import { FilterPanel } from "../components/FilterPanel";
 
 // helpers
 import { swalToast } from "../helpers/CustomSwal";
+import { useLang } from "../context/LangContext";
+import {
+    getLiteratureText,
+    resolveLiteratureTypeLabel,
+} from "../i18n/literature";
 
 interface LiteratureFilterProps {
     initialLiterature: LiteratureItemType[];
@@ -45,6 +50,7 @@ const LitertureFilter = ({
     onFiltered,
     resultRef,
 }: LiteratureFilterProps) => {
+    const { lang } = useLang();
     const [fields, setFields] = useState<FilterField<LiteratureFilterKeys>[]>(
         []
     );
@@ -87,7 +93,7 @@ const LitertureFilter = ({
             onFiltered([]);
             swalToast.fire({
                 icon: "error",
-                title: "查詢資料失敗，請稍後再試",
+                title: getLiteratureText(lang, "queryFailed"),
             });
         } finally {
             if (resultRef?.current) {
@@ -107,26 +113,33 @@ const LitertureFilter = ({
 
     useEffect(() => {
         async function loadFields() {
-            const categories = await fetchCategories();
+            const categories = (await fetchCategories()).map((item) => ({
+                ...item,
+                label: resolveLiteratureTypeLabel(
+                    item.value,
+                    item.label,
+                    lang,
+                ),
+            }));
             setFields([
                 {
                     type: "date-range",
                     key: "date_range" as any,
-                    label: "日期",
+                    label: getLiteratureText(lang, "date"),
                     startKey: "start_date",
                     endKey: "end_date",
                 },
                 {
                     type: "text",
                     key: "content_keyword",
-                    label: "關鍵字",
+                    label: getLiteratureText(lang, "keyword"),
                     col: "half",
-                    placeholder: "請輸入關鍵字",
+                    placeholder: getLiteratureText(lang, "keywordPlaceholder"),
                 },
                 {
                     type: "checkbox-group",
                     key: "category",
-                    label: "類型",
+                    label: getLiteratureText(lang, "type"),
                     col: "full",
                     options: [...categories],
                 },
@@ -134,7 +147,7 @@ const LitertureFilter = ({
         }
 
         loadFields();
-    }, []);
+    }, [lang]);
 
     return (
         <FilterPanel<LiteratureItemType, LiteratureFilterKeys>
@@ -143,6 +156,8 @@ const LitertureFilter = ({
             setFilter={setFilter}
             onApply={() => handleApply()}
             onClear={handleClear}
+            applyText={getLiteratureText(lang, "search")}
+            clearText={getLiteratureText(lang, "clear")}
         />
     );
 };

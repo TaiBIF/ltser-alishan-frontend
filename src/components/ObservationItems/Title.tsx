@@ -1,16 +1,23 @@
 // types
 import type { AsideItemType } from "../../types/item";
+import { useLang } from "../../context/LangContext";
+import {
+    getObservationText,
+    resolveObservationAsideTitle,
+} from "../../i18n/observation";
 
 interface TitleProps {
     entry: AsideItemType;
 }
 
 const Title = ({ entry }: TitleProps) => {
+    const { lang } = useLang();
+
     return (
         <div className="infbox-title">
             <div className="titlearea">
                 <h2>
-                    {entry?.title}
+                    {resolveObservationAsideTitle(entry.key, entry.title, lang)}
                     <div className="mark-cir">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +46,7 @@ const Title = ({ entry }: TitleProps) => {
                 target="_blank"
                 rel="noreferrer"
             >
-                查看資料集與研究方法
+                {getObservationText(lang, "viewDatasetAndMethod")}
             </a>
         </div>
     );

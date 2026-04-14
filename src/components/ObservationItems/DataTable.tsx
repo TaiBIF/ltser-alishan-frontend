@@ -12,6 +12,8 @@ import ArrowIcon from "../Icons/ArrowIcon";
 // context
 import { useAuth } from "../../context/AuthContext";
 import { useDownloadPop } from "../../context/DownloadPopContext";
+import { useLang } from "../../context/LangContext";
+import { getObservationText } from "../../i18n/observation";
 
 // helpers
 import { swalToast } from "../../helpers/CustomSwal";
@@ -53,6 +55,7 @@ const DataTable = ({
     setRowCountPerPage,
 }: DataTableProps) => {
     const { isLoggedIn } = useAuth();
+    const { lang } = useLang();
     const { open: openDownloadPop } = useDownloadPop();
     const hasCatalog =
         typeof observationItem === "string" &&
@@ -62,7 +65,7 @@ const DataTable = ({
         if (!isLoggedIn) {
             swalToast.fire({
                 icon: "warning",
-                title: "請登入帳號以取得下載觀測資料權限",
+                title: getObservationText(lang, "downloadNeedLogin"),
             });
             return;
         }
@@ -70,7 +73,7 @@ const DataTable = ({
         if (typeof observationItem !== "string") {
             swalToast.fire({
                 icon: "error",
-                title: "觀測項目不存在，無法下載",
+                title: getObservationText(lang, "downloadInvalidItem"),
             });
             return;
         }
@@ -88,13 +91,15 @@ const DataTable = ({
         <div className="result-area">
             <div className="toptool">
                 <div className="d-flex flex-column">
-                    <div className="data-num">資料筆數：{rowCount}</div>
+                    <div className="data-num">
+                        {getObservationText(lang, "rowCount")}：{rowCount}
+                    </div>
                     <div className="c-select c-select--light c-form__set c-form__set--row">
                         <label
                             htmlFor="site"
                             className="c-select__label c-form__label mb-0"
                         >
-                            一頁
+                            {getObservationText(lang, "perPage")}
                         </label>
                         <div className="c-select__wrapper">
                             <select
@@ -107,12 +112,12 @@ const DataTable = ({
                                 }}
                             >
                                 <option value="" disabled>
-                                    請選擇筆數
+                                    {getObservationText(lang, "selectRowCount")}
                                 </option>
                                 {[10, 30, 50, 100].map((v: number) => {
                                     return (
                                         <option key={v} value={v}>
-                                            {v} 筆
+                                            {v} {getObservationText(lang, "rowUnit")}
                                         </option>
                                     );
                                 })}
@@ -131,21 +136,21 @@ const DataTable = ({
                         className="dowapply"
                         onClick={() => handleDownloadClick("item_all")}
                     >
-                        觀測資料下載
+                        {getObservationText(lang, "downloadObservationData")}
                     </button>
                     {hasCatalog && (
                         <button
                             type="button"
                             onClick={() => handleDownloadClick("catalog")}
                         >
-                            名錄下載
+                            {getObservationText(lang, "downloadCatalog")}
                         </button>
                     )}
                 </div>
             </div>
             <div className="ovhbox" style={{ overflowX: "scroll" }}>
-                {loading && <div>觀測資料載入中</div>}
-                {error && <div>觀測資料載入發生錯誤</div>}
+                {loading && <div>{getObservationText(lang, "observationLoading")}</div>}
+                {error && <div>{getObservationText(lang, "observationError")}</div>}
 
                 {!loading &&
                     !error &&
@@ -195,7 +200,7 @@ const DataTable = ({
                     )}
 
                 {!loading && !error && rows.length === 0 && (
-                    <div>目前沒有資料</div>
+                    <div>{getObservationText(lang, "observationNoData")}</div>
                 )}
             </div>
 
@@ -205,6 +210,8 @@ const DataTable = ({
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                     totalPages={totalPages}
+                    prevText={getObservationText(lang, "paginationPrev")}
+                    nextText={getObservationText(lang, "paginationNext")}
                 />
             )}
         </div>

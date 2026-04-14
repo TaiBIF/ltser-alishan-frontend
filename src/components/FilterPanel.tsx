@@ -16,6 +16,8 @@ export interface FilterPanelProps<TItem, K extends string = string> {
     setFilter: Dispatch<SetStateAction<FilterState<K>>>;
     onApply: (rows: TItem[]) => void;
     onClear: () => void;
+    applyText?: string;
+    clearText?: string;
 }
 
 export function FilterPanel<TItem, K extends string = string>({
@@ -24,6 +26,8 @@ export function FilterPanel<TItem, K extends string = string>({
     setFilter,
     onApply,
     onClear,
+    applyText = "搜尋",
+    clearText = "清除",
 }: FilterPanelProps<TItem, K>) {
     const toggleArrayValue = (key: K, value: string | number) => {
         setFilter((prev) => {
@@ -161,10 +165,10 @@ export function FilterPanel<TItem, K extends string = string>({
 
             <div className="flex-center btn-area">
                 <button className="og-btn" onClick={onClear}>
-                    清除
+                    {clearText}
                 </button>
                 <button className="g-btn" onClick={onApply}>
-                    搜尋
+                    {applyText}
                 </button>
             </div>
         </div>

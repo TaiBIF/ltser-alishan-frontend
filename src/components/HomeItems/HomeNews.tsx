@@ -3,11 +3,18 @@ import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { API } from "../../config/api";
+import { useLang } from "../../context/LangContext";
+import {
+    getHomeSectionText,
+    resolveHomeNewsCategoryLabel,
+} from "../../i18n/homeSections";
+import { resolveNewsTypeLabel } from "../../i18n/news";
 
 // types
 import type { NewsItemType, CategoryType } from "../../types/item";
 
 const HomeNews = () => {
+    const { lang } = useLang();
     const prevRef = useRef<HTMLDivElement | null>(null);
     const nextRef = useRef<HTMLDivElement | null>(null);
 
@@ -222,7 +229,7 @@ const HomeNews = () => {
                                 </g>
                             </g>
                         </svg>
-                        <h2>NEWS</h2>
+                        <h2>{getHomeSectionText(lang, "homeNewsTitle")}</h2>
                     </div>
                     <ul className="news-filter">
                         <li
@@ -243,7 +250,7 @@ const HomeNews = () => {
                                     fill="#ffffff"
                                 />
                             </svg>
-                            <p>全部</p>
+                            <p>{getHomeSectionText(lang, "all")}</p>
                         </li>
                         {newsCategory.map((category, index) => {
                             return (
@@ -272,7 +279,13 @@ const HomeNews = () => {
                                             fill="#ffffff"
                                         />
                                     </svg>
-                                    <p>{category.name}</p>
+                                    <p>
+                                        {resolveHomeNewsCategoryLabel(
+                                            category.key,
+                                            category.name,
+                                            lang,
+                                        )}
+                                    </p>
                                 </li>
                             );
                         })}
@@ -311,9 +324,9 @@ const HomeNews = () => {
                 >
                     {filteredNews.length === 0 ? (
                         <SwiperSlide>
-                            <div className="no-news-slide">
-                                尚無相關最新消息
-                            </div>
+                                <div className="no-news-slide">
+                                {getHomeSectionText(lang, "noRelatedNews")}
+                                </div>
                         </SwiperSlide>
                     ) : (
                         filteredNews.map((item) => (
@@ -333,7 +346,12 @@ const HomeNews = () => {
                                                     className="class-tag"
                                                     key={index}
                                                 >
-                                                    {type}
+                                                    {resolveNewsTypeLabel(
+                                                        item.types?.[index] ??
+                                                            "",
+                                                        type,
+                                                        lang,
+                                                    )}
                                                 </div>
                                             )
                                         )}
@@ -382,7 +400,7 @@ const HomeNews = () => {
                     </svg>
                 </div>
                 <Link to="/news/" className="btn-linkto">
-                    <p>了解更多</p>
+                    <p>{getHomeSectionText(lang, "learnMore")}</p>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="31.001"

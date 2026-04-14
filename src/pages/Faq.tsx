@@ -16,10 +16,13 @@ import { usePageTitle } from "../hooks/usePageTitle";
 
 // helpers
 import { swalToast } from "../helpers/CustomSwal";
+import { useLang } from "../context/LangContext";
+import { getFaqText, resolveFaqCategoryLabel } from "../i18n/faq";
 
 const Faq = () => {
+    const { lang } = useLang();
     const { node, trail } = useBreadcrumb();
-    usePageTitle(node?.title_zh ?? "");
+    usePageTitle(lang === "en" ? (node?.title_en ?? "") : (node?.title_zh ?? ""));
 
     const [faqCategory, setFaqCategory] = useState<CategoryType[]>([]);
     const [allQA, setAllQA] = useState<QAType[]>([]);
@@ -60,7 +63,7 @@ const Faq = () => {
                 if (err.name !== "AbortError") {
                     swalToast.fire({
                         icon: "error",
-                        title: "獲取資料失敗，請稍後再試",
+                        title: getFaqText(lang, "fetchFailed"),
                     });
                 }
             } finally {
@@ -89,7 +92,7 @@ const Faq = () => {
             <div className="innbox">
                 {node && (
                     <Banner
-                        title={node.title_zh}
+                        title={lang === "en" ? node.title_en : node.title_zh}
                         en={node.title_en}
                         bgImg={node.bg_img}
                     />
@@ -106,7 +109,7 @@ const Faq = () => {
                                     className={filter === "all" ? "now" : ""}
                                     onClick={() => setFilter("all")}
                                 >
-                                    全部
+                                    {getFaqText(lang, "all")}
                                 </li>
 
                                 {/* 後端回來的分類 */}
@@ -118,7 +121,11 @@ const Faq = () => {
                                         }
                                         onClick={() => setFilter(category.key)}
                                     >
-                                        {category.name}
+                                        {resolveFaqCategoryLabel(
+                                            category.key,
+                                            category.name,
+                                            lang,
+                                        )}
                                     </li>
                                 ))}
                             </ul>
@@ -136,7 +143,7 @@ const Faq = () => {
                                     padding: "2rem",
                                 }}
                             >
-                                尚無任何常見問題
+                                {getFaqText(lang, "noData")}
                             </div>
                         )}
 

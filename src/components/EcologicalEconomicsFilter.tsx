@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useLang } from "../context/LangContext";
+import { getObservationText } from "../i18n/observation";
 
 // types
 import type { FilterField, FilterState } from "../types/filter";
@@ -15,23 +17,6 @@ interface EcologicalEconomicsFilterProps {
     allEvent: EcologicalEconomicsItemType[];
     onFiltered: (interview: EcologicalEconomicsItemType[]) => void;
 }
-
-const fields: FilterField<EcologicalFilterKeys>[] = [
-    {
-        type: "date-range",
-        key: "date_range" as any,
-        label: "日期",
-        startKey: "start_date",
-        endKey: "end_date",
-    },
-    {
-        type: "text",
-        key: "content_keyword",
-        label: "關鍵字",
-        col: "half",
-        placeholder: "請輸入關鍵字",
-    },
-];
 
 const initialFilter: FilterState<EcologicalFilterKeys> = {
     content_keyword: "",
@@ -73,8 +58,25 @@ const EcologicalEconomicsFilter = ({
     allEvent,
     onFiltered,
 }: EcologicalEconomicsFilterProps) => {
+    const { lang } = useLang();
     const [filter, setFilter] =
         useState<FilterState<EcologicalFilterKeys>>(initialFilter);
+    const fields: FilterField<EcologicalFilterKeys>[] = [
+        {
+            type: "date-range",
+            key: "date_range" as any,
+            label: getObservationText(lang, "date"),
+            startKey: "start_date",
+            endKey: "end_date",
+        },
+        {
+            type: "text",
+            key: "content_keyword",
+            label: getObservationText(lang, "keyword"),
+            col: "half",
+            placeholder: getObservationText(lang, "keywordPlaceholder"),
+        },
+    ];
 
     const handleApply = (rows: EcologicalEconomicsItemType[]) =>
         onFiltered(rows);
@@ -91,6 +93,8 @@ const EcologicalEconomicsFilter = ({
             setFilter={setFilter}
             onApply={handleApply}
             onClear={handleClear}
+            applyText={getObservationText(lang, "search")}
+            clearText={getObservationText(lang, "clear")}
         />
     );
 };

@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useLang } from "../../context/LangContext";
+import { getHomeSectionText } from "../../i18n/homeSections";
 
 const JoinUs = () => {
+    const { lang } = useLang();
+
     return (
         <section className="s5-join">
             <div className="tree">
@@ -129,12 +133,12 @@ const JoinUs = () => {
                                 </g>
                             </g>
                         </svg>
-                        <h2>JOIN US</h2>
+                        <h2>{getHomeSectionText(lang, "joinUsTitle")}</h2>
                     </div>
-                    <p>加入我們，一起探索臺灣原住民的社會－生態系統</p>
+                    <p>{getHomeSectionText(lang, "joinUsDesc")}</p>
                     <div className="btn-two">
                         <Link to="/contact" className="btn-linkto">
-                            <p>聯絡資訊</p>
+                            <p>{getHomeSectionText(lang, "contactInfo")}</p>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="31.001"
@@ -151,7 +155,7 @@ const JoinUs = () => {
                             </svg>
                         </Link>
                         <Link to="/terms-of-use" className="btn-linkto">
-                            <p>資料使用說明</p>
+                            <p>{getHomeSectionText(lang, "dataUsage")}</p>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="31.001"

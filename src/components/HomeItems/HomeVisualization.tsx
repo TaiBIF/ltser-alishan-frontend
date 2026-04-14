@@ -1,6 +1,8 @@
 import { useEffect, useState, useMemo } from "react";
 import ReactECharts from "echarts-for-react";
 import { API } from "../../config/api";
+import { useLang } from "../../context/LangContext";
+import { getObservationText } from "../../i18n/observation";
 
 interface SpeciesChartTypeItem {
     date: string;
@@ -47,6 +49,7 @@ const HomeVisualization = ({
     year,
     observationItems,
 }: HomeVisualizationProps) => {
+    const { lang } = useLang();
     const [cameratrapData, setCameratrapData] = useState<
         SpeciesChartTypeItem[]
     >([]);
@@ -130,7 +133,7 @@ const HomeVisualization = ({
                 }
             } catch (e: any) {
                 console.error(e);
-                setError(e.message ?? "資料載入失敗");
+                setError(e.message ?? "Load failed");
                 setCameratrapData([]);
                 setTerresoundindexData([]);
                 setBirdnetsoundData([]);
@@ -257,7 +260,7 @@ const HomeVisualization = ({
         axisIndex.temp = yAxis.length;
         yAxis.push({
             type: "value",
-            name: "氣溫（℃）",
+            name: getObservationText(lang, "weatherTemp"),
             position: "right",
             offset: 0, // 你也可以視情況調整 offset
         });
@@ -265,7 +268,7 @@ const HomeVisualization = ({
         axisIndex.rain = yAxis.length;
         yAxis.push({
             type: "value",
-            name: "降水量（mm）",
+            name: getObservationText(lang, "weatherPrecip"),
             position: "right",
             offset: 60,
         });
@@ -280,7 +283,7 @@ const HomeVisualization = ({
         axisIndex.species = yAxis.length;
         yAxis.push({
             type: "value",
-            name: "物種數",
+            name: getObservationText(lang, "speciesCount"),
             position: "left",
             minInterval: 1,
         });
@@ -292,7 +295,7 @@ const HomeVisualization = ({
         axisIndex.species !== undefined
     ) {
         series.push({
-            name: "自動相機物種數",
+            name: getObservationText(lang, "cameraTrapSpeciesCount"),
             type: "bar",
             yAxisIndex: axisIndex.species,
             barMaxWidth: 20,
@@ -306,7 +309,7 @@ const HomeVisualization = ({
         axisIndex.species !== undefined
     ) {
         series.push({
-            name: "鳥音辨識物種數",
+            name: getObservationText(lang, "birdSoundSpeciesCount"),
             type: "bar",
             yAxisIndex: axisIndex.species,
             barMaxWidth: 20,
@@ -320,7 +323,7 @@ const HomeVisualization = ({
         axisIndex.species !== undefined
     ) {
         series.push({
-            name: "植物物候物種數",
+            name: getObservationText(lang, "plantPhenologySpeciesCount"),
             type: "bar",
             yAxisIndex: axisIndex.species,
             barMaxWidth: 20,
@@ -371,7 +374,7 @@ const HomeVisualization = ({
     if (observationKeys.includes("weather")) {
         if (axisIndex.temp !== undefined) {
             series.push({
-                name: "日平均氣溫（℃）",
+                name: getObservationText(lang, "weatherTemp"),
                 type: "line",
                 yAxisIndex: axisIndex.temp,
                 showSymbol: false,
@@ -381,7 +384,7 @@ const HomeVisualization = ({
 
         if (axisIndex.rain !== undefined) {
             series.push({
-                name: "日累積降水量（mm）",
+                name: getObservationText(lang, "weatherPrecip"),
                 type: "bar",
                 yAxisIndex: axisIndex.rain,
                 barMaxWidth: 20,
@@ -421,7 +424,9 @@ const HomeVisualization = ({
     if (loading) {
         return (
             <div className="home-vis-chart">
-                <div className="chart-loading">圖表載入中</div>
+                <div className="chart-loading">
+                    {getObservationText(lang, "chartLoading")}
+                </div>
             </div>
         );
     }
@@ -429,7 +434,9 @@ const HomeVisualization = ({
     if (error) {
         return (
             <div className="home-vis-chart">
-                <div className="chart-error">載入失敗：{error}</div>
+                <div className="chart-error">
+                    {getObservationText(lang, "chartError")}：{error}
+                </div>
             </div>
         );
     }

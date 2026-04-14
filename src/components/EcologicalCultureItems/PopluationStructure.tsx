@@ -1,5 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { API } from "../../config/api";
+import { useLang } from "../../context/LangContext";
+import { getObservationText } from "../../i18n/observation";
 
 // components
 import ArrowIcon from "../../components/Icons/ArrowIcon";
@@ -35,6 +37,7 @@ type PyramidPayload = {
 };
 
 const PopluationStructure = () => {
+    const { lang } = useLang();
     const [mapLoading, setMapLoading] = useState(false);
     const [pyramidLoading, setPyramidLoading] = useState(false);
     const [linesLoading, setLinesLoading] = useState(false);
@@ -141,7 +144,7 @@ const PopluationStructure = () => {
             <div className="infbox-title">
                 <div className="titlearea">
                     <h2>
-                        人口結構
+                        {getObservationText(lang, "populationStructure")}
                         <div className="mark-cir">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -168,14 +171,16 @@ const PopluationStructure = () => {
 
             {/* 人口概況 */}
             <section className="u-section">
-                <h2 className="c-subtitle">人口概況</h2>
+                <h2 className="c-subtitle">
+                    {getObservationText(lang, "populationOverview")}
+                </h2>
                 <div className="c-select c-form__set c-select__flex-container">
                     <div>
                         <label
                             htmlFor="site"
                             className="c-select__label c-form__label"
                         >
-                            請選擇年份
+                            {getObservationText(lang, "selectYear")}
                         </label>
                         <div className="c-select__wrapper">
                             <select
@@ -188,12 +193,13 @@ const PopluationStructure = () => {
                                 disabled={mapLoading || !mapPayload}
                             >
                                 <option value="" disabled>
-                                    請選擇年份
+                                    {getObservationText(lang, "selectYear")}
                                 </option>
 
                                 {yearOptions.map((y) => (
                                     <option key={y} value={y}>
-                                        {y}年
+                                        {y}
+                                        {getObservationText(lang, "yearSuffix")}
                                     </option>
                                 ))}
                             </select>
@@ -205,7 +211,9 @@ const PopluationStructure = () => {
                     </div>
                 </div>
                 {mapLoading ? (
-                    <div style={{ padding: 12 }}>資料載入中</div>
+                    <div style={{ padding: 12 }}>
+                        {getObservationText(lang, "loadingData")}
+                    </div>
                 ) : (
                     <AreaMap populationByVillName={populationByVillName} />
                 )}
@@ -213,14 +221,16 @@ const PopluationStructure = () => {
 
             {/* 人口金字塔 */}
             <section className="u-section">
-                <h2 className="c-subtitle">人口金字塔</h2>
+                <h2 className="c-subtitle">
+                    {getObservationText(lang, "populationPyramid")}
+                </h2>
                 <div className="c-select c-form__set c-select__flex-container">
                     <div>
                         <label
                             htmlFor="site"
                             className="c-select__label c-form__label"
                         >
-                            請選擇年份
+                            {getObservationText(lang, "selectYear")}
                         </label>
                         <div className="c-select__wrapper">
                             <select
@@ -249,12 +259,13 @@ const PopluationStructure = () => {
                                 disabled={pyramidLoading || !pyramidPayload}
                             >
                                 <option value="" disabled>
-                                    請選擇年份
+                                    {getObservationText(lang, "selectYear")}
                                 </option>
 
                                 {pyramidYearOptions.map((y) => (
                                     <option key={y} value={y}>
-                                        {y}年
+                                        {y}
+                                        {getObservationText(lang, "yearSuffix")}
                                     </option>
                                 ))}
                             </select>
@@ -269,7 +280,9 @@ const PopluationStructure = () => {
                     </div>
                 </div>
                 {pyramidLoading ? (
-                    <div style={{ padding: 12 }}>資料載入中</div>
+                    <div style={{ padding: 12 }}>
+                        {getObservationText(lang, "loadingData")}
+                    </div>
                 ) : pyramidPayload?.chart?.xAxis?.length ? (
                     <PyramidChart
                         xAxis={pyramidPayload.chart.xAxis}
@@ -277,17 +290,23 @@ const PopluationStructure = () => {
                         female={pyramidPayload.chart.female}
                     />
                 ) : (
-                    <div style={{ padding: 12 }}>尚無資料</div>
+                    <div style={{ padding: 12 }}>
+                        {getObservationText(lang, "noData")}
+                    </div>
                 )}
             </section>
 
             {/* 人口變遷 */}
             <section className="u-section">
-                <h2 className="c-subtitle">人口變遷</h2>
+                <h2 className="c-subtitle">
+                    {getObservationText(lang, "populationChange")}
+                </h2>
 
                 <div className="village-population-line-chart">
                     {linesLoading ? (
-                        <div style={{ padding: 12 }}>資料載入中</div>
+                        <div style={{ padding: 12 }}>
+                            {getObservationText(lang, "loadingData")}
+                        </div>
                     ) : (
                         linesPayload &&
                         populaitonThemeList.map((o, i) => (
@@ -303,7 +322,7 @@ const PopluationStructure = () => {
 
             <section className="u-section">
                 <div className="population-data-source">
-                    資料來源：SEGIS 社會經濟資料服務平台
+                    {getObservationText(lang, "populationDataSource")}
                 </div>
             </section>
         </>

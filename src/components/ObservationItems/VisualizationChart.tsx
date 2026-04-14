@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import ReactECharts from "echarts-for-react";
 import { API } from "../../config/api";
+import { useLang } from "../../context/LangContext";
+import { getObservationText } from "../../i18n/observation";
 
 type SpeciesPoint = {
     date: string;
@@ -53,6 +55,7 @@ const VisualizationChart = ({
     locationID,
     height = 360,
 }: VisualizationChartProps) => {
+    const { lang } = useLang();
     const [data, setData] = useState<ChartPoint[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -124,7 +127,7 @@ const VisualizationChart = ({
                 chartType: "species" as ChartType,
                 series: [
                     {
-                        name: "物種數",
+                        name: getObservationText(lang, "speciesCount"),
                         type: "line",
                         smooth: false,
                         showSymbol: true,
@@ -134,7 +137,7 @@ const VisualizationChart = ({
                 ],
                 yAxis: {
                     type: "value",
-                    name: "物種數",
+                    name: getObservationText(lang, "speciesCount"),
                     minInterval: 1,
                 },
             };
@@ -160,7 +163,7 @@ const VisualizationChart = ({
                 chartType: "acoustic" as ChartType,
                 series: [
                     {
-                        name: "日平均聲音複雜度（ACI）",
+                        name: getObservationText(lang, "acousticAci"),
                         type: "line",
                         showSymbol: true,
                         sampling: "lttb",
@@ -168,7 +171,7 @@ const VisualizationChart = ({
                         yAxisIndex: 0,
                     },
                     {
-                        name: "日平均聲音多樣性指數（ADI）",
+                        name: getObservationText(lang, "acousticAdi"),
                         type: "line",
                         showSymbol: true,
                         sampling: "lttb",
@@ -176,7 +179,7 @@ const VisualizationChart = ({
                         yAxisIndex: 1,
                     },
                     {
-                        name: "日平均聲音指數（BI）",
+                        name: getObservationText(lang, "acousticBi"),
                         type: "line",
                         showSymbol: true,
                         sampling: "lttb",
@@ -184,7 +187,7 @@ const VisualizationChart = ({
                         yAxisIndex: 1,
                     },
                     {
-                        name: "日平均標準化聲景指數（NDSI）",
+                        name: getObservationText(lang, "acousticNdsi"),
                         type: "line",
                         showSymbol: true,
                         sampling: "lttb",
@@ -225,7 +228,7 @@ const VisualizationChart = ({
                 chartType: "weather" as ChartType,
                 series: [
                     {
-                        name: "日平均氣溫（°C）",
+                        name: getObservationText(lang, "weatherTemp"),
                         type: "line",
                         showSymbol: true,
                         sampling: "lttb",
@@ -233,7 +236,7 @@ const VisualizationChart = ({
                         yAxisIndex: 0,
                     },
                     {
-                        name: "日累積降水量（mm）",
+                        name: getObservationText(lang, "weatherPrecip"),
                         type: "bar", // 這個你可以改 line
                         data: precip,
                         yAxisIndex: 1,
@@ -242,12 +245,12 @@ const VisualizationChart = ({
                 yAxis: [
                     {
                         type: "value",
-                        name: "氣溫（°C）",
+                        name: getObservationText(lang, "weatherTemp"),
                         position: "left",
                     },
                     {
                         type: "value",
-                        name: "降水量（mm）",
+                        name: getObservationText(lang, "weatherPrecip"),
                         position: "right",
                     },
                 ],
@@ -261,17 +264,22 @@ const VisualizationChart = ({
             yAxis: [],
             chartType: "unknown" as ChartType,
         };
-    }, [data]);
+    }, [data, lang]);
 
     // 根據 chartType 統一產生 tooltip
     const option = useMemo(() => {
+        const tempLabel = getObservationText(lang, "weatherTemp");
+        const precipLabel = getObservationText(lang, "weatherPrecip");
         const tooltipFormatter = (params: any) => {
             const list = Array.isArray(params) ? params : [params];
             const dateStr = list[0]?.axisValue ?? "";
 
             if (chartType === "species") {
                 const p = list[0];
-                return `${dateStr}<br/>物種數：${p.data}`;
+                return `${dateStr}<br/>${getObservationText(
+                    lang,
+                    "tooltipSpeciesCount",
+                )}：${p.data}`;
             }
 
             if (chartType === "acoustic") {
@@ -291,12 +299,12 @@ const VisualizationChart = ({
             if (chartType === "weather") {
                 const lines = list
                     .map((p: any) => {
-                        if (p.seriesName.includes("氣溫")) {
+                        if (p.seriesName === tempLabel) {
                             return `${p.seriesName}: ${
                                 p.data == null ? "-" : `${p.data.toFixed(1)} °C`
                             }`;
                         }
-                        if (p.seriesName.includes("降水量")) {
+                        if (p.seriesName === precipLabel) {
                             return `${p.seriesName}: ${
                                 p.data == null ? "-" : `${p.data.toFixed(1)} mm`
                             }`;
@@ -337,22 +345,26 @@ const VisualizationChart = ({
                 { type: "slider", start: 0, end: 100, bottom: 10, height: 20 },
             ],
         };
-    }, [dates, series, yAxis, chartType, locationID]);
+    }, [dates, series, yAxis, chartType, locationID, lang]);
 
     if (!locationID) {
-        return <div>請選擇樣站</div>;
+        return <div>{getObservationText(lang, "chartNeedLocation")}</div>;
     }
     if (!observationItem) {
-        return <div>沒有該觀測項目</div>;
+        return <div>{getObservationText(lang, "chartNoItem")}</div>;
     }
     if (loading) {
-        return <div>圖表資料載入中</div>;
+        return <div>{getObservationText(lang, "chartLoading")}</div>;
     }
     if (error) {
-        return <div>獲取圖表資料發生錯誤：{error}</div>;
+        return (
+            <div>
+                {getObservationText(lang, "chartError")}：{error}
+            </div>
+        );
     }
     if (!data.length) {
-        return <div>沒有可用資料</div>;
+        return <div>{getObservationText(lang, "chartNoData")}</div>;
     }
 
     return <ReactECharts option={option} style={{ height }} notMerge={true} />;

@@ -1,11 +1,15 @@
 // types
 import type { LiteratureItemType } from "../types/item";
+import { useLang } from "../context/LangContext";
+import { resolveLiteratureTypeLabel } from "../i18n/literature";
 
 interface LiteratureResultProps {
     filteredLiterature: LiteratureItemType[];
 }
 
 const LiteratureResult = ({ filteredLiterature }: LiteratureResultProps) => {
+    const { lang } = useLang();
+
     return (
         <ul className="literature-list">
             {filteredLiterature.map((literature, index) => {
@@ -21,7 +25,13 @@ const LiteratureResult = ({ filteredLiterature }: LiteratureResultProps) => {
                                                     className="l-tag"
                                                     key={index}
                                                 >
-                                                    {type}
+                                                    {resolveLiteratureTypeLabel(
+                                                        literature.types?.[
+                                                            index
+                                                        ] ?? "",
+                                                        type,
+                                                        lang,
+                                                    )}
                                                 </span>
                                             );
                                         }

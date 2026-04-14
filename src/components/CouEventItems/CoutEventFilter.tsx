@@ -14,6 +14,11 @@ import { FilterPanel } from "../FilterPanel";
 
 // helpers
 import { swalToast } from "../../helpers/CustomSwal";
+import { useLang } from "../../context/LangContext";
+import {
+    getCouEventText,
+    resolveCouEventTypeLabel,
+} from "../../i18n/couEvent";
 
 interface CoutEventFilterProps {
     initialEvent: EventItemType[];
@@ -46,6 +51,7 @@ const CoutEventFilter = ({
     onFiltered,
     resultRef,
 }: CoutEventFilterProps) => {
+    const { lang } = useLang();
     const [filter, setFilter] =
         useState<FilterState<CouEventFilterKeys>>(initialFilter);
     const [fields, setFields] = useState<FilterField<CouEventFilterKeys>[]>([]);
@@ -93,7 +99,7 @@ const CoutEventFilter = ({
             onFiltered([]);
             swalToast.fire({
                 icon: "error",
-                title: "查詢資料失敗，請稍後再試",
+                title: getCouEventText(lang, "queryFailed"),
             });
         } finally {
             if (resultRef?.current) {
@@ -113,33 +119,36 @@ const CoutEventFilter = ({
 
     useEffect(() => {
         async function loadFields() {
-            const categories = await fetchCategories();
+            const categories = (await fetchCategories()).map((item) => ({
+                ...item,
+                label: resolveCouEventTypeLabel(item.value, item.label, lang),
+            }));
             setFields([
                 {
                     type: "date-range",
                     key: "date_range" as any,
-                    label: "日期",
+                    label: getCouEventText(lang, "date"),
                     startKey: "start_date",
                     endKey: "end_date",
                 },
                 {
                     type: "text",
                     key: "content_keyword",
-                    label: "關鍵字",
+                    label: getCouEventText(lang, "keyword"),
                     col: "quarter",
-                    placeholder: "請輸入關鍵字",
+                    placeholder: getCouEventText(lang, "keywordPlaceholder"),
                 },
                 {
                     type: "text",
                     key: "location_keyword",
-                    label: "地點",
+                    label: getCouEventText(lang, "location"),
                     col: "quarter",
-                    placeholder: "請輸入關鍵字",
+                    placeholder: getCouEventText(lang, "keywordPlaceholder"),
                 },
                 {
                     type: "checkbox-group",
                     key: "category",
-                    label: "類型",
+                    label: getCouEventText(lang, "type"),
                     col: "full",
                     options: [...categories],
                 },
@@ -147,7 +156,7 @@ const CoutEventFilter = ({
         }
 
         loadFields();
-    }, []);
+    }, [lang]);
 
     return (
         <FilterPanel<EventItemType, CouEventFilterKeys>
@@ -156,6 +165,8 @@ const CoutEventFilter = ({
             setFilter={setFilter}
             onApply={() => handleApply()}
             onClear={handleClear}
+            applyText={getCouEventText(lang, "search")}
+            clearText={getCouEventText(lang, "clear")}
         />
     );
 };

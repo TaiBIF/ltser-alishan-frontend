@@ -1,5 +1,6 @@
 import { useRef, useState, useMemo, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useLang } from "../context/LangContext";
 
 // components
 import Banner from "../components/Banner";
@@ -11,6 +12,10 @@ import IndustryStructure from "../components/EcologicalCultureItems/IndustryStru
 // hooks
 import { useBreadcrumb } from "../hooks/useBreadcrumb";
 import { usePageTitle } from "../hooks/usePageTitle";
+import {
+    getObservationText,
+    resolveObservationAsideTitle,
+} from "../i18n/observation";
 
 // types
 import type { AsideItemType } from "../types/item";
@@ -25,11 +30,15 @@ type ViewKey = "population" | "industry";
 
 const EcologicalCultrue = () => {
     const { item } = useParams<{ item?: ViewKey }>();
+    const { lang } = useLang();
     const navigate = useNavigate();
     const [active, setActive] = useState<boolean>(false);
     const targetRef = useRef<HTMLUListElement>(null);
     const { node, trail } = useBreadcrumb();
-    usePageTitle(node?.title_zh ?? "");
+    usePageTitle(
+        (lang === "en" ? node?.title_en : node?.title_zh)?.replace(/\n/g, " ") ??
+            "",
+    );
 
     const view: ViewKey = item === "industry" ? "industry" : "population";
 
@@ -82,7 +91,7 @@ const EcologicalCultrue = () => {
                             style={{ overflow: "visible" }}
                         >
                             <div className="btn-mb" onClick={handleMobileClick}>
-                                <p>項目選擇</p>
+                                <p>{getObservationText(lang, "mobileItemSelect")}</p>
                             </div>
 
                             <ul
@@ -100,6 +109,13 @@ const EcologicalCultrue = () => {
                                                     `/observation/ecological-culture/${child.key}`
                                                 );
                                             }}
+                                            resolveLabel={(key, label) =>
+                                                resolveObservationAsideTitle(
+                                                    key,
+                                                    label,
+                                                    lang,
+                                                )
+                                            }
                                             defaultOpen={index === 0}
                                         />
                                     ))}

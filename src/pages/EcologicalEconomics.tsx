@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLang } from "../context/LangContext";
 
 // types
 import type { EcologicalEconomicsItemType } from "../types/item";
@@ -11,11 +12,16 @@ import EcologicalEconomicsFilter from "../components/EcologicalEconomicsFilter";
 // hooks
 import { useBreadcrumb } from "../hooks/useBreadcrumb";
 import { usePageTitle } from "../hooks/usePageTitle";
+import { getObservationText } from "../i18n/observation";
 
 const EcologicalEconomics = () => {
+    const { lang } = useLang();
     // 找出符合 pathname 的項目 / 麵包屑
     const { node, trail } = useBreadcrumb();
-    usePageTitle(node?.title_zh ?? "");
+    usePageTitle(
+        (lang === "en" ? node?.title_en : node?.title_zh)?.replace(/\n/g, " ") ??
+            "",
+    );
 
     const allInterview: EcologicalEconomicsItemType[] = [];
     const [filteredInterview, setFilteredInterview] =
@@ -48,7 +54,8 @@ const EcologicalEconomics = () => {
                             justifyContent: "center",
                         }}
                     >
-                        尚無任何訪談資料
+                        {filteredInterview.length === 0 &&
+                            getObservationText(lang, "interviewNoData")}
                     </div>
                 </div>
             </div>

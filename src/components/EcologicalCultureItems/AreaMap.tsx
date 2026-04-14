@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import * as echarts from "echarts";
 import ReactECharts from "echarts-for-react";
+import { useLang } from "../../context/LangContext";
+import { getObservationText } from "../../i18n/observation";
 
 // data
 import villageJson from "../../data/villageGeojson.json";
@@ -28,6 +30,7 @@ interface AreaMapProps {
 }
 
 const AreaMap = ({ populationByVillName }: AreaMapProps) => {
+    const { lang } = useLang();
     // 從 GeoJSON 抓所有村名
     const villageList =
         villageJson.features?.map((f: any) => f.properties.VILLNAME) ?? [];
@@ -44,7 +47,7 @@ const AreaMap = ({ populationByVillName }: AreaMapProps) => {
     const option = {
         title: {
             subtext:
-                "本圖表以地圖方式呈現嘉義縣阿里山鄉及其周邊設有觀測站之村里分布情形，其中包含一處位於番路鄉之觀測村里。\n滑鼠懸停於各村里時可查看人口數，資料採用每年最新月份之統計數據。",
+                getObservationText(lang, "areaMapSubtext"),
             subtextStyle: {
                 color: "#333333",
                 lineHeight: 16,
@@ -60,7 +63,13 @@ const AreaMap = ({ populationByVillName }: AreaMapProps) => {
                 return `
                     <div>
                         <strong>${village}</strong><br/>
-                        人口數：${population.toLocaleString()} 人
+                        ${getObservationText(
+                            lang,
+                            "populationCountLabel",
+                        )}：${population.toLocaleString()} ${getObservationText(
+                            lang,
+                            "peopleUnit",
+                        )}
                     </div>
                 `;
             },

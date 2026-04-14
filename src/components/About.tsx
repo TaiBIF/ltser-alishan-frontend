@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { API } from "../config/api";
+import { useLang } from "../context/LangContext";
 
 // types
-import type { AboutItemType, AboutApiItemType } from "../types/item";
+import type { AboutApiItemType } from "../types/item";
 
 // helpers
 import { swalToast } from "../helpers/CustomSwal";
@@ -18,13 +19,19 @@ const typeMap: Record<string, string> = {
     "ecological-culture": "經濟與文化面向",
 };
 
+const typeMapEn: Record<string, string> = {
+    ecology: "Ecological Observation",
+    environment: "Environmental Observation",
+    "ecological-economics": "Ecological Economics",
+    "ecological-culture": "Ecology and Culture",
+};
+
 const About = () => {
     const { path } = useParams<{ path: string }>();
-    usePageTitle("關於LTSER 阿里山");
+    const { lang } = useLang();
+    usePageTitle(lang === "en" ? "About LTSER Alishan" : "關於LTSER 阿里山");
     const navigate = useNavigate();
-    const [currentAbout, setCurrentAbout] = useState<AboutItemType | null>(
-        null
-    );
+    const [currentAbout, setCurrentAbout] = useState<AboutApiItemType | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -55,15 +62,7 @@ const About = () => {
                             navigate("/", { replace: true });
                         }
                     } else {
-                        const mappedAbout: AboutItemType = {
-                            type_zh: typeMap[matched.type] ?? "",
-                            id: matched.id,
-                            path: matched.name_en,
-                            title: matched.name,
-                            content: matched.content,
-                            bg_img: matched.media_url,
-                        };
-                        setCurrentAbout(mappedAbout);
+                        setCurrentAbout(matched);
                     }
                 }
             } catch (e: any) {
@@ -83,13 +82,25 @@ const About = () => {
         return () => {
             controller.abort();
         };
-    }, [path]);
+    }, [path, navigate]);
 
     if (!currentAbout) return null;
     if (loading) return null;
     if (error && !currentAbout) return null;
 
-    const { type_zh, title, content, bg_img } = currentAbout;
+    const category =
+        lang === "en"
+            ? (typeMapEn[currentAbout.type] ?? "")
+            : (typeMap[currentAbout.type] ?? "");
+    const title =
+        lang === "en"
+            ? (currentAbout.name_en?.trim() || currentAbout.name)
+            : currentAbout.name;
+    const content =
+        lang === "en"
+            ? (currentAbout.content_en?.trim() || currentAbout.content)
+            : currentAbout.content;
+    const bg_img = currentAbout.media_url;
 
     return (
         <div className="innbox">
@@ -98,8 +109,8 @@ const About = () => {
                     <div className="about-mainbox">
                         <div className="leftbox">
                             <div className="title-area">
-                                {type_zh && (
-                                    <div className="ab-category">{type_zh}</div>
+                                {category && (
+                                    <div className="ab-category">{category}</div>
                                 )}
                                 {title && <h2>{title}</h2>}
                             </div>

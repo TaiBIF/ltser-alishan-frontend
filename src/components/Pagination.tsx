@@ -9,6 +9,8 @@ interface PaginationProps {
     currentPage: number;
     totalPages: number;
     setCurrentPage: Dispatch<SetStateAction<number>>;
+    prevText?: string;
+    nextText?: string;
 }
 
 const Pagination = (props: PaginationProps) => {
@@ -17,6 +19,8 @@ const Pagination = (props: PaginationProps) => {
         currentPage,
         setCurrentPage,
         totalPages,
+        prevText = "上一頁",
+        nextText = "下一頁",
     } = props;
 
     const pageList = () => {
@@ -74,8 +78,7 @@ const Pagination = (props: PaginationProps) => {
                         className="back m-1"
                     >
                         <PrevIcon />
-                        {/* <p>{t(`${I18N_KEY_PREFIX}.prevBtn`)}</p> */}
-                        <p>上一頁</p>
+                        <p>{prevText}</p>
                     </div>
                 )}
                 {pageList().map((v) => {
@@ -100,8 +103,7 @@ const Pagination = (props: PaginationProps) => {
                             handlePage(currentPage + 1);
                         }}
                     >
-                        {/* <p>{t(`${I18N_KEY_PREFIX}.nextBtn`)}</p> */}
-                        <p>下一頁</p>
+                        <p>{nextText}</p>
                         <NextIcon />
                     </div>
                 )}

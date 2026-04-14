@@ -18,11 +18,14 @@ import { usePageTitle } from "../hooks/usePageTitle";
 
 // helpers
 import { swalToast } from "../helpers/CustomSwal";
+import { useLang } from "../context/LangContext";
+import { getNewsText } from "../i18n/news";
 
 const News = () => {
+    const { lang } = useLang();
     // 找出符合 pathname 的項目 / 麵包屑
     const { node, trail } = useBreadcrumb();
-    usePageTitle(node?.title_zh ?? "");
+    usePageTitle(lang === "en" ? (node?.title_en ?? "") : (node?.title_zh ?? ""));
 
     const [initialNews, setInitialNews] = useState<NewsItemType[]>([]);
     const [filteredNews, setFilteredNews] = useState<NewsItemType[]>([]);
@@ -61,7 +64,7 @@ const News = () => {
                 if (err.name !== "AbortError") {
                     swalToast.fire({
                         icon: "error",
-                        title: "獲取資料失敗，請稍後再試",
+                        title: getNewsText(lang, "fetchFailed"),
                     });
                 }
             } finally {
@@ -114,7 +117,7 @@ const News = () => {
                                     padding: "2rem",
                                 }}
                             >
-                                尚無任何最新消息
+                                {getNewsText(lang, "noData")}
                             </div>
                         )}
 

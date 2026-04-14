@@ -494,6 +494,7 @@ header {
                 }
             }
             a,
+            button,
             .m3title {
                 color: #555;
                 display: block;
@@ -502,6 +503,12 @@ header {
                 text-align: center;
                 border-bottom: 1px solid #eee;
                 @include bg_change(0.3s);
+                border-left: 0;
+                border-right: 0;
+                border-top: 0;
+                background: #fff;
+                width: 100%;
+                cursor: pointer;
                 @media #{$pc_s} {
                     text-align: left;
                     padding: 10px 20px;

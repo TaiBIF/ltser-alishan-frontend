@@ -1,5 +1,6 @@
 import { useRef, useState, useMemo, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useLang } from "../context/LangContext";
 
 // types
 import type { AsideItemType } from "../types/item";
@@ -19,18 +20,26 @@ import ObservationItem from "../components/ObservationItem";
 // hooks
 import { useBreadcrumb } from "../hooks/useBreadcrumb";
 import { usePageTitle } from "../hooks/usePageTitle";
+import {
+    getObservationText,
+    resolveObservationAsideTitle,
+} from "../i18n/observation";
 
 // animation
 import { gsapSlideToggle } from "../utils/animation";
 
 const Observation = () => {
     const { path, item } = useParams<{ path: string; item?: string }>();
+    const { lang } = useLang();
     const navigate = useNavigate();
     const [active, setActive] = useState<boolean>(false);
     const targetRef = useRef<HTMLUListElement>(null);
 
     const { node, trail } = useBreadcrumb();
-    usePageTitle(node?.title_zh ?? "");
+    usePageTitle(
+        (lang === "en" ? node?.title_en : node?.title_zh)?.replace(/\n/g, " ") ??
+            "",
+    );
 
     const asideLists = useMemo<Record<string, AsideItemType[]>>(
         () => ({
@@ -100,7 +109,12 @@ const Observation = () => {
                             style={{ overflow: "visible" }}
                         >
                             <div className="btn-mb" onClick={handleMobileClick}>
-                                <p>觀測項目選擇</p>
+                                <p>
+                                    {getObservationText(
+                                        lang,
+                                        "mobileObservationItemSelect",
+                                    )}
+                                </p>
                             </div>
 
                             <ul
@@ -120,6 +134,13 @@ const Observation = () => {
                                                         `/observation/${path}/${child.key}`
                                                     );
                                                 }}
+                                                resolveLabel={(key, label) =>
+                                                    resolveObservationAsideTitle(
+                                                        key,
+                                                        label,
+                                                        lang,
+                                                    )
+                                                }
                                                 defaultOpen={index === 0}
                                             />
                                         );

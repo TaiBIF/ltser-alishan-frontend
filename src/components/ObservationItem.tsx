@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo, useRef } from "react";
 import { API } from "../config/api";
+import { useLang } from "../context/LangContext";
 
 // types
 import type {
@@ -31,6 +32,7 @@ interface ObservationItemProps {
 type RowRecord = Record<string, unknown>;
 
 const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
+    const { lang } = useLang();
     const [rows, setRows] = useState<RowItemType[]>([]);
     const [rowCount, setRowCount] = useState<number>(0);
     const [rowCountPerPage, setRowCountPerPage] = useState<number>(10);
@@ -80,8 +82,9 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
                     .map((f) => ({
                         key: f.field_name,
                         label:
-                            f.field_name_zh_tw ||
-                            f.field_name_en ||
+                            (lang === "en"
+                                ? f.field_name_en || f.field_name_zh_tw
+                                : f.field_name_zh_tw || f.field_name_en) ||
                             f.field_name,
                         type: f.field_type!,
                     }));
@@ -91,8 +94,9 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
                     .map((f) => ({
                         key: f.field_name,
                         label:
-                            f.field_name_zh_tw ||
-                            f.field_name_en ||
+                            (lang === "en"
+                                ? f.field_name_en || f.field_name_zh_tw
+                                : f.field_name_zh_tw || f.field_name_en) ||
                             f.field_name,
                         type: f.field_type!,
                     }));
@@ -110,7 +114,7 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
         })();
 
         return () => controller.abort();
-    }, [entry]);
+    }, [entry, lang]);
 
     // 2) 取資料列（依賴 entry、分頁、filters、fields）
     useEffect(() => {

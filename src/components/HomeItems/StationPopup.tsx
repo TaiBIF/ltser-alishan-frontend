@@ -3,6 +3,12 @@ import { useMap } from "react-leaflet";
 // context
 import { useAuth } from "../../context/AuthContext";
 import { useDownloadPop } from "../../context/DownloadPopContext";
+import { useLang } from "../../context/LangContext";
+import { getCommonText } from "../../i18n/common";
+import {
+    getObservationText,
+    resolveObservationMapItemLabel,
+} from "../../i18n/observation";
 
 // helpers
 import { swalToast } from "../../helpers/CustomSwal";
@@ -29,6 +35,7 @@ const StationPopup = ({
 }: StationPopupProps) => {
     const map = useMap();
     const { isLoggedIn } = useAuth();
+    const { lang } = useLang();
     const { open: openDownloadPop } = useDownloadPop();
 
     const itemsThisYear = observationItem[selectedYear] ?? [];
@@ -52,7 +59,7 @@ const StationPopup = ({
         if (!isLoggedIn) {
             swalToast.fire({
                 icon: "warning",
-                title: "請登入帳號以取得下載觀測資料權限",
+                title: getObservationText(lang, "downloadNeedLogin"),
             });
             return;
         }
@@ -86,7 +93,9 @@ const StationPopup = ({
                     </svg>
                 </button>
 
-                <h3 className="item-title">{locationName}</h3>
+                <h3 className="item-title">
+                    {lang === "en" ? locationID : locationName}
+                </h3>
 
                 <table
                     className="map-tablestyle"
@@ -96,13 +105,13 @@ const StationPopup = ({
                 >
                     <thead>
                         <tr>
-                            <td>調查年份</td>
+                            <td>{getObservationText(lang, "surveyYear")}</td>
                             <td>{selectedYear}</td>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>觀測項目</td>
+                            <td>{getCommonText(lang, "ecologicalObservation")}</td>
                             <td>
                                 <ul
                                     style={{
@@ -112,7 +121,12 @@ const StationPopup = ({
                                     }}
                                 >
                                     {itemsThisYear.map((item) => (
-                                        <li key={item}>{item}</li>
+                                        <li key={item}>
+                                            {resolveObservationMapItemLabel(
+                                                item,
+                                                lang,
+                                            )}
+                                        </li>
                                     ))}
                                 </ul>
                             </td>
@@ -122,7 +136,7 @@ const StationPopup = ({
 
                 <div className="align-center">
                     <button className="link-more" onClick={handleViewChart}>
-                        <p>查看圖表</p>
+                        <p>{getObservationText(lang, "viewChart")}</p>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="30.999"
@@ -140,7 +154,7 @@ const StationPopup = ({
                     </button>
 
                     <button className="link-more" onClick={handleDownloadClick}>
-                        <p>資料下載</p>
+                        <p>{getObservationText(lang, "downloadObservationData")}</p>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="30.999"

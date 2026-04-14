@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { API } from "../../config/api";
+import { useLang } from "../../context/LangContext";
+import { getObservationText } from "../../i18n/observation";
 
 // components
 import IndustryLineChart from "./IndustryLineChart";
@@ -22,6 +24,7 @@ type IndustryPayload = {
 };
 
 const IndustryStructure = () => {
+    const { lang } = useLang();
     const [loading, setLoading] = useState(false);
     const [hasLoaded, setHasLoaded] = useState(false);
     const [payload, setPayload] = useState<IndustryPayload | null>(null);
@@ -56,7 +59,7 @@ const IndustryStructure = () => {
             <div className="infbox-title">
                 <div className="titlearea">
                     <h2>
-                        產業結構
+                        {getObservationText(lang, "industryStructure")}
                         <div className="mark-cir">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +87,9 @@ const IndustryStructure = () => {
             <section className="u-section">
                 <div className="town-industry-line-chart">
                     {loading && !hasLoaded ? (
-                        <div style={{ padding: 12 }}>載入中…</div>
+                        <div style={{ padding: 12 }}>
+                            {getObservationText(lang, "loadingData")}
+                        </div>
                     ) : payload ? (
                         industryThemeList.map((theme: ThemeItem, i) => (
                             <IndustryLineChart
@@ -94,14 +99,16 @@ const IndustryStructure = () => {
                             />
                         ))
                     ) : (
-                        <div style={{ padding: 12 }}>尚無資料</div>
+                        <div style={{ padding: 12 }}>
+                            {getObservationText(lang, "noData")}
+                        </div>
                     )}
                 </div>
             </section>
 
             <section className="u-section">
                 <div className="population-data-source">
-                    資料來源：SEGIS 社會經濟資料服務平台
+                    {getObservationText(lang, "populationDataSource")}
                 </div>
             </section>
         </>

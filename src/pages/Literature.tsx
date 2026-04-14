@@ -18,10 +18,13 @@ import { usePageTitle } from "../hooks/usePageTitle";
 
 // helpers
 import { swalToast } from "../helpers/CustomSwal";
+import { useLang } from "../context/LangContext";
+import { getLiteratureText } from "../i18n/literature";
 
 const Literature = () => {
+    const { lang } = useLang();
     const { node, trail } = useBreadcrumb();
-    usePageTitle(node?.title_zh ?? "");
+    usePageTitle(lang === "en" ? (node?.title_en ?? "") : (node?.title_zh ?? ""));
 
     const [initialLiterature, setInitialLiterature] = useState<
         LiteratureItemType[]
@@ -64,7 +67,7 @@ const Literature = () => {
                 if (err.name !== "AbortError") {
                     swalToast.fire({
                         icon: "error",
-                        title: "獲取資料失敗，請稍後再試",
+                        title: getLiteratureText(lang, "fetchFailed"),
                     });
                 }
             } finally {
@@ -120,7 +123,7 @@ const Literature = () => {
                                             padding: "2rem",
                                         }}
                                     >
-                                        尚無任何相關文獻
+                                        {getLiteratureText(lang, "noData")}
                                     </div>
                                 )}
 

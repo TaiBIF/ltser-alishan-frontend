@@ -6,6 +6,8 @@ import type { ConvertedFieldItemType, FilterItemType } from "../../types/item";
 
 // hooks
 import { useFieldRenderer } from "../../hooks/useObservation";
+import { useLang } from "../../context/LangContext";
+import { getObservationText } from "../../i18n/observation";
 
 interface FieldFilterProps {
     fields: ConvertedFieldItemType[];
@@ -18,6 +20,7 @@ const FieldFilter = ({
     setFilters,
     setCurrentPage,
 }: FieldFilterProps) => {
+    const { lang } = useLang();
     const { renderInputByType } = useFieldRenderer();
     return (
         <>
@@ -25,7 +28,9 @@ const FieldFilter = ({
                 id="search"
                 style={{ position: "relative", top: "-96px" }}
             ></div>
-            <div className="center-title">資料列表搜尋</div>
+            <div className="center-title">
+                {getObservationText(lang, "fieldSearchTitle")}
+            </div>
             <div className="input-box">
                 <Formik
                     enableReinitialize
@@ -52,10 +57,10 @@ const FieldFilter = ({
 
                             <div className="send-btnarea">
                                 <button type="reset" className="clearall">
-                                    清除
+                                    {getObservationText(lang, "clear")}
                                 </button>
                                 <button type="submit" className="searchall">
-                                    搜尋
+                                    {getObservationText(lang, "search")}
                                 </button>
                             </div>
                         </Form>

@@ -14,6 +14,8 @@ import { FilterPanel } from "../FilterPanel";
 
 // helpers
 import { swalToast } from "../../helpers/CustomSwal";
+import { useLang } from "../../context/LangContext";
+import { getNewsText, resolveNewsTypeLabel } from "../../i18n/news";
 
 interface NewsFilterProps {
     initialNews: NewsItemType[];
@@ -45,6 +47,7 @@ const NewsFilter = ({
     onFiltered,
     resultRef,
 }: NewsFilterProps) => {
+    const { lang } = useLang();
     const [fields, setFields] = useState<FilterField<NewsFilterKeys>[]>([]);
     const [filter, setFilter] = useState<NewsFilterType>(initialFilter);
 
@@ -84,7 +87,7 @@ const NewsFilter = ({
             onFiltered([]);
             swalToast.fire({
                 icon: "error",
-                title: "查詢資料失敗，請稍後再試",
+                title: getNewsText(lang, "queryFailed"),
             });
         } finally {
             if (resultRef?.current) {
@@ -104,26 +107,29 @@ const NewsFilter = ({
 
     useEffect(() => {
         async function loadFields() {
-            const categories = await fetchCategories();
+            const categories = (await fetchCategories()).map((item) => ({
+                ...item,
+                label: resolveNewsTypeLabel(item.value, item.label, lang),
+            }));
             setFields([
                 {
                     type: "date-range",
                     key: "date_range" as any,
-                    label: "日期",
+                    label: getNewsText(lang, "date"),
                     startKey: "start_date",
                     endKey: "end_date",
                 },
                 {
                     type: "text",
                     key: "content_keyword",
-                    label: "關鍵字",
+                    label: getNewsText(lang, "keyword"),
                     col: "half",
-                    placeholder: "請輸入關鍵字",
+                    placeholder: getNewsText(lang, "keywordPlaceholder"),
                 },
                 {
                     type: "checkbox-group",
                     key: "category",
-                    label: "類型",
+                    label: getNewsText(lang, "type"),
                     col: "full",
                     options: [...categories],
                 },
@@ -131,7 +137,7 @@ const NewsFilter = ({
         }
 
         loadFields();
-    }, []);
+    }, [lang]);
 
     return (
         <FilterPanel<NewsItemType, NewsFilterKeys>
@@ -140,6 +146,8 @@ const NewsFilter = ({
             setFilter={setFilter}
             onApply={() => handleApply()}
             onClear={handleClear}
+            applyText={getNewsText(lang, "search")}
+            clearText={getNewsText(lang, "clear")}
         />
     );
 };

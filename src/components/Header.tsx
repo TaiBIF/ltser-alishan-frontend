@@ -5,6 +5,10 @@ import { API } from "../config/api";
 
 // context
 import { useAuth } from "../context/AuthContext";
+import { useLang } from "../context/LangContext";
+import { getHeaderText } from "../i18n/header";
+import { resolveAboutTitle } from "../i18n/about";
+import { getCommonText } from "../i18n/common";
 
 // types
 import type { AboutApiItemType } from "../types/item";
@@ -18,6 +22,7 @@ interface HeaderProps {
 
 const Header = ({ setIsLoginOpen }: HeaderProps) => {
     const { isLoggedIn, logout, isStaff } = useAuth();
+    const { lang, setLang } = useLang();
     const [items, setItems] = useState<AboutApiItemType[]>([]);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDesktop, setIsDesktop] = useState(
@@ -180,8 +185,8 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                 <Link to="/" className="logo">
                     <img src="/logo.png" alt="長期社會生態核心觀測-原民站" />
                     <div className="logo-txt">
-                        <span>LTSER INDEGENOUS - Alishan</span>
-                        <h1>長期社會生態核心觀測 阿里山站</h1>
+                        <span>{getHeaderText(lang, "logoSubtitle")}</span>
+                        <h1>{getHeaderText(lang, "logoTitle")}</h1>
                     </div>
                 </Link>
                 <div
@@ -202,7 +207,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                 }
                                 onClick={() => handleTopMenuClick("about")}
                             >
-                                關於LTSER_阿里山
+                                {getCommonText(lang, "aboutLtser")}
                                 <span></span>
                             </a>
                             <div
@@ -231,7 +236,10 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                                     )
                                                 }
                                             >
-                                                生態觀測
+                                                {getCommonText(
+                                                    lang,
+                                                    "ecologyCategory",
+                                                )}
                                                 <div className="mark"></div>
                                             </div>
                                             {ecology.map((item) => (
@@ -249,7 +257,10 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                                     <a
                                                         href={`/about/${item.name_en}`}
                                                     >
-                                                        {item.name}
+                                                        {resolveAboutTitle(
+                                                            item,
+                                                            lang,
+                                                        )}
                                                     </a>
                                                 </div>
                                             ))}
@@ -270,7 +281,10 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                                     )
                                                 }
                                             >
-                                                環境觀測
+                                                {getCommonText(
+                                                    lang,
+                                                    "environmentCategory",
+                                                )}
                                                 <div className="mark"></div>
                                             </div>
 
@@ -289,7 +303,10 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                                     <a
                                                         href={`/about/${item.name_en}`}
                                                     >
-                                                        {item.name}
+                                                        {resolveAboutTitle(
+                                                            item,
+                                                            lang,
+                                                        )}
                                                     </a>
                                                 </div>
                                             ))}
@@ -309,7 +326,10 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                                     )
                                                 }
                                             >
-                                                生態經濟
+                                                {getCommonText(
+                                                    lang,
+                                                    "economicsCategory",
+                                                )}
                                                 <div className="mark"></div>
                                             </div>
 
@@ -328,7 +348,10 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                                     <a
                                                         href={`/about/${item.name_en}`}
                                                     >
-                                                        {item.name}
+                                                        {resolveAboutTitle(
+                                                            item,
+                                                            lang,
+                                                        )}
                                                     </a>
                                                 </div>
                                             ))}
@@ -388,7 +411,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                     handleTopMenuClick("observation")
                                 }
                             >
-                                觀測站資料
+                                {getCommonText(lang, "observationStation")}
                                 <span></span>
                             </p>
                             <div
@@ -402,19 +425,28 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                             >
                                 <div className="w_bg">
                                     <Link to="/observation/data-catalog">
-                                        資料目錄
+                                        {getCommonText(lang, "dataCatalog")}
                                     </Link>
                                     <Link to="/observation/ecology">
-                                        生態觀測
+                                        {getCommonText(
+                                            lang,
+                                            "ecologicalObservation",
+                                        )}
                                     </Link>
                                     <Link to="/observation/environment">
-                                        環境觀測
+                                        {getCommonText(
+                                            lang,
+                                            "environmentalObservation",
+                                        )}
                                     </Link>
                                     <Link to="/observation/ecological-economics">
-                                        生態經濟
+                                        {getCommonText(
+                                            lang,
+                                            "ecologicalEconomics",
+                                        )}
                                     </Link>
                                     <Link to="/observation/ecological-culture">
-                                        經濟與文化面向
+                                        {getCommonText(lang, "ecologyCulture")}
                                     </Link>
                                 </div>
                             </div>
@@ -429,7 +461,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                 }
                                 onClick={() => handleTopMenuClick("cou")}
                             >
-                                鄒族記事
+                                {getHeaderText(lang, "couChronicle")}
                                 <span></span>
                             </p>
                             <div
@@ -442,32 +474,37 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                 }
                             >
                                 <div className="w_bg">
-                                    <Link to="/cou/event">重要活動紀錄</Link>
+                                    <Link to="/cou/event">
+                                        {getHeaderText(
+                                            lang,
+                                            "majorEventRecord",
+                                        )}
+                                    </Link>
                                 </div>
                             </div>
                         </li>
                         <li>
                             <Link to="/news" className="big_title">
-                                最新消息
+                                {getCommonText(lang, "news")}
                                 <span></span>
                             </Link>
                         </li>
                         <li>
                             <Link to="/literature" className="big_title">
-                                相關文獻
+                                {getCommonText(lang, "literature")}
                                 <span></span>
                             </Link>
                         </li>
                         <li>
                             <Link to="/faq" className="big_title">
-                                常見Q&A
+                                {getCommonText(lang, "faq")}
                                 <span></span>
                             </Link>
                         </li>
                         {isLoggedIn && isStaff && (
                             <li>
                                 <Link to="/form-link" className="big_title">
-                                    常用表單與連結
+                                    {getHeaderText(lang, "formsAndLinks")}
                                     <span></span>
                                 </Link>
                             </li>
@@ -490,11 +527,27 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                     />
                                 </svg>
                             </div>
-                            <p>選擇語系</p>
+                            <p>{getHeaderText(lang, "language")}</p>
                             <div className="menu_2">
                                 <div className="w_bg">
-                                    <a href="#">English</a>
-                                    <a href="#">繁體中文</a>
+                                    <button
+                                        type="button"
+                                        className={`lang-btn${
+                                            lang === "en" ? " now" : ""
+                                        }`}
+                                        onClick={() => setLang("en")}
+                                    >
+                                        English
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className={`lang-btn${
+                                            lang === "zh-TW" ? " now" : ""
+                                        }`}
+                                        onClick={() => setLang("zh-TW")}
+                                    >
+                                        繁體中文
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -515,7 +568,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                     />
                                 </svg>
                             </div>
-                            <p>聯絡我們</p>
+                            <p>{getHeaderText(lang, "contact")}</p>
                         </Link>
                         <div
                             className="loginbox"
@@ -541,13 +594,18 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                         />
                                     </svg>
                                 </div>
-                                <p>登入</p>
+                                <p>{getHeaderText(lang, "login")}</p>
                             </div>
                             <div className="menu_2">
                                 <div className="w_bg">
                                     {isLoggedIn ? (
                                         <>
-                                            <Link to="/dashboard">後台</Link>
+                                            <Link to="/dashboard">
+                                                {getHeaderText(
+                                                    lang,
+                                                    "dashboard",
+                                                )}
+                                            </Link>
                                             <a
                                                 href="/"
                                                 onClick={(e) => {
@@ -555,7 +613,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                                     logout();
                                                 }}
                                             >
-                                                登出
+                                                {getHeaderText(lang, "logout")}
                                             </a>
                                         </>
                                     ) : (
@@ -564,7 +622,7 @@ const Header = ({ setIsLoginOpen }: HeaderProps) => {
                                                 setIsLoginOpen(true);
                                             }}
                                         >
-                                            登入
+                                            {getHeaderText(lang, "login")}
                                         </a>
                                     )}
                                 </div>

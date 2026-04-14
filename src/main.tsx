@@ -10,15 +10,18 @@ import App from "./App.tsx";
 // context
 import { AuthProvider } from "./context/AuthContext.tsx";
 import { DownloadPopProvider } from "./context/DownloadPopContext.tsx";
+import { LangProvider } from "./context/LangContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <BrowserRouter>
-            <AuthProvider>
-                <DownloadPopProvider>
-                    <App />
-                </DownloadPopProvider>
-            </AuthProvider>
+            <LangProvider>
+                <AuthProvider>
+                    <DownloadPopProvider>
+                        <App />
+                    </DownloadPopProvider>
+                </AuthProvider>
+            </LangProvider>
         </BrowserRouter>
     </StrictMode>
 );

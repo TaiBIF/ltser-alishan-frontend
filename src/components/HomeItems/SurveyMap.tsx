@@ -13,6 +13,12 @@ import { divIcon } from "leaflet";
 // comnponents
 import StationPopup from "./StationPopup";
 import HomeVisualization from "./HomeVisualization";
+import { useLang } from "../../context/LangContext";
+import { getHomeSectionText } from "../../i18n/homeSections";
+import {
+    getObservationText,
+    resolveObservationMapItemLabel,
+} from "../../i18n/observation";
 
 const customIcon = divIcon({
     html: `
@@ -50,6 +56,21 @@ type ChartTarget = {
 };
 
 const SurveyMap = () => {
+    const { lang } = useLang();
+    const tileConfig =
+        lang === "en"
+            ? {
+                  // CARTO Positron (labels are primarily English/Latin)
+                  url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                  attribution:
+                      '&copy; OpenStreetMap contributors &copy; CARTO',
+              }
+            : {
+                  // Keep existing OSM layer for zh-TW
+                  url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                  attribution:
+                      '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>',
+              };
     const position: [number, number] = [23.5, 120.8];
     const [iconPosition, setIconPosition] = useState<IconPositionItemType[]>(
         []
@@ -259,12 +280,12 @@ const SurveyMap = () => {
                             </g>
                         </g>
                     </svg>
-                    <h2>survey map</h2>
+                    <h2>{getHomeSectionText(lang, "surveyMapTitle")}</h2>
                 </div>
 
                 <div className="map-area">
                     <div className="select-box">
-                        <h3>年份/觀測項目篩選</h3>
+                        <h3>{getHomeSectionText(lang, "yearItemFilter")}</h3>
                         <div className="select-itembox">
                             <div className="select-itembox">
                                 {/* 年份 */}
@@ -289,10 +310,18 @@ const SurveyMap = () => {
                                     value={selectedItem}
                                     onChange={handleItemChange}
                                 >
-                                    <option value="">全部觀測項目</option>
+                                    <option value="">
+                                        {getHomeSectionText(
+                                            lang,
+                                            "allObservationItems",
+                                        )}
+                                    </option>
                                     {itemOptions.map((item) => (
                                         <option key={item} value={item}>
-                                            {item}
+                                            {resolveObservationMapItemLabel(
+                                                item,
+                                                lang,
+                                            )}
                                         </option>
                                     ))}
                                 </select>
@@ -309,8 +338,8 @@ const SurveyMap = () => {
                                 style={{ height: "100%", width: "100%" }}
                             >
                                 <TileLayer
-                                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
-                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                    attribution={tileConfig.attribution}
+                                    url={tileConfig.url}
                                 />
 
                                 {iconPosition.map((item, index) => {
@@ -366,12 +395,23 @@ const SurveyMap = () => {
                                         <div className="chart-panel-header">
                                             <h4>
                                                 {chartTarget.year}–{" "}
-                                                {chartTarget.locationName}–{" "}
+                                                {lang === "en"
+                                                    ? chartTarget.locationID
+                                                    : chartTarget.locationName}
+                                                –{" "}
                                                 {chartTarget.items.length
-                                                    ? chartTarget.items.join(
-                                                          "｜"
-                                                      )
-                                                    : "無"}
+                                                    ? chartTarget.items
+                                                          .map((item) =>
+                                                              resolveObservationMapItemLabel(
+                                                                  item,
+                                                                  lang,
+                                                              ),
+                                                          )
+                                                          .join("｜")
+                                                    : getObservationText(
+                                                          lang,
+                                                          "none",
+                                                      )}
                                             </h4>
                                             <button
                                                 className="xx"

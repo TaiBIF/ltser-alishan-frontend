@@ -2,12 +2,16 @@ import { Link } from "react-router-dom";
 
 // types
 import type { NewsItemType } from "../../types/item";
+import { useLang } from "../../context/LangContext";
+import { resolveNewsTypeLabel } from "../../i18n/news";
 
 interface NewsResultProps {
     filteredNews: NewsItemType[];
 }
 
 const NewsResult = ({ filteredNews }: NewsResultProps) => {
+    const { lang } = useLang();
+
     return (
         <div className="news-list">
             <ul>
@@ -17,12 +21,17 @@ const NewsResult = ({ filteredNews }: NewsResultProps) => {
                             <Link to={`/news/${news.id}`}>
                                 <div className="cat-date">
                                     {news.types_display.map((type, index) => {
+                                        const typeKey = news.types?.[index] ?? "";
                                         return (
                                             <div
                                                 key={index}
                                                 className="category e-tag e-tag--news"
                                             >
-                                                {type}
+                                                {resolveNewsTypeLabel(
+                                                    typeKey,
+                                                    type,
+                                                    lang,
+                                                )}
                                             </div>
                                         );
                                     })}

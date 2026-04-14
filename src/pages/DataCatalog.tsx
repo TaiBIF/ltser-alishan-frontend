@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useLang } from "../context/LangContext";
 
 // components
 import Banner from "../components/Banner";
@@ -7,13 +8,23 @@ import Breadcrumb from "../components/Breadcrumb";
 // hooks
 import { useBreadcrumb } from "../hooks/useBreadcrumb";
 import { usePageTitle } from "../hooks/usePageTitle";
+import {
+    getObservationText,
+    resolveObservationCatalogDescription,
+    resolveObservationCatalogName,
+    resolveObservationCatalogType,
+} from "../i18n/observation";
 
 // data
 import { catalogList } from "../data/dataCatlog";
 
 const DataCatalog = () => {
+    const { lang } = useLang();
     const { node, trail } = useBreadcrumb();
-    usePageTitle(node?.title_zh ?? "");
+    usePageTitle(
+        (lang === "en" ? node?.title_en : node?.title_zh)?.replace(/\n/g, " ") ??
+            "",
+    );
 
     const typeCount = catalogList.reduce<Record<string, number>>(
         (acc, item) => {
@@ -38,19 +49,19 @@ const DataCatalog = () => {
                 <div className="main-box">
                     <div className="terms-editer">
                         <p>
-                            本頁彙整 LTSER
-                            阿里山站長期社會生態核心觀測資料。若您需要完整觀測資料，請先登入會員，並點擊下方表格的對應觀測項目頁面，使用「資料下載」或「物種名錄下載」功能進行取得。使用前請先詳閱本網站{" "}
+                            {getObservationText(lang, "dataCatalogDescriptionStart")}{" "}
                             <Link
                                 to="/privacy-policy"
                                 className="highlight-link"
                             >
-                                隱私權政策
+                                {getObservationText(lang, "privacyPolicy")}
                             </Link>{" "}
-                            與{" "}
+                            {getObservationText(lang, "dataCatalogDescriptionMiddle")}{" "}
                             <Link to="/terms-of-use" className="highlight-link">
-                                使用者條款
+                                {getObservationText(lang, "termsOfUse")}
                             </Link>
-                            ，並依規範使用。
+                            {" "}
+                            {getObservationText(lang, "dataCatalogDescriptionEnd")}
                         </p>
                         <div className="data-catalog-table-area">
                             <div className="ovhbox">
@@ -62,8 +73,13 @@ const DataCatalog = () => {
                                 >
                                     <tbody>
                                         <tr>
-                                            <td>類型</td>
-                                            <td>資料集名稱</td>
+                                            <td>{getObservationText(lang, "catalogType")}</td>
+                                            <td>
+                                                {getObservationText(
+                                                    lang,
+                                                    "catalogDatasetName",
+                                                )}
+                                            </td>
                                         </tr>
                                         {catalogList.map((item, index) => (
                                             <tr
@@ -83,7 +99,10 @@ const DataCatalog = () => {
                                                                 "nowrap",
                                                         }}
                                                     >
-                                                        {item.type}
+                                                        {resolveObservationCatalogType(
+                                                            item.type,
+                                                            lang,
+                                                        )}
                                                     </td>
                                                 ) : null}
                                                 <td>
@@ -92,10 +111,18 @@ const DataCatalog = () => {
                                                             to={item.link}
                                                             className="highlight-link"
                                                         >
-                                                            {item.name}
+                                                            {resolveObservationCatalogName(
+                                                                item.link,
+                                                                item.name,
+                                                                lang,
+                                                            )}
                                                         </Link>
                                                         <p>
-                                                            {item.description}
+                                                            {resolveObservationCatalogDescription(
+                                                                item.link,
+                                                                item.description,
+                                                                lang,
+                                                            )}
                                                         </p>
                                                     </div>
                                                 </td>

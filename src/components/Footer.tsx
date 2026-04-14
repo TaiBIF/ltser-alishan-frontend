@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import { useLang } from "../context/LangContext";
+import { getCommonText } from "../i18n/common";
+import { getFooterText } from "../i18n/footer";
 
 const Footer = () => {
+    const { lang } = useLang();
+
     return (
         <footer>
             <div className="topline"></div>
@@ -117,18 +122,23 @@ const Footer = () => {
                     </div>
                     <ul className="footer-menu">
                         <li>
-                            <p className="btitle">關於LTSER_阿里山</p>
+                            <p className="btitle">
+                                {getCommonText(lang, "aboutLtser")}
+                            </p>
                             <Link to="/about/camtrap" className="stitle">
-                                生態觀測
+                                {getCommonText(lang, "ecologicalObservation")}
                             </Link>
                             <Link to="/about/weather" className="stitle">
-                                環境觀測
+                                {getCommonText(
+                                    lang,
+                                    "environmentalObservation",
+                                )}
                             </Link>
                             <Link
                                 to="/about/ecological-economics"
                                 className="stitle"
                             >
-                                生態經濟
+                                {getCommonText(lang, "ecologicalEconomics")}
                             </Link>
                             {/* <Link
                                 to="/about/ecological-culture"
@@ -138,44 +148,49 @@ const Footer = () => {
                             </Link> */}
                         </li>
                         <li>
-                            <p className="btitle">觀測站資料</p>
+                            <p className="btitle">
+                                {getCommonText(lang, "observationStation")}
+                            </p>
                             <Link
                                 to="/observation/data-catalog"
                                 className="stitle"
                             >
-                                資料目錄
+                                {getCommonText(lang, "dataCatalog")}
                             </Link>
                             <Link to="/observation/ecology" className="stitle">
-                                生態觀測
+                                {getCommonText(lang, "ecologicalObservation")}
                             </Link>
                             <Link
                                 to="/observation/environment"
                                 className="stitle"
                             >
-                                環境觀測
+                                {getCommonText(
+                                    lang,
+                                    "environmentalObservation",
+                                )}
                             </Link>
                             <Link
                                 to="/observation/ecological-economics"
                                 className="stitle"
                             >
-                                生態經濟
+                                {getCommonText(lang, "ecologicalEconomics")}
                             </Link>
                             <Link
                                 to="/observation/ecological-culture"
                                 className="stitle"
                             >
-                                經濟與文化面向
+                                {getCommonText(lang, "ecologyCulture")}
                             </Link>
                         </li>
                         <li>
                             <Link to="/news" className="btitle">
-                                最新消息
+                                {getCommonText(lang, "news")}
                             </Link>
                             <Link to="/literature" className="btitle">
-                                相關文獻
+                                {getCommonText(lang, "literature")}
                             </Link>
                             <Link to="/faq" className="btitle">
-                                常見Q&A
+                                {getCommonText(lang, "faq")}
                             </Link>
                         </li>
                     </ul>
@@ -187,27 +202,30 @@ const Footer = () => {
                         >
                             <img src="/ftlogo8.png" />
                             <p>
-                                資料庫管理：
+                                {getFooterText(lang, "taibifManage")}
                                 <br />
-                                TaiBIF
+                                {getFooterText(lang, "taibifName")}
                                 <br />
-                                臺灣生物多樣性資訊機構
+                                {getFooterText(lang, "taibifOrg")}
                             </p>
                         </a>
                         <p className="pic-cc">
-                            本站鄒族圖像皆由 許評註 創作 <br /> 依 CC BY-NC-SA
-                            3.0 TW 授權使用
+                            {getFooterText(lang, "ccNotice")}
                         </p>
                     </div>
                 </div>
             </div>
             <div className="footer-botbox">
                 <div className="linkbox">
-                    <Link to="/privacy-policy">隱私權政策</Link>
+                    <Link to="/privacy-policy">
+                        {getFooterText(lang, "privacyPolicy")}
+                    </Link>
                     <div className="line"> | </div>
-                    <Link to="/terms-of-use">使用者條款</Link>
+                    <Link to="/terms-of-use">
+                        {getFooterText(lang, "termsOfUse")}
+                    </Link>
                 </div>
-                <h6>©2025 LTSER 長期社會生態核心觀測 阿里山站</h6>
+                <h6>{getFooterText(lang, "copyright")}</h6>
             </div>
         </footer>
     );

@@ -5,12 +5,14 @@ import { ENV } from "../../config/env";
 
 // context
 import { useAuth } from "../../context/AuthContext";
+import { useLang } from "../../context/LangContext";
 
 // data
-import { LoginViewSchema } from "../../data/schema";
+import { createLoginViewSchema } from "../../data/schema";
 
 // helpers
 import { swalToast } from "../../helpers/CustomSwal";
+import { getLoginText } from "../../i18n/login";
 
 type PopupView = "login" | "register" | "forgot";
 
@@ -37,13 +39,17 @@ function decodeExp(jwt: string): number | null {
 
 const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
     const { login } = useAuth();
+    const { lang } = useLang();
 
     const handleGoogleLogin = () => {
         // @ts-ignore
         const google = window.google;
 
         if (!google) {
-            swalToast.fire({ icon: "error", title: "Google 登入服務尚未載入" });
+            swalToast.fire({
+                icon: "error",
+                title: getLoginText(lang, "googleServiceNotLoaded"),
+            });
             return;
         }
 
@@ -55,7 +61,7 @@ const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
                 if (!credential) {
                     swalToast.fire({
                         icon: "error",
-                        title: "無法取得 Google 認證資訊",
+                        title: getLoginText(lang, "googleCredentialMissing"),
                     });
                     return;
                 }
@@ -89,7 +95,7 @@ const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
 
                         swalToast.fire({
                             icon: "success",
-                            title: "Google 登入成功",
+                            title: getLoginText(lang, "googleLoginSuccess"),
                         });
 
                         setIsLoginOpen(false);
@@ -97,14 +103,16 @@ const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
                     } else {
                         swalToast.fire({
                             icon: "error",
-                            title: data.detail || "Google 登入失敗，請稍後再試",
+                            title:
+                                data.detail ||
+                                getLoginText(lang, "googleLoginFailed"),
                         });
                     }
                 } catch (e) {
                     console.error(e);
                     swalToast.fire({
                         icon: "error",
-                        title: "伺服器錯誤，請稍後再試",
+                        title: getLoginText(lang, "serverErrorRetry"),
                     });
                 }
             },
@@ -128,7 +136,7 @@ const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
     return (
         <Formik
             initialValues={initialValues}
-            validationSchema={LoginViewSchema}
+            validationSchema={createLoginViewSchema(lang)}
             onSubmit={async (
                 values,
                 { setSubmitting, setErrors, resetForm }
@@ -181,14 +189,22 @@ const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
                             },
                         });
 
-                        swalToast.fire({ icon: "success", title: "登入成功" });
+                        swalToast.fire({
+                            icon: "success",
+                            title: getLoginText(lang, "loginSuccess"),
+                        });
                         setIsLoginOpen(false);
                         onSuccess?.();
                     } else {
                         const detail =
                             typeof data.detail === "string" ? data.detail : "";
                         if (detail) {
-                            setErrors({ password: "帳號或密碼錯誤" });
+                            setErrors({
+                                password: getLoginText(
+                                    lang,
+                                    "invalidEmailOrPassword",
+                                ),
+                            });
                         } else {
                             const fieldErrors: Record<string, string> = {};
                             for (const k in data) {
@@ -204,7 +220,7 @@ const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
                     console.error(e);
                     swalToast.fire({
                         icon: "error",
-                        title: "伺服器錯誤，請稍後再試",
+                        title: getLoginText(lang, "serverErrorRetry"),
                     });
                 } finally {
                     setSubmitting(false);
@@ -215,13 +231,18 @@ const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
                 <Form>
                     {
                         <div className="login-set">
-                            <div className="titlebox">會員登入</div>
+                            <div className="titlebox">
+                                {getLoginText(lang, "memberLogin")}
+                            </div>
 
                             <div className="input-item">
                                 <Field
                                     type="email"
                                     name="email"
-                                    placeholder="請輸入您的帳號(email)"
+                                    placeholder={getLoginText(
+                                        lang,
+                                        "accountPlaceholder",
+                                    )}
                                 />
                                 <ErrorMessage
                                     name="email"
@@ -234,7 +255,10 @@ const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
                                 <Field
                                     type="password"
                                     name="password"
-                                    placeholder="請輸入您的密碼"
+                                    placeholder={getLoginText(
+                                        lang,
+                                        "passwordPlaceholder",
+                                    )}
                                 />
                                 <ErrorMessage
                                     name="password"
@@ -245,7 +269,7 @@ const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
 
                             <div className="check-area">
                                 <label className="check-item">
-                                    記住我的帳號
+                                    {getLoginText(lang, "rememberAccount")}
                                     <Field type="checkbox" name="remember" />
                                     <span className="checkmark"></span>
                                 </label>
@@ -257,23 +281,24 @@ const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
                                     type="submit"
                                     disabled={isSubmitting}
                                 >
-                                    {isSubmitting ? "登入中" : "登入"}
+                                    {isSubmitting
+                                        ? getLoginText(lang, "loggingIn")
+                                        : getLoginText(lang, "login")}
                                 </button>
                                 <button
                                     className="logingoogle"
                                     type="button"
                                     onClick={handleGoogleLogin}
                                 >
-                                    使用 Google 登入
+                                    {getLoginText(lang, "loginWithGoogle")}
                                 </button>
                             </div>
 
-                            <div className="login-tip">
-                                如果按下「使用 Google 登入」沒有反應，
-                                <br />
-                                可能是瀏覽器阻擋了第三方登入（FedCM）或正在使用無痕視窗。
-                                <br />
-                                請改用一般視窗、檢查瀏覽器網站設定，或改用帳號密碼登入。
+                            <div
+                                className="login-tip"
+                                style={{ whiteSpace: "pre-line" }}
+                            >
+                                {getLoginText(lang, "googleTip")}
                             </div>
 
                             <div className="btn-area2">
@@ -282,14 +307,14 @@ const LoginView = ({ onSuccess, setIsLoginOpen, setView }: LoginViewProps) => {
                                     type="button"
                                     onClick={() => setView("register")}
                                 >
-                                    建立帳號
+                                    {getLoginText(lang, "createAccount")}
                                 </button>
                                 <button
                                     className="forget-btn"
                                     type="button"
                                     onClick={() => setView("forgot")}
                                 >
-                                    忘記密碼
+                                    {getLoginText(lang, "forgotPassword")}
                                 </button>
                             </div>
                         </div>

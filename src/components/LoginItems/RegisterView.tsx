@@ -2,12 +2,14 @@ import { Link } from "react-router-dom";
 import type { Dispatch, SetStateAction } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { API } from "../../config/api";
+import { useLang } from "../../context/LangContext";
 
 // helpers
 import { swalToast } from "../../helpers/CustomSwal";
+import { getLoginText } from "../../i18n/login";
 
 // data
-import { RegisterViewSchema } from "../../data/schema";
+import { createRegisterViewSchema } from "../../data/schema";
 
 type PopupView = "login" | "register" | "forgot";
 
@@ -16,6 +18,7 @@ interface RegisterViewProps {
 }
 
 const RegisterView = ({ setView }: RegisterViewProps) => {
+    const { lang } = useLang();
     return (
         <Formik
             initialValues={{
@@ -24,7 +27,7 @@ const RegisterView = ({ setView }: RegisterViewProps) => {
                 password: "",
                 password2: "",
             }}
-            validationSchema={RegisterViewSchema}
+            validationSchema={createRegisterViewSchema(lang)}
             onSubmit={async (
                 values,
                 { setSubmitting, setErrors, resetForm }
@@ -39,7 +42,7 @@ const RegisterView = ({ setView }: RegisterViewProps) => {
                     if (res.ok) {
                         swalToast.fire({
                             icon: "success",
-                            title: "註冊成功！請登入",
+                            title: getLoginText(lang, "registerSuccess"),
                         });
                         resetForm();
                         setView("login");
@@ -58,7 +61,7 @@ const RegisterView = ({ setView }: RegisterViewProps) => {
                 } catch {
                     swalToast.fire({
                         icon: "error",
-                        title: "伺服器錯誤，請稍後再試",
+                        title: getLoginText(lang, "serverErrorRetry"),
                     });
                 } finally {
                     setSubmitting(false);
@@ -67,10 +70,16 @@ const RegisterView = ({ setView }: RegisterViewProps) => {
         >
             {({ isSubmitting }) => (
                 <Form className="register-set">
-                    <div className="titlebox">會員註冊</div>
+                    <div className="titlebox">
+                        {getLoginText(lang, "memberRegister")}
+                    </div>
 
                     <div className="input-item">
-                        <Field type="text" name="name" placeholder="姓名" />
+                        <Field
+                            type="text"
+                            name="name"
+                            placeholder={getLoginText(lang, "namePlaceholder")}
+                        />
                         <ErrorMessage
                             name="name"
                             component="div"
@@ -82,7 +91,10 @@ const RegisterView = ({ setView }: RegisterViewProps) => {
                         <Field
                             type="email"
                             name="email"
-                            placeholder="請輸入您的Email作為帳號"
+                            placeholder={getLoginText(
+                                lang,
+                                "registerEmailPlaceholder",
+                            )}
                         />
                         <ErrorMessage
                             name="email"
@@ -95,7 +107,10 @@ const RegisterView = ({ setView }: RegisterViewProps) => {
                         <Field
                             type="password"
                             name="password"
-                            placeholder="請輸入您的密碼，需包含大小寫字母與數字"
+                            placeholder={getLoginText(
+                                lang,
+                                "registerPasswordPlaceholder",
+                            )}
                         />
                         <ErrorMessage
                             name="password"
@@ -108,7 +123,10 @@ const RegisterView = ({ setView }: RegisterViewProps) => {
                         <Field
                             type="password"
                             name="password2"
-                            placeholder="請再次輸入密碼"
+                            placeholder={getLoginText(
+                                lang,
+                                "registerPassword2Placeholder",
+                            )}
                         />
                         <ErrorMessage
                             name="password2"
@@ -123,7 +141,9 @@ const RegisterView = ({ setView }: RegisterViewProps) => {
                             type="submit"
                             disabled={isSubmitting}
                         >
-                            {isSubmitting ? "註冊中" : "註冊"}
+                            {isSubmitting
+                                ? getLoginText(lang, "registering")
+                                : getLoginText(lang, "register")}
                         </button>
                     </div>
 
@@ -133,11 +153,15 @@ const RegisterView = ({ setView }: RegisterViewProps) => {
                             type="button"
                             onClick={() => setView("login")}
                         >
-                            返回登入
+                            {getLoginText(lang, "goBackLogin")}
                         </button>
                         <div className="link">
-                            <span className="col-red">*註冊即同意</span>{" "}
-                            <Link to="#">使⽤者條款</Link>
+                            <span className="col-red">
+                                {getLoginText(lang, "registerAgreePrefix")}
+                            </span>{" "}
+                            <Link to="/terms-of-use">
+                                {getLoginText(lang, "termsOfUse")}
+                            </Link>
                         </div>
                     </div>
                 </Form>

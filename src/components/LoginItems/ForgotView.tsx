@@ -1,11 +1,13 @@
 import type { Dispatch, SetStateAction } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useLang } from "../../context/LangContext";
 
 // data
-import { ForgotViewSchema } from "../../data/schema";
+import { createForgotViewSchema } from "../../data/schema";
 
 // helpers
 import { swalToast } from "../../helpers/CustomSwal";
+import { getLoginText } from "../../i18n/login";
 
 import { API } from "../../config/api";
 
@@ -18,10 +20,11 @@ interface ForgotViewProps {
 }
 
 const ForgotView = ({ setView }: ForgotViewProps) => {
+    const { lang } = useLang();
     return (
         <Formik
             initialValues={{ email: "" }}
-            validationSchema={ForgotViewSchema}
+            validationSchema={createForgotViewSchema(lang)}
             onSubmit={async (values, { setSubmitting }) => {
                 try {
                     const res = await fetch(API.auth.passReset, {
@@ -34,14 +37,14 @@ const ForgotView = ({ setView }: ForgotViewProps) => {
                     if (res.ok) {
                         swalToast.fire({
                             icon: "success",
-                            title: "如果帳號存在，我們已寄出重設密碼信件",
+                            title: getLoginText(lang, "forgotSubmitSuccess"),
                         });
                         setView("login");
                     }
                 } catch {
                     swalToast.fire({
                         icon: "error",
-                        title: "伺服器錯誤，請稍後再試",
+                        title: getLoginText(lang, "serverErrorRetry"),
                     });
                 } finally {
                     setSubmitting(false);
@@ -52,18 +55,21 @@ const ForgotView = ({ setView }: ForgotViewProps) => {
                 <Form>
                     {
                         <div className="forget-set">
-                            <div className="titlebox">忘記密碼</div>
-                            <p>
-                                請輸入當初加入會員使用的E-Mail，
-                                <br />
-                                我們將協助您重新設定密碼。
+                            <div className="titlebox">
+                                {getLoginText(lang, "forgotPasswordTitle")}
+                            </div>
+                            <p style={{ whiteSpace: "pre-line" }}>
+                                {getLoginText(lang, "forgotPasswordDesc")}
                             </p>
 
                             <div className="input-item">
                                 <Field
                                     type="email"
                                     name="email"
-                                    placeholder="請輸入您的帳號(email)"
+                                    placeholder={getLoginText(
+                                        lang,
+                                        "accountPlaceholder",
+                                    )}
                                 />
                                 <ErrorMessage
                                     name="email"
@@ -78,7 +84,7 @@ const ForgotView = ({ setView }: ForgotViewProps) => {
                                     type="submit"
                                     disabled={isSubmitting}
                                 >
-                                    確認送出
+                                    {getLoginText(lang, "submit")}
                                 </button>
                             </div>
 
@@ -88,14 +94,14 @@ const ForgotView = ({ setView }: ForgotViewProps) => {
                                     type="button"
                                     onClick={() => setView("register")}
                                 >
-                                    建立帳號
+                                    {getLoginText(lang, "createAccount")}
                                 </button>
                                 <button
                                     className="back-btn"
                                     type="button"
                                     onClick={() => setView("login")}
                                 >
-                                    返回登入
+                                    {getLoginText(lang, "goBackLogin")}
                                 </button>
                             </div>
                         </div>

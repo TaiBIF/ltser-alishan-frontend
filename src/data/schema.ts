@@ -1,45 +1,60 @@
 import * as Yup from "yup";
+import type { Lang } from "../context/LangContext";
+import { getLoginValidationText } from "../i18n/login";
 
-export const RegisterViewSchema = Yup.object().shape({
-    name: Yup.string().trim().required("*使用者姓名不可為空"),
-    email: Yup.string()
-        .trim()
-        .email("*Email 格式不正確")
-        .required("*Email 不可為空"),
-    password: Yup.string()
-        .min(8, "*密碼至少 8 碼")
-        .matches(/[a-z]/, "*需含小寫字母")
-        .matches(/[A-Z]/, "*需含大寫字母")
-        .matches(/\d/, "*需含數字")
-        .required("*密碼不可為空"),
-    password2: Yup.string()
-        .oneOf([Yup.ref("password")], "*兩次密碼不一致")
-        .required("*請再次輸入密碼"),
-});
+export const createRegisterViewSchema = (lang: Lang) =>
+    Yup.object().shape({
+        name: Yup.string()
+            .trim()
+            .required(getLoginValidationText(lang, "nameRequired")),
+        email: Yup.string()
+            .trim()
+            .email(getLoginValidationText(lang, "emailInvalid"))
+            .required(getLoginValidationText(lang, "emailRequired")),
+        password: Yup.string()
+            .min(8, getLoginValidationText(lang, "passwordMin"))
+            .matches(/[a-z]/, getLoginValidationText(lang, "passwordNeedLower"))
+            .matches(/[A-Z]/, getLoginValidationText(lang, "passwordNeedUpper"))
+            .matches(/\d/, getLoginValidationText(lang, "passwordNeedDigit"))
+            .required(getLoginValidationText(lang, "passwordRequired")),
+        password2: Yup.string()
+            .oneOf([Yup.ref("password")], getLoginValidationText(lang, "password2Mismatch"))
+            .required(getLoginValidationText(lang, "password2Required")),
+    });
 
-export const LoginViewSchema = Yup.object().shape({
-    email: Yup.string()
-        .trim()
-        .email("*Email 格式不正確")
-        .required("*請輸入 Email"),
-    password: Yup.string().required("*請輸入密碼"),
-});
+export const createLoginViewSchema = (lang: Lang) =>
+    Yup.object().shape({
+        email: Yup.string()
+            .trim()
+            .email(getLoginValidationText(lang, "emailInvalid"))
+            .required(getLoginValidationText(lang, "loginEmailRequired")),
+        password: Yup.string().required(
+            getLoginValidationText(lang, "loginPasswordRequired"),
+        ),
+    });
 
-export const ForgotViewSchema = Yup.object().shape({
-    email: Yup.string()
-        .trim()
-        .email("*Email 格式不正確")
-        .required("*請輸入 Email"),
-});
+export const createForgotViewSchema = (lang: Lang) =>
+    Yup.object().shape({
+        email: Yup.string()
+            .trim()
+            .email(getLoginValidationText(lang, "emailInvalid"))
+            .required(getLoginValidationText(lang, "loginEmailRequired")),
+    });
 
-export const ResetPswSchema = Yup.object().shape({
-    password: Yup.string()
-        .min(8, "*密碼至少 8 碼")
-        .matches(/[a-z]/, "*需含小寫字母")
-        .matches(/[A-Z]/, "*需含大寫字母")
-        .matches(/\d/, "*需含數字")
-        .required("*密碼不可為空"),
-    password2: Yup.string()
-        .oneOf([Yup.ref("password")], "*兩次密碼不一致")
-        .required("*請再次輸入密碼"),
-});
+export const createResetPswSchema = (lang: Lang) =>
+    Yup.object().shape({
+        password: Yup.string()
+            .min(8, getLoginValidationText(lang, "passwordMin"))
+            .matches(/[a-z]/, getLoginValidationText(lang, "passwordNeedLower"))
+            .matches(/[A-Z]/, getLoginValidationText(lang, "passwordNeedUpper"))
+            .matches(/\d/, getLoginValidationText(lang, "passwordNeedDigit"))
+            .required(getLoginValidationText(lang, "passwordRequired")),
+        password2: Yup.string()
+            .oneOf([Yup.ref("password")], getLoginValidationText(lang, "password2Mismatch"))
+            .required(getLoginValidationText(lang, "password2Required")),
+    });
+
+export const RegisterViewSchema = createRegisterViewSchema("zh-TW");
+export const LoginViewSchema = createLoginViewSchema("zh-TW");
+export const ForgotViewSchema = createForgotViewSchema("zh-TW");
+export const ResetPswSchema = createResetPswSchema("zh-TW");

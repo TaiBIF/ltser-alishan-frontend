@@ -11,6 +11,8 @@ type ObservationTextKey =
     | "termsOfUse"
     | "catalogType"
     | "catalogDatasetName"
+    | "dataCatalogPdfDescription"
+    | "dataCatalogPdfTitle"
     | "viewDatasetAndMethod"
     | "locationUnavailable"
     | "locationSelect"
@@ -109,6 +111,14 @@ const OBSERVATION_TEXT_MAP: Record<ObservationTextKey, Record<Lang, string>> = {
     catalogDatasetName: {
         "zh-TW": "資料集名稱",
         en: "Dataset",
+    },
+    dataCatalogPdfDescription: {
+        "zh-TW": "下方提供 2025 年資料年報預覽，內容包含 LTSER 原住民站概況、阿里山與豐濱地區的氣象及聲景監測站資訊、各觀測站年度資料圖表、資料下載連結，以及年度執行成果與未來展望。",
+        en: "The PDF preview below presents the 2025 data annual report, including an overview of the LTSER Indigenous Peoples Site, weather and soundscape monitoring information for the Alishan and Fengbin areas, annual charts for each station, data download links, and the year's outcomes and future directions.",
+    },
+    dataCatalogPdfTitle: {
+        "zh-TW": "LTSER 阿里山站年度報告 PDF 預覽",
+        en: "LTSER Alishan Annual Report PDF Preview",
     },
     viewDatasetAndMethod: {
         "zh-TW": "查看資料集與研究方法",

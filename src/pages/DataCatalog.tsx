@@ -21,6 +21,7 @@ import { catalogList } from "../data/dataCatlog";
 const DataCatalog = () => {
     const { lang } = useLang();
     const { node, trail } = useBreadcrumb();
+    const annualReportPdfUrl = `${import.meta.env.BASE_URL}2025-annual-report.pdf`;
     usePageTitle(
         (lang === "en" ? node?.title_en : node?.title_zh)?.replace(/\n/g, " ") ??
             "",
@@ -131,6 +132,22 @@ const DataCatalog = () => {
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div className="data-catalog-pdf-section">
+                            <p>
+                                {getObservationText(
+                                    lang,
+                                    "dataCatalogPdfDescription",
+                                )}
+                            </p>
+                            <iframe
+                                src={annualReportPdfUrl}
+                                title={getObservationText(
+                                    lang,
+                                    "dataCatalogPdfTitle",
+                                )}
+                                className="data-catalog-pdf-preview"
+                            />
                         </div>
                     </div>
                 </div>

@@ -85,8 +85,9 @@ const OBSERVATION_TEXT_MAP: Record<ObservationTextKey, Record<Lang, string>> = {
         en: "Select Item",
     },
     dataCatalogDescriptionStart: {
-        "zh-TW": "本頁彙整 LTSER 阿里山站長期社會生態核心觀測資料。若您需要完整觀測資料，請先登入會員，並點擊下方表格的對應觀測項目頁面，使用「資料下載」或「物種名錄下載」功能進行取得。使用前請先詳閱本網站",
-        en: "This page compiles long-term social-ecological core observation datasets from the LTSER Alishan site. For full datasets, please sign in first, then open the corresponding observation item from the table below and use \"Data Download\" or \"Species Catalog Download\". Before use, please read our",
+        "zh-TW":
+            "本頁彙整 LTSER 阿里山站長期社會生態核心觀測資料。若您需要完整觀測資料，請先登入會員，並點擊下方表格的對應觀測項目頁面，使用「資料下載」或「物種名錄下載」功能進行取得。使用前請先詳閱本網站",
+        en: 'This page compiles long-term social-ecological core observation datasets from the LTSER Alishan site. For full datasets, please sign in first, then open the corresponding observation item from the table below and use "Data Download" or "Species Catalog Download". Before use, please read our',
     },
     dataCatalogDescriptionMiddle: {
         "zh-TW": "與",
@@ -113,8 +114,9 @@ const OBSERVATION_TEXT_MAP: Record<ObservationTextKey, Record<Lang, string>> = {
         en: "Dataset",
     },
     dataCatalogPdfDescription: {
-        "zh-TW": "下方提供 2025 年資料年報預覽，內容包含 LTSER 原住民站概況、阿里山與豐濱地區的氣象及聲景監測站資訊、各觀測站年度資料圖表、資料下載連結，以及年度執行成果與未來展望。",
-        en: "The PDF preview below presents the 2025 data annual report, including an overview of the LTSER Indigenous Peoples Site, weather and soundscape monitoring information for the Alishan and Fengbin areas, annual charts for each station, data download links, and the year's outcomes and future directions.",
+        "zh-TW":
+            "下方提供 2025 年資料年報預覽，內容包含 LTSER 原住民站概況、阿里山與豐濱地區的氣象及聲景監測站資訊、各觀測站年度資料圖表、資料下載連結，以及年度執行成果與未來展望。",
+        en: "The PDF preview below presents the 2025 data annual report, including an overview of the LTSER Indigenous, weather and soundscape monitoring information for the Alishan and Fengbin areas, annual charts for each station, data download links, and the year's outcomes and future directions.",
     },
     dataCatalogPdfTitle: {
         "zh-TW": "LTSER 阿里山站年度報告 PDF 預覽",
@@ -201,11 +203,13 @@ const OBSERVATION_TEXT_MAP: Record<ObservationTextKey, Record<Lang, string>> = {
         en: "",
     },
     areaMapSubtext: {
-        "zh-TW": "本圖表以地圖方式呈現嘉義縣阿里山鄉及其周邊設有觀測站之村里分布情形，其中包含一處位於番路鄉之觀測村里。\n滑鼠懸停於各村里時可查看人口數，資料採用每年最新月份之統計數據。",
+        "zh-TW":
+            "本圖表以地圖方式呈現嘉義縣阿里山鄉及其周邊設有觀測站之村里分布情形，其中包含一處位於番路鄉之觀測村里。\n滑鼠懸停於各村里時可查看人口數，資料採用每年最新月份之統計數據。",
         en: "This map shows villages in Alishan Township, Chiayi County, and nearby villages with observation stations, including one village in Fanlu Township.\nHover over each village to view population. Data uses the latest monthly statistics of each year.",
     },
     pyramidSubtext: {
-        "zh-TW": "本圖表為嘉義縣「阿里山鄉」的人口金字塔，用以呈現該鄉各年齡層與性別的人口分布情形，資料採用每年最新月份之統計數據，不包含嘉義縣其他行政區。",
+        "zh-TW":
+            "本圖表為嘉義縣「阿里山鄉」的人口金字塔，用以呈現該鄉各年齡層與性別的人口分布情形，資料採用每年最新月份之統計數據，不包含嘉義縣其他行政區。",
         en: "This population pyramid shows the age and sex distribution in Alishan Township, Chiayi County. Data uses the latest monthly statistics of each year and excludes other townships in Chiayi County.",
     },
     populationCountLabel: {
@@ -428,8 +432,7 @@ const CATALOG_DESCRIPTION_MAP: Record<string, Record<Lang, string>> = {
         en: "Infrared camera traps are used as the primary monitoring tool to assess whether the abundance of terrestrial mammals has changed under the implementation of hunting self-governance policies.",
     },
     plantphenology: {
-        "zh-TW":
-            "選定與狩獵行為有關的植物種類進行每半月一次的物候調查。",
+        "zh-TW": "選定與狩獵行為有關的植物種類進行每半月一次的物候調查。",
         en: "Plant species associated with hunting activities are selected for phenological surveys conducted half-monthly.",
     },
     terresoundindex: {

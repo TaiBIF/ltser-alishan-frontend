@@ -87,6 +87,7 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
                                 : f.field_name_zh_tw || f.field_name_en) ||
                             f.field_name,
                         type: f.field_type!,
+                        filter_widget: f.filter_widget,
                     }));
 
                 const visibleFields: ConvertedFieldItemType[] = (metaJson || [])
@@ -99,6 +100,7 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
                                 : f.field_name_zh_tw || f.field_name_en) ||
                             f.field_name,
                         type: f.field_type!,
+                        filter_widget: f.filter_widget,
                     }));
 
                 if (!signal.aborted) {
@@ -243,6 +245,7 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
             <div className="data-searchbox">
                 {/* 篩選 */}
                 <FieldFilter
+                    observationItem={entry?.key ?? ""}
                     fields={fields}
                     setFilters={setFilters}
                     setCurrentPage={setCurrentPage}

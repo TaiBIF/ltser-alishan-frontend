@@ -161,12 +161,21 @@ export type FieldItemType = {
     field_type?: string | null;
     show_at_table?: boolean | null;
     show_at_filter?: boolean | null;
+    filter_widget?: FilterWidgetType | null;
 };
+
+export type FilterWidgetType = "text" | "select" | "combobox";
 
 export type ConvertedFieldItemType = {
     key: string;
     label: string;
     type: string;
+    filter_widget?: FilterWidgetType | null;
+};
+
+export type FilterOptionType = {
+    label: string;
+    value: string;
 };
 
 export type LocationItemType = {

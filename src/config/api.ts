@@ -68,6 +68,8 @@ export const API = {
         location: (item: string) =>
             `${API_BASE}/api/location/?observation_item=${item}`,
         field: (model: string) => `${API_BASE}/api/data-field/?model=${model}`,
+        filterOptions: (model: string, query: string) =>
+            `${API_BASE}/api/${model}/filter-options/?${query}`,
         base: (model: string) => `${API_BASE}/api/${model}/`,
         chart: (item: string, locationID: string) =>
             `${API_BASE}/api/${item}/chart/?locationID=${locationID}`,

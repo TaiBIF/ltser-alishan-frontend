@@ -1798,8 +1798,195 @@
                                 background: #fff;
                                 border-radius: 5px;
                                 padding: 0px 15px;
+                                color: #555;
+                                font-size: 16px;
                                 @media #{$mobile} {
                                     height: 40px;
+                                    font-size: 14px;
+                                }
+                                &::placeholder {
+                                    color: #999;
+                                    opacity: 1;
+                                }
+                            }
+                            .observation-date-picker,
+                            .react-datepicker-wrapper,
+                            .react-datepicker__input-container {
+                                display: block;
+                                width: 100%;
+                            }
+                            .observation-date-popper {
+                                z-index: 30;
+                                .react-datepicker__triangle {
+                                    display: none;
+                                }
+                                @media #{$pad} {
+                                    left: 50% !important;
+                                    max-width: calc(100vw - 30px);
+                                    position: fixed !important;
+                                    right: auto !important;
+                                    top: 50% !important;
+                                    transform: translate(-50%, -50%) !important;
+                                }
+                            }
+                            .observation-date-calendar {
+                                border: 1px solid #eee;
+                                border-radius: 5px;
+                                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+                                color: #555;
+                                font-family: inherit;
+                                overflow: hidden;
+                                @media #{$pad} {
+                                    max-width: calc(100vw - 30px);
+                                }
+                                @media #{$mobile} {
+                                    width: calc(100vw - 30px);
+                                }
+                                .react-datepicker__header {
+                                    background: #f7f7f7;
+                                    border-bottom: 1px solid #eee;
+                                    padding-top: 12px;
+                                }
+                                .react-datepicker__current-month,
+                                .react-datepicker-time__header,
+                                .react-datepicker-year-header {
+                                    color: $col-brown1;
+                                    font-size: 18px;
+                                    font-weight: bold;
+                                    letter-spacing: 0;
+                                    margin-bottom: 8px;
+                                    @media #{$mobile} {
+                                        font-size: 17px;
+                                    }
+                                }
+                                .react-datepicker__month-read-view,
+                                .react-datepicker__year-read-view {
+                                    border: 1px solid #e5e5e5;
+                                    border-radius: 5px;
+                                    color: $col-brown1;
+                                    display: inline-flex;
+                                    align-items: center;
+                                    min-height: 32px;
+                                    padding: 4px 28px 4px 12px;
+                                    background: #fff;
+                                    font-size: 15px;
+                                    font-weight: bold;
+                                    position: relative;
+                                    @include bg_change(0.3s);
+                                    @media #{$pc} {
+                                        &:hover {
+                                            border-color: $col-brown1;
+                                            background: #fff;
+                                        }
+                                    }
+                                }
+                                .react-datepicker__month-read-view--down-arrow,
+                                .react-datepicker__year-read-view--down-arrow {
+                                    border-color: $col-brown1;
+                                    border-width: 2px 2px 0 0;
+                                    right: 10px;
+                                    top: 9px;
+                                }
+                                .react-datepicker__day-name {
+                                    color: #777;
+                                    font-size: 13px;
+                                    line-height: 30px;
+                                    margin: 2px;
+                                    width: 32px;
+                                    @media #{$mobile} {
+                                        width: calc((100vw - 58px) / 7);
+                                    }
+                                }
+                                .react-datepicker__day {
+                                    border-radius: 5px;
+                                    color: #555;
+                                    font-size: 14px;
+                                    line-height: 32px;
+                                    margin: 2px;
+                                    width: 32px;
+                                    @include bg_change(0.3s);
+                                    @media #{$mobile} {
+                                        line-height: 36px;
+                                        width: calc((100vw - 58px) / 7);
+                                    }
+                                    @media #{$pc} {
+                                        &:hover {
+                                            background: #f7f7f7;
+                                            color: $col-brown1;
+                                        }
+                                    }
+                                }
+                                .react-datepicker__day--today {
+                                    color: $col-brown1;
+                                    font-weight: bold;
+                                }
+                                .react-datepicker__day--selected,
+                                .react-datepicker__day--keyboard-selected {
+                                    background: $col-brown1;
+                                    color: #fff;
+                                    font-weight: bold;
+                                    @media #{$pc} {
+                                        &:hover {
+                                            background: $col-brown1;
+                                            color: #fff;
+                                        }
+                                    }
+                                }
+                                .react-datepicker__day--outside-month {
+                                    color: #bbb;
+                                }
+                                .react-datepicker__navigation {
+                                    top: 13px;
+                                }
+                                .react-datepicker__navigation-icon::before {
+                                    border-color: $col-brown1;
+                                    border-width: 2px 2px 0 0;
+                                }
+                                .react-datepicker__month-dropdown,
+                                .react-datepicker__year-dropdown {
+                                    background: #fff;
+                                    border: 1px solid #eee;
+                                    border-radius: 5px;
+                                    box-shadow: 0 8px 20px
+                                        rgba(0, 0, 0, 0.08);
+                                    max-height: 240px;
+                                    overflow-y: auto;
+                                    &::-webkit-scrollbar {
+                                        width: 6px;
+                                    }
+                                    &::-webkit-scrollbar-thumb {
+                                        background: $col-brown1;
+                                    }
+                                }
+                                .react-datepicker__month-option,
+                                .react-datepicker__year-option {
+                                    color: #555;
+                                    font-size: 14px;
+                                    line-height: 36px;
+                                    position: relative;
+                                    @include bg_change(0.3s);
+                                    @media #{$pc} {
+                                        &:hover {
+                                            background: #f7f7f7;
+                                            color: $col-brown1;
+                                        }
+                                    }
+                                }
+                                .react-datepicker__month-option--selected,
+                                .react-datepicker__year-option--selected {
+                                    display: none;
+                                }
+                                .react-datepicker__month-option--selected_month,
+                                .react-datepicker__year-option--selected_year {
+                                    background: $col-brown1;
+                                    color: #fff;
+                                    font-weight: bold;
+                                    @media #{$pc} {
+                                        &:hover {
+                                            background: $col-brown1;
+                                            color: #fff;
+                                        }
+                                    }
                                 }
                             }
                             select {
@@ -1811,6 +1998,126 @@
                                 padding: 0px 15px;
                                 @media #{$mobile} {
                                     height: 40px;
+                                }
+                            }
+                            .custom-filter-dropdown {
+                                position: relative;
+                                width: 100%;
+                                z-index: 1;
+                                &.is-open {
+                                    z-index: 20;
+                                }
+                                &__control {
+                                    position: relative;
+                                    input,
+                                    button {
+                                        width: 100%;
+                                        height: 50px;
+                                        border: 1px solid #eee;
+                                        background: #fff;
+                                        border-radius: 5px;
+                                        padding: 0px 42px 0px 15px;
+                                        color: #555;
+                                        font-size: 16px;
+                                        text-align: left;
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                        white-space: nowrap;
+                                        @include bg_change(0.3s);
+                                        @media #{$mobile} {
+                                            height: 40px;
+                                            font-size: 14px;
+                                            padding-right: 36px;
+                                        }
+                                        &:focus {
+                                            border-color: $col-brown1;
+                                            outline: none;
+                                        }
+                                        &::placeholder {
+                                            color: #999;
+                                            opacity: 1;
+                                        }
+                                    }
+                                    button {
+                                        cursor: pointer;
+                                        &.is-placeholder {
+                                            color: #999;
+                                        }
+                                    }
+                                }
+                                &__arrow {
+                                    position: absolute;
+                                    right: 15px;
+                                    top: 50%;
+                                    width: 8px;
+                                    height: 8px;
+                                    border-right: 2px solid $col-brown1;
+                                    border-bottom: 2px solid $col-brown1;
+                                    transform: translateY(-65%) rotate(45deg);
+                                    pointer-events: none;
+                                    @include bg_change(0.3s);
+                                    @media #{$mobile} {
+                                        right: 13px;
+                                    }
+                                }
+                                &.is-open {
+                                    .custom-filter-dropdown__arrow {
+                                        transform: translateY(-35%)
+                                            rotate(225deg);
+                                    }
+                                }
+                                &__menu {
+                                    position: absolute;
+                                    left: 0;
+                                    right: 0;
+                                    top: calc(100% + 6px);
+                                    max-height: 240px;
+                                    overflow-y: auto;
+                                    background: #fff;
+                                    border: 1px solid #eee;
+                                    border-radius: 5px;
+                                    box-shadow: 0 8px 20px
+                                        rgba(0, 0, 0, 0.08);
+                                    padding: 5px 0;
+                                    &::-webkit-scrollbar {
+                                        width: 6px;
+                                    }
+                                    &::-webkit-scrollbar-thumb {
+                                        background: $col-brown1;
+                                    }
+                                    button {
+                                        display: block;
+                                        width: 100%;
+                                        min-height: 40px;
+                                        padding: 9px 15px;
+                                        background: #fff;
+                                        color: #555;
+                                        font-size: 15px;
+                                        line-height: 1.4;
+                                        text-align: left;
+                                        @include bg_change(0.3s);
+                                        @media #{$mobile} {
+                                            min-height: 36px;
+                                            font-size: 14px;
+                                        }
+                                        @media #{$pc} {
+                                            &:hover {
+                                                background: #f7f7f7;
+                                                color: $col-brown1;
+                                            }
+                                        }
+                                        &.is-selected {
+                                            background: $col-brown1;
+                                            color: #fff;
+                                        }
+                                    }
+                                }
+                                &__empty {
+                                    padding: 10px 15px;
+                                    color: #999;
+                                    font-size: 15px;
+                                    line-height: 1.4;
+                                    text-align: left;
                                 }
                             }
                         }

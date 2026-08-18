@@ -1,8 +1,13 @@
 import { Field, ErrorMessage } from "formik";
+import { useEffect, useMemo, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 
 // types
-import type { ConvertedFieldItemType, HeaderItemType } from "../types/item";
+import type {
+    ConvertedFieldItemType,
+    FilterOptionType,
+    HeaderItemType,
+} from "../types/item";
 
 const DateField: React.FC<{
     id: string;
@@ -31,6 +36,11 @@ const DateField: React.FC<{
             onChange={handleDateChange}
             dateFormat="yyyy/MM/dd"
             placeholderText={placeholderText}
+            className="observation-date-input"
+            wrapperClassName="observation-date-picker"
+            calendarClassName="observation-date-calendar"
+            popperClassName="observation-date-popper"
+            popperPlacement="bottom-start"
             showYearDropdown
             dateFormatCalendar="MMMM"
             yearDropdownItemNumber={30}
@@ -39,12 +49,197 @@ const DateField: React.FC<{
     );
 };
 
+type CustomDropdownProps = {
+    id: string;
+    value: string;
+    options: FilterOptionType[];
+    placeholder?: string;
+    searchable?: boolean;
+    onChange: (value: string) => void;
+    onSearch?: (keyword: string) => void;
+};
+
+const CustomDropdown = ({
+    id,
+    value,
+    options,
+    placeholder = "全部",
+    searchable = false,
+    onChange,
+    onSearch,
+}: CustomDropdownProps) => {
+    const [open, setOpen] = useState(false);
+    const [keyword, setKeyword] = useState("");
+    const wrapperRef = useRef<HTMLDivElement>(null);
+    const selectedOption = useMemo(
+        () => options.find((option) => option.value === value),
+        [options, value]
+    );
+
+    useEffect(() => {
+        if (!open) return;
+
+        const handleClick = (event: MouseEvent) => {
+            if (!wrapperRef.current?.contains(event.target as Node)) {
+                setOpen(false);
+                setKeyword("");
+            }
+        };
+
+        document.addEventListener("mousedown", handleClick);
+        return () => document.removeEventListener("mousedown", handleClick);
+    }, [open]);
+
+    const openDropdown = () => {
+        setOpen(true);
+        if (searchable) onSearch?.(keyword);
+    };
+
+    const handleKeywordChange = (nextKeyword: string) => {
+        setKeyword(nextKeyword);
+        onChange(nextKeyword);
+        onSearch?.(nextKeyword);
+        setOpen(true);
+    };
+
+    const handleSelect = (nextValue: string) => {
+        onChange(nextValue);
+        setKeyword("");
+        setOpen(false);
+    };
+
+    const inputValue = searchable ? value : selectedOption?.label ?? "";
+
+    return (
+        <div
+            className={`custom-filter-dropdown${open ? " is-open" : ""}`}
+            ref={wrapperRef}
+        >
+            <div className="custom-filter-dropdown__control">
+                {searchable ? (
+                    <input
+                        id={id}
+                        type="text"
+                        value={inputValue}
+                        placeholder={placeholder}
+                        autoComplete="off"
+                        onChange={(event) =>
+                            handleKeywordChange(event.target.value)
+                        }
+                        onFocus={openDropdown}
+                    />
+                ) : (
+                    <button
+                        id={id}
+                        type="button"
+                        className={!value ? "is-placeholder" : ""}
+                        onClick={() => {
+                            if (open) {
+                                setOpen(false);
+                            } else {
+                                openDropdown();
+                            }
+                        }}
+                    >
+                        {selectedOption?.label ?? placeholder}
+                    </button>
+                )}
+                <span className="custom-filter-dropdown__arrow" />
+            </div>
+
+            {open && (
+                <div className="custom-filter-dropdown__menu">
+                    {!searchable && (
+                        <button
+                            type="button"
+                            className={!value ? "is-selected" : ""}
+                            onClick={() => handleSelect("")}
+                        >
+                            全部
+                        </button>
+                    )}
+                    {options.length > 0 ? (
+                        options.map((option) => (
+                            <button
+                                type="button"
+                                key={option.value}
+                                className={
+                                    option.value === value ? "is-selected" : ""
+                                }
+                                onClick={() => handleSelect(option.value)}
+                            >
+                                {option.label}
+                            </button>
+                        ))
+                    ) : (
+                        <div className="custom-filter-dropdown__empty">
+                            無符合資料
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
+    );
+};
+
 export function useFieldRenderer() {
-    const renderInputByType = (field: ConvertedFieldItemType) => {
-        const { key, label, type } = field;
+    const renderInputByType = (
+        field: ConvertedFieldItemType,
+        options: FilterOptionType[] = [],
+        onOptionSearch?: (field: ConvertedFieldItemType, keyword: string) => void
+    ) => {
+        const { key, label, type, filter_widget } = field;
 
         switch (type) {
             case "CharField":
+            case "TextField":
+                if (filter_widget === "select") {
+                    return (
+                        <li key={key}>
+                            <p>{label}</p>
+                            <Field name={key}>
+                                {({ field: formikField, form }: any) => (
+                                    <CustomDropdown
+                                        id={key}
+                                        value={formikField.value ?? ""}
+                                        options={options}
+                                        onChange={(value) =>
+                                            form.setFieldValue(key, value)
+                                        }
+                                    />
+                                )}
+                            </Field>
+                            <ErrorMessage name={key} component="small" />
+                        </li>
+                    );
+                }
+
+                if (filter_widget === "combobox") {
+                    return (
+                        <li key={key}>
+                            <p>{label}</p>
+                            <Field name={key}>
+                                {({ field: formikField, form }: any) => (
+                                    <CustomDropdown
+                                        id={key}
+                                        value={formikField.value ?? ""}
+                                        options={options}
+                                        placeholder={`請輸入${label}`}
+                                        searchable
+                                        onChange={(value) =>
+                                            form.setFieldValue(key, value)
+                                        }
+                                        onSearch={(keyword) =>
+                                            onOptionSearch?.(field, keyword)
+                                        }
+                                    />
+                                )}
+                            </Field>
+                            <ErrorMessage name={key} component="small" />
+                        </li>
+                    );
+                }
+
                 return (
                     <li key={key}>
                         <p>{label}</p>
@@ -84,10 +279,20 @@ export function useFieldRenderer() {
                 return (
                     <li key={key}>
                         <p>{label}</p>
-                        <Field as="select" id={key} name={key}>
-                            <option value="">全部</option>
-                            <option value="true">是</option>
-                            <option value="false">否</option>
+                        <Field name={key}>
+                            {({ field: formikField, form }: any) => (
+                                <CustomDropdown
+                                    id={key}
+                                    value={formikField.value ?? ""}
+                                    options={[
+                                        { label: "是", value: "true" },
+                                        { label: "否", value: "false" },
+                                    ]}
+                                    onChange={(value) =>
+                                        form.setFieldValue(key, value)
+                                    }
+                                />
+                            )}
                         </Field>
                     </li>
                 );

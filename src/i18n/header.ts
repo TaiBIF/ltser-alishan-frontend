@@ -14,8 +14,8 @@ type HeaderTextKey =
 
 const HEADER_TEXT_MAP: Record<HeaderTextKey, Record<Lang, string>> = {
     logoSubtitle: {
-        "zh-TW": "LTSER INDEGENOUS - Alishan",
-        en: "LTSER INDEGENOUS - Alishan",
+        "zh-TW": "LTSER INDIGENOUS - Alishan",
+        en: "LTSER INDIGENOUS - Alishan",
     },
     logoTitle: {
         "zh-TW": "長期社會生態核心觀測 阿里山站",

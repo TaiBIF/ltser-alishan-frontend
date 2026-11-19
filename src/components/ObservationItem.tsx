@@ -36,11 +36,14 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
     const [rows, setRows] = useState<RowItemType[]>([]);
     const [rowCount, setRowCount] = useState<number>(0);
     const [rowCountPerPage, setRowCountPerPage] = useState<number>(10);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [metaLoading, setMetaLoading] = useState(true);
+    const [dataLoading, setDataLoading] = useState(true);
+    const [dataLoaded, setDataLoaded] = useState(false);
+    const [metaError, setMetaError] = useState<string | null>(null);
+    const [dataError, setDataError] = useState<string | null>(null);
     const [headers, setHeaders] = useState<HeaderItemType[]>([]);
     const [fields, setFields] = useState<ConvertedFieldItemType[]>([]);
-    const [locationID, setLocationID] = useState<string>("SM");
+    const [locationID, setLocationID] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [totalPages, setTotalPages] = useState<number>(1);
     const [filters, setFilters] = useState<Record<string, FilterItemType>>({});
@@ -50,6 +53,11 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
     const entry = useMemo(
         () => findChildByCurrentItem(currentItem, allItem),
         [currentItem, allItem]
+    );
+    const query = buildQueryParams(
+        { page: currentPage, page_size: rowCountPerPage },
+        fields,
+        filters
     );
 
     // 1) 取欄位定義（只依賴 entry）
@@ -65,8 +73,8 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
 
         (async () => {
             try {
-                setLoading(true);
-                setError(null);
+                setMetaLoading(true);
+                setMetaError(null);
 
                 const url = API.data.field(entry.key);
                 const res = await fetch(url, { signal });
@@ -108,17 +116,17 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
                     setFields(visibleFields);
                 }
             } catch (e: any) {
-                if (e?.name !== "AbortError")
-                    setError(e?.message ?? "Unknown error");
+                if (!signal.aborted && e?.name !== "AbortError")
+                    setMetaError(e?.message ?? "Unknown error");
             } finally {
-                setLoading(false);
+                if (!signal.aborted) setMetaLoading(false);
             }
         })();
 
         return () => controller.abort();
     }, [entry, lang]);
 
-    // 2) 取資料列（依賴 entry、分頁、filters、fields）
+    // 2) 只在 API 查詢內容改變時取資料，避免 meta 載入後重送相同請求。
     useEffect(() => {
         if (!entry) return;
 
@@ -132,14 +140,8 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
 
         (async () => {
             try {
-                setLoading(true);
-                setError(null);
-
-                const query = buildQueryParams(
-                    { page: currentPage, page_size: rowCountPerPage },
-                    fields, // 用 meta 轉出的 fields
-                    filters
-                );
+                setDataLoading(true);
+                setDataError(null);
                 const base = API.data.base(entry.key);
                 const url = query ? `${base}?${query}` : base;
 
@@ -166,17 +168,18 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
                             : data.length;
                     setRowCount(count);
                     setTotalPages(Math.ceil(count / rowCountPerPage));
+                    setDataLoaded(true);
                 }
             } catch (e: any) {
-                if (e?.name !== "AbortError")
-                    setError(e?.message ?? "Unknown error");
+                if (!signal.aborted && e?.name !== "AbortError")
+                    setDataError(e?.message ?? "Unknown error");
             } finally {
-                setLoading(false);
+                if (!signal.aborted) setDataLoading(false);
             }
         })();
 
         return () => controller.abort();
-    }, [entry, currentPage, rowCountPerPage, filters, fields]);
+    }, [entry, query, rowCountPerPage]);
 
     // 3) 取樣站（只依賴 entry）
     useEffect(() => {
@@ -191,9 +194,6 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
 
         (async () => {
             try {
-                setLoading(true);
-                setError(null);
-
                 const res = await fetch(API.data.location(entry.key), {
                     signal,
                 });
@@ -207,15 +207,13 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
                     setLocations(
                         Array.isArray(locationJson) ? locationJson : []
                     );
-                    setLocationID(locationJson[0].location_id);
+                    setLocationID(locationJson[0]?.location_id ?? "");
                 }
             } catch (e: any) {
                 if (e?.name !== "AbortError") {
                     // 只影響樣站，不影響其他資料
                     console.error(e);
                 }
-            } finally {
-                setLoading(false);
             }
         })();
 
@@ -234,7 +232,7 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
             />
 
             {/* 圖表視覺化區 */}
-            {entry && (
+            {entry && dataLoaded && (
                 <VisualizationChart
                     observationItem={entry.key}
                     locationID={locationID}
@@ -256,8 +254,8 @@ const ObservationItem = ({ currentItem, allItem }: ObservationItemProps) => {
                     observationItem={entry?.key}
                     rowCount={rowCount}
                     rowCountPerPage={rowCountPerPage}
-                    loading={loading}
-                    error={error}
+                    loading={metaLoading || dataLoading}
+                    error={metaError || dataError}
                     currentPage={currentPage}
                     totalPages={totalPages}
                     rows={rows}

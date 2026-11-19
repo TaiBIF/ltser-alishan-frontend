@@ -151,6 +151,7 @@ const Observation = () => {
                         {/* 右側內容 */}
                         {currentId && (
                             <ObservationItem
+                                key={currentId}
                                 allItem={allAside}
                                 currentItem={currentId}
                             />
